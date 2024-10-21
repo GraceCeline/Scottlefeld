@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'de.techfak.se.template'
+    namespace 'de.techfak.se.gflorensia'
     compileSdk 34
 
     defaultConfig {
-        applicationId "de.techfak.se.template"
-        base.setArchivesName("template")
+        applicationId "de.techfak.se.gflorensia"
+        base.setArchivesName("gflorensia")
         minSdk 33
         targetSdk 34
         versionCode 1

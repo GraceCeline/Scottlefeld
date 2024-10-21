@@ -1,4 +1,4 @@
-package de.techfak.se.template;
+package de.techfak.se.gflorensia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
