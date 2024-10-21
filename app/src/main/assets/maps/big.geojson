@@ -1,0 +1,5775 @@
+{
+    "type": "FeatureCollection",
+    "metadata": {
+        "name": "G-SE 2024 Scotland Yard in Bielefeld - große Map",
+        "types": {
+            "node": {
+                "name": "node"
+            },
+            "tram": {
+                "name": "tram-connection",
+                "Ticketanzahl Detectives": "4",
+                "Ticketanzahl M. X": "3"
+            },
+            "bus": {
+                "name": "bus-connection",
+                "Ticketanzahl Detectives": "8",
+                "Ticketanzahl M. X": "3"
+            },
+            "escooter": {
+                "name": "eScooter-connection",
+                "Ticketanzahl Detectives": "10",
+                "Ticketanzahl M. X": "4"
+            },
+            "black": {
+                "name": "Black-Tickets",
+                "Ticketanzahl M. X": "3-5 (Anzahl Detectives)"
+            }
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.535395,
+                    52.027737
+                ]
+            },
+            "properties": {
+                "name": "Der Spiegel",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.53687,
+                    52.026736
+                ]
+            },
+            "properties": {
+                "name": "Stadtbibliothek",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.536538,
+                    52.025964
+                ]
+            },
+            "properties": {
+                "name": "Neumarkt",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.532638,
+                    52.02562
+                ]
+            },
+            "properties": {
+                "name": "Loom Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533089,
+                    52.02299
+                ]
+            },
+            "properties": {
+                "name": "Jahnplatz",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533158,
+                    52.031053
+                ]
+            },
+            "properties": {
+                "name": "Ishara",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534939,
+                    52.028591
+                ]
+            },
+            "properties": {
+                "name": "Stadthalle Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533314,
+                    52.029109
+                ]
+            },
+            "properties": {
+                "name": "Hauptbahnhof Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531324,
+                    52.029799
+                ]
+            },
+            "properties": {
+                "name": "Cinemaxx",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533888,
+                    52.027294
+                ]
+            },
+            "properties": {
+                "name": "Kamera",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531548,
+                    52.027108
+                ]
+            },
+            "properties": {
+                "name": "Fließendes Tuch",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.529371,
+                    52.025137
+                ]
+            },
+            "properties": {
+                "name": "Der Seher - Hommage an Laokoon",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531361,
+                    52.022557
+                ]
+            },
+            "properties": {
+                "name": "Süsterkirche",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.528792,
+                    52.020213
+                ]
+            },
+            "properties": {
+                "name": "Pfarrkirche St.Jodokus",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.528239,
+                    52.021124
+                ]
+            },
+            "properties": {
+                "name": "Astoria",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531742,
+                    52.020992
+                ]
+            },
+            "properties": {
+                "name": "Altstädter Nicolaikirche",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.53276,
+                    52.021174
+                ]
+            },
+            "properties": {
+                "name": "Leineweberdenkmal",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.5267,
+                    52.019758
+                ]
+            },
+            "properties": {
+                "name": "Kunstforum Hermann Stenner",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.535041,
+                    52.02425
+                ]
+            },
+            "properties": {
+                "name": "Die Arcade",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.525911,
+                    52.0182
+                ]
+            },
+            "properties": {
+                "name": "Kunsthalle",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.526834,
+                    52.018724
+                ]
+            },
+            "properties": {
+                "name": "Altstadt, Skulpturenpark",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.52958,
+                    52.018322
+                ]
+            },
+            "properties": {
+                "name": "Park der Menschenrechte",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.529355,
+                    52.0171
+                ]
+            },
+            "properties": {
+                "name": "Neustädter Marienkirche",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.528169,
+                    52.017166
+                ]
+            },
+            "properties": {
+                "name": "NaMu - Naturkunde-Museum",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.526884,
+                    52.014889
+                ]
+            },
+            "properties": {
+                "name": "Burg und Festung Sparrenberg",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.525385,
+                    52.017242
+                ]
+            },
+            "properties": {
+                "name": "Adenauerplatz",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.530519,
+                    52.015615
+                ]
+            },
+            "properties": {
+                "name": "Turm der Neustädter Stadtmauer",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.542176,
+                    52.019183
+                ]
+            },
+            "properties": {
+                "name": "Georg-Rothgiesser-Park",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.542267,
+                    52.020874
+                ]
+            },
+            "properties": {
+                "name": "Museum Wäschefabrik",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.54591,
+                    52.02129
+                ]
+            },
+            "properties": {
+                "name": "Ravensberger Park",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.544558,
+                    52.022049
+                ]
+            },
+            "properties": {
+                "name": "Lichtwerk",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.542632,
+                    52.022451
+                ]
+            },
+            "properties": {
+                "name": "Rochdale Park",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.543919,
+                    52.022356
+                ]
+            },
+            "properties": {
+                "name": "Historisches Museum",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.546004,
+                    52.022632
+                ]
+            },
+            "properties": {
+                "name": "Museum Huelsmann",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.537058,
+                    52.017245
+                ]
+            },
+            "properties": {
+                "name": "Lutteroffenlegung",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.536699,
+                    52.016394
+                ]
+            },
+            "properties": {
+                "name": "Evangelische Freikirche Ecclesia",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.53414,
+                    52.015624
+                ]
+            },
+            "properties": {
+                "name": "Amtsgericht",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.545754,
+                    52.024204
+                ]
+            },
+            "properties": {
+                "name": "Freibad Wiesenbad",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.539494,
+                    52.023953
+                ]
+            },
+            "properties": {
+                "name": "Kesselbrink/Skatepark",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.538373,
+                    52.023903
+                ]
+            },
+            "properties": {
+                "name": "Calisthenics Park Kesselbrink",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.537439,
+                    52.024151
+                ]
+            },
+            "properties": {
+                "name": "Grüner Würfel (GrüWü)",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534778,
+                    52.024838
+                ]
+            },
+            "properties": {
+                "name": "Alte Post",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534902,
+                    52.021167
+                ]
+            },
+            "properties": {
+                "name": "Altes Rathaus",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.535567,
+                    52.02163
+                ]
+            },
+            "properties": {
+                "name": "Neues Rathaus",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.5348,
+                    52.020732
+                ]
+            },
+            "properties": {
+                "name": "Stadttheater",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.532005,
+                    52.020458
+                ]
+            },
+            "properties": {
+                "name": "Theater am Alten Markt",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.532466,
+                    52.015918
+                ]
+            },
+            "properties": {
+                "name": "Landgericht",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.539016,
+                    52.022055
+                ]
+            },
+            "properties": {
+                "name": "Technisches Rathaus",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.539971,
+                    52.027089
+                ]
+            },
+            "properties": {
+                "name": "Pauluskirche",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.544585,
+                    52.022491
+                ]
+            },
+            "properties": {
+                "name": "Freiluftkino Luna",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.539687,
+                    52.021032
+                ]
+            },
+            "properties": {
+                "name": "Filmhaus Bielefeld e. V.",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.537895,
+                    52.028997
+                ]
+            },
+            "properties": {
+                "name": "Ostmannturm",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534097,
+                    52.024241
+                ]
+            },
+            "properties": {
+                "name": "Bielefelder Puppenspiele",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.52972,
+                    52.02426
+                ]
+            },
+            "properties": {
+                "name": "Katholisch-Apostolische Gemeinde",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.540481,
+                    52.01815
+                ]
+            },
+            "properties": {
+                "name": "Hoffnungskirche",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531367,
+                    52.018718
+                ]
+            },
+            "properties": {
+                "name": "DansArt Theater",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.542053,
+                    52.024673
+                ]
+            },
+            "properties": {
+                "name": "Arbeitsamt",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.5334,
+                    52.017576
+                ]
+            },
+            "properties": {
+                "name": "Landgericht - Haltestelle",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.539765,
+                    52.019045
+                ]
+            },
+            "properties": {
+                "name": "Marktstraße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534489,
+                    52.020339
+                ]
+            },
+            "properties": {
+                "name": "Rathaus - Haltestelle",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.529092,
+                    52.022508
+                ]
+            },
+            "properties": {
+                "name": "Notpfortenstraße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.536818,
+                    52.021613
+                ]
+            },
+            "properties": {
+                "name": "Turnerstraße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.541901,
+                    52.021343
+                ]
+            },
+            "properties": {
+                "name": "Volkshochschule",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.528643,
+                    52.024602
+                ]
+            },
+            "properties": {
+                "name": "Elsa-Brändström-Straße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.537596,
+                    52.024808
+                ]
+            },
+            "properties": {
+                "name": "Kesselbrink",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.539819,
+                    52.029129
+                ]
+            },
+            "properties": {
+                "name": "Märkische Straße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.533314,
+                        52.029109
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Hauptbahnhof Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.533158,
+                        52.031053
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Ishara"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533158,
+                        52.031053
+                    ],
+                    [
+                        8.533314,
+                        52.029109
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ishara",
+                    "p2": "Hauptbahnhof Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533314,
+                        52.029109
+                    ],
+                    [
+                        8.534939,
+                        52.028591
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Stadthalle Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534939,
+                        52.028591
+                    ],
+                    [
+                        8.535395,
+                        52.027737
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadthalle Bielefeld",
+                    "p2": "Der Spiegel"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533314,
+                        52.029109
+                    ],
+                    [
+                        8.533888,
+                        52.027294
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Kamera"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534939,
+                        52.028591
+                    ],
+                    [
+                        8.533888,
+                        52.027294
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadthalle Bielefeld",
+                    "p2": "Kamera"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533888,
+                        52.027294
+                    ],
+                    [
+                        8.535395,
+                        52.027737
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kamera",
+                    "p2": "Der Spiegel"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533314,
+                        52.029109
+                    ],
+                    [
+                        8.531548,
+                        52.027108
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Fließendes Tuch"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.531548,
+                        52.027108
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Fließendes Tuch"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531548,
+                        52.027108
+                    ],
+                    [
+                        8.533888,
+                        52.027294
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Fließendes Tuch",
+                    "p2": "Kamera"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534939,
+                        52.028591
+                    ],
+                    [
+                        8.537895,
+                        52.028997
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadthalle Bielefeld",
+                    "p2": "Ostmannturm"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537895,
+                        52.028997
+                    ],
+                    [
+                        8.539819,
+                        52.029129
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ostmannturm",
+                    "p2": "Märkische Straße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539819,
+                        52.029129
+                    ],
+                    [
+                        8.539971,
+                        52.027089
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Märkische Straße",
+                    "p2": "Pauluskirche"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535395,
+                        52.027737
+                    ],
+                    [
+                        8.53687,
+                        52.026736
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Spiegel",
+                    "p2": "Stadtbibliothek"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539971,
+                        52.027089
+                    ],
+                    [
+                        8.53687,
+                        52.026736
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pauluskirche",
+                    "p2": "Stadtbibliothek"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535395,
+                        52.027737
+                    ],
+                    [
+                        8.537895,
+                        52.028997
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Spiegel",
+                    "p2": "Ostmannturm"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537895,
+                        52.028997
+                    ],
+                    [
+                        8.53687,
+                        52.026736
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ostmannturm",
+                    "p2": "Stadtbibliothek"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53687,
+                        52.026736
+                    ],
+                    [
+                        8.536538,
+                        52.025964
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadtbibliothek",
+                    "p2": "Neumarkt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531548,
+                        52.027108
+                    ],
+                    [
+                        8.529371,
+                        52.025137
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Fließendes Tuch",
+                    "p2": "Der Seher - Hommage an Laokoon"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531548,
+                        52.027108
+                    ],
+                    [
+                        8.532638,
+                        52.02562
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Fließendes Tuch",
+                    "p2": "Loom Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529371,
+                        52.025137
+                    ],
+                    [
+                        8.532638,
+                        52.02562
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Seher - Hommage an Laokoon",
+                    "p2": "Loom Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532638,
+                        52.02562
+                    ],
+                    [
+                        8.533888,
+                        52.027294
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Kamera"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533888,
+                        52.027294
+                    ],
+                    [
+                        8.536538,
+                        52.025964
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kamera",
+                    "p2": "Neumarkt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532638,
+                        52.02562
+                    ],
+                    [
+                        8.534778,
+                        52.024838
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Alte Post"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536538,
+                        52.025964
+                    ],
+                    [
+                        8.534778,
+                        52.024838
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neumarkt",
+                    "p2": "Alte Post"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529371,
+                        52.025137
+                    ],
+                    [
+                        8.528643,
+                        52.024602
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Seher - Hommage an Laokoon",
+                    "p2": "Elsa-Brändström-Straße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52972,
+                        52.02426
+                    ],
+                    [
+                        8.529371,
+                        52.025137
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Katholisch-Apostolische Gemeinde",
+                    "p2": "Der Seher - Hommage an Laokoon"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528643,
+                        52.024602
+                    ],
+                    [
+                        8.52972,
+                        52.02426
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Elsa-Brändström-Straße",
+                    "p2": "Katholisch-Apostolische Gemeinde"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528643,
+                        52.024602
+                    ],
+                    [
+                        8.529092,
+                        52.022508
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Elsa-Brändström-Straße",
+                    "p2": "Notpfortenstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52972,
+                        52.02426
+                    ],
+                    [
+                        8.529092,
+                        52.022508
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Katholisch-Apostolische Gemeinde",
+                    "p2": "Notpfortenstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534778,
+                        52.024838
+                    ],
+                    [
+                        8.534097,
+                        52.024241
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Alte Post",
+                    "p2": "Bielefelder Puppenspiele"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536538,
+                        52.025964
+                    ],
+                    [
+                        8.537596,
+                        52.024808
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neumarkt",
+                    "p2": "Kesselbrink"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534778,
+                        52.024838
+                    ],
+                    [
+                        8.535041,
+                        52.02425
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Alte Post",
+                    "p2": "Die Arcade"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534097,
+                        52.024241
+                    ],
+                    [
+                        8.535041,
+                        52.02425
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bielefelder Puppenspiele",
+                    "p2": "Die Arcade"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534097,
+                        52.024241
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bielefelder Puppenspiele",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531361,
+                        52.022557
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Süsterkirche",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529092,
+                        52.022508
+                    ],
+                    [
+                        8.531361,
+                        52.022557
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Notpfortenstraße",
+                    "p2": "Süsterkirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52972,
+                        52.02426
+                    ],
+                    [
+                        8.531361,
+                        52.022557
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Katholisch-Apostolische Gemeinde",
+                    "p2": "Süsterkirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539971,
+                        52.027089
+                    ],
+                    [
+                        8.542053,
+                        52.024673
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pauluskirche",
+                    "p2": "Arbeitsamt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542053,
+                        52.024673
+                    ],
+                    [
+                        8.545754,
+                        52.024204
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Arbeitsamt",
+                    "p2": "Freibad Wiesenbad"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.545754,
+                        52.024204
+                    ],
+                    [
+                        8.546004,
+                        52.022632
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Freibad Wiesenbad",
+                    "p2": "Museum Huelsmann"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.546004,
+                        52.022632
+                    ],
+                    [
+                        8.544585,
+                        52.022491
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Museum Huelsmann",
+                    "p2": "Freiluftkino Luna"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.546004,
+                        52.022632
+                    ],
+                    [
+                        8.54591,
+                        52.02129
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Museum Huelsmann",
+                    "p2": "Ravensberger Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.544585,
+                        52.022491
+                    ],
+                    [
+                        8.544558,
+                        52.022049
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Freiluftkino Luna",
+                    "p2": "Lichtwerk"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.544585,
+                        52.022491
+                    ],
+                    [
+                        8.543919,
+                        52.022356
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Freiluftkino Luna",
+                    "p2": "Historisches Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.543919,
+                        52.022356
+                    ],
+                    [
+                        8.544558,
+                        52.022049
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Historisches Museum",
+                    "p2": "Lichtwerk"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.544558,
+                        52.022049
+                    ],
+                    [
+                        8.54591,
+                        52.02129
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Lichtwerk",
+                    "p2": "Ravensberger Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.54591,
+                        52.02129
+                    ],
+                    [
+                        8.542176,
+                        52.019183
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ravensberger Park",
+                    "p2": "Georg-Rothgiesser-Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542267,
+                        52.020874
+                    ],
+                    [
+                        8.542176,
+                        52.019183
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Museum Wäschefabrik",
+                    "p2": "Georg-Rothgiesser-Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542267,
+                        52.020874
+                    ],
+                    [
+                        8.54591,
+                        52.02129
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Museum Wäschefabrik",
+                    "p2": "Ravensberger Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.541901,
+                        52.021343
+                    ],
+                    [
+                        8.542267,
+                        52.020874
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Volkshochschule",
+                    "p2": "Museum Wäschefabrik"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542267,
+                        52.020874
+                    ],
+                    [
+                        8.544558,
+                        52.022049
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Museum Wäschefabrik",
+                    "p2": "Lichtwerk"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.541901,
+                        52.021343
+                    ],
+                    [
+                        8.544558,
+                        52.022049
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Volkshochschule",
+                    "p2": "Lichtwerk"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.541901,
+                        52.021343
+                    ],
+                    [
+                        8.542632,
+                        52.022451
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Volkshochschule",
+                    "p2": "Rochdale Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542632,
+                        52.022451
+                    ],
+                    [
+                        8.543919,
+                        52.022356
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Rochdale Park",
+                    "p2": "Historisches Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.541901,
+                        52.021343
+                    ],
+                    [
+                        8.543919,
+                        52.022356
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Volkshochschule",
+                    "p2": "Historisches Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.544558,
+                        52.022049
+                    ],
+                    [
+                        8.546004,
+                        52.022632
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Lichtwerk",
+                    "p2": "Museum Huelsmann"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.541901,
+                        52.021343
+                    ],
+                    [
+                        8.539687,
+                        52.021032
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Volkshochschule",
+                    "p2": "Filmhaus Bielefeld e. V."
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539687,
+                        52.021032
+                    ],
+                    [
+                        8.542267,
+                        52.020874
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Filmhaus Bielefeld e. V.",
+                    "p2": "Museum Wäschefabrik"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539687,
+                        52.021032
+                    ],
+                    [
+                        8.542176,
+                        52.019183
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Filmhaus Bielefeld e. V.",
+                    "p2": "Georg-Rothgiesser-Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539687,
+                        52.021032
+                    ],
+                    [
+                        8.539765,
+                        52.019045
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Filmhaus Bielefeld e. V.",
+                    "p2": "Marktstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539765,
+                        52.019045
+                    ],
+                    [
+                        8.542176,
+                        52.019183
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Marktstraße",
+                    "p2": "Georg-Rothgiesser-Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539765,
+                        52.019045
+                    ],
+                    [
+                        8.540481,
+                        52.01815
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Marktstraße",
+                    "p2": "Hoffnungskirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542176,
+                        52.019183
+                    ],
+                    [
+                        8.540481,
+                        52.01815
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Georg-Rothgiesser-Park",
+                    "p2": "Hoffnungskirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.540481,
+                        52.01815
+                    ],
+                    [
+                        8.537058,
+                        52.017245
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hoffnungskirche",
+                    "p2": "Lutteroffenlegung"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537058,
+                        52.017245
+                    ],
+                    [
+                        8.539765,
+                        52.019045
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Lutteroffenlegung",
+                    "p2": "Marktstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.526884,
+                        52.014889
+                    ],
+                    [
+                        8.530519,
+                        52.015615
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Burg und Festung Sparrenberg",
+                    "p2": "Turm der Neustädter Stadtmauer"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.525385,
+                        52.017242
+                    ],
+                    [
+                        8.526884,
+                        52.014889
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Adenauerplatz",
+                    "p2": "Burg und Festung Sparrenberg"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.530519,
+                        52.015615
+                    ],
+                    [
+                        8.532466,
+                        52.015918
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Turm der Neustädter Stadtmauer",
+                    "p2": "Landgericht"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532466,
+                        52.015918
+                    ],
+                    [
+                        8.53414,
+                        52.015624
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht",
+                    "p2": "Amtsgericht"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53414,
+                        52.015624
+                    ],
+                    [
+                        8.536699,
+                        52.016394
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Amtsgericht",
+                    "p2": "Evangelische Freikirche Ecclesia"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536699,
+                        52.016394
+                    ],
+                    [
+                        8.537058,
+                        52.017245
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Evangelische Freikirche Ecclesia",
+                    "p2": "Lutteroffenlegung"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5334,
+                        52.017576
+                    ],
+                    [
+                        8.532466,
+                        52.015918
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht - Haltestelle",
+                    "p2": "Landgericht"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5334,
+                        52.017576
+                    ],
+                    [
+                        8.53414,
+                        52.015624
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht - Haltestelle",
+                    "p2": "Amtsgericht"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5334,
+                        52.017576
+                    ],
+                    [
+                        8.536699,
+                        52.016394
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht - Haltestelle",
+                    "p2": "Evangelische Freikirche Ecclesia"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5334,
+                        52.017576
+                    ],
+                    [
+                        8.537058,
+                        52.017245
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht - Haltestelle",
+                    "p2": "Lutteroffenlegung"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529355,
+                        52.0171
+                    ],
+                    [
+                        8.530519,
+                        52.015615
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neustädter Marienkirche",
+                    "p2": "Turm der Neustädter Stadtmauer"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529355,
+                        52.0171
+                    ],
+                    [
+                        8.532466,
+                        52.015918
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neustädter Marienkirche",
+                    "p2": "Landgericht"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528169,
+                        52.017166
+                    ],
+                    [
+                        8.529355,
+                        52.0171
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "NaMu - Naturkunde-Museum",
+                    "p2": "Neustädter Marienkirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528169,
+                        52.017166
+                    ],
+                    [
+                        8.525385,
+                        52.017242
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "NaMu - Naturkunde-Museum",
+                    "p2": "Adenauerplatz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528169,
+                        52.017166
+                    ],
+                    [
+                        8.526884,
+                        52.014889
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "NaMu - Naturkunde-Museum",
+                    "p2": "Burg und Festung Sparrenberg"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.526884,
+                        52.014889
+                    ],
+                    [
+                        8.529355,
+                        52.0171
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Burg und Festung Sparrenberg",
+                    "p2": "Neustädter Marienkirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529355,
+                        52.0171
+                    ],
+                    [
+                        8.5334,
+                        52.017576
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neustädter Marienkirche",
+                    "p2": "Landgericht - Haltestelle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.525385,
+                        52.017242
+                    ],
+                    [
+                        8.525911,
+                        52.0182
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Adenauerplatz",
+                    "p2": "Kunsthalle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.525911,
+                        52.0182
+                    ],
+                    [
+                        8.528169,
+                        52.017166
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kunsthalle",
+                    "p2": "NaMu - Naturkunde-Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.525911,
+                        52.0182
+                    ],
+                    [
+                        8.526834,
+                        52.018724
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kunsthalle",
+                    "p2": "Altstadt, Skulpturenpark"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.526834,
+                        52.018724
+                    ],
+                    [
+                        8.528169,
+                        52.017166
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Altstadt, Skulpturenpark",
+                    "p2": "NaMu - Naturkunde-Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.526834,
+                        52.018724
+                    ],
+                    [
+                        8.52958,
+                        52.018322
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Altstadt, Skulpturenpark",
+                    "p2": "Park der Menschenrechte"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52958,
+                        52.018322
+                    ],
+                    [
+                        8.528169,
+                        52.017166
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Park der Menschenrechte",
+                    "p2": "NaMu - Naturkunde-Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52958,
+                        52.018322
+                    ],
+                    [
+                        8.529355,
+                        52.0171
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Park der Menschenrechte",
+                    "p2": "Neustädter Marienkirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.526834,
+                        52.018724
+                    ],
+                    [
+                        8.5267,
+                        52.019758
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Altstadt, Skulpturenpark",
+                    "p2": "Kunstforum Hermann Stenner"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.525911,
+                        52.0182
+                    ],
+                    [
+                        8.5267,
+                        52.019758
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kunsthalle",
+                    "p2": "Kunstforum Hermann Stenner"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5267,
+                        52.019758
+                    ],
+                    [
+                        8.528239,
+                        52.021124
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kunstforum Hermann Stenner",
+                    "p2": "Astoria"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5267,
+                        52.019758
+                    ],
+                    [
+                        8.528792,
+                        52.020213
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kunstforum Hermann Stenner",
+                    "p2": "Pfarrkirche St.Jodokus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528792,
+                        52.020213
+                    ],
+                    [
+                        8.528239,
+                        52.021124
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pfarrkirche St.Jodokus",
+                    "p2": "Astoria"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528239,
+                        52.021124
+                    ],
+                    [
+                        8.529092,
+                        52.022508
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Astoria",
+                    "p2": "Notpfortenstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528239,
+                        52.021124
+                    ],
+                    [
+                        8.531361,
+                        52.022557
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Astoria",
+                    "p2": "Süsterkirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528792,
+                        52.020213
+                    ],
+                    [
+                        8.526834,
+                        52.018724
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pfarrkirche St.Jodokus",
+                    "p2": "Altstadt, Skulpturenpark"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528792,
+                        52.020213
+                    ],
+                    [
+                        8.52958,
+                        52.018322
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pfarrkirche St.Jodokus",
+                    "p2": "Park der Menschenrechte"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52958,
+                        52.018322
+                    ],
+                    [
+                        8.5334,
+                        52.017576
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Park der Menschenrechte",
+                    "p2": "Landgericht - Haltestelle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52958,
+                        52.018322
+                    ],
+                    [
+                        8.531367,
+                        52.018718
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Park der Menschenrechte",
+                    "p2": "DansArt Theater"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531367,
+                        52.018718
+                    ],
+                    [
+                        8.5334,
+                        52.017576
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "DansArt Theater",
+                    "p2": "Landgericht - Haltestelle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528792,
+                        52.020213
+                    ],
+                    [
+                        8.531367,
+                        52.018718
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pfarrkirche St.Jodokus",
+                    "p2": "DansArt Theater"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528792,
+                        52.020213
+                    ],
+                    [
+                        8.532005,
+                        52.020458
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pfarrkirche St.Jodokus",
+                    "p2": "Theater am Alten Markt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532005,
+                        52.020458
+                    ],
+                    [
+                        8.531367,
+                        52.018718
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Theater am Alten Markt",
+                    "p2": "DansArt Theater"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5334,
+                        52.017576
+                    ],
+                    [
+                        8.534489,
+                        52.020339
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht - Haltestelle",
+                    "p2": "Rathaus - Haltestelle"
+                },
+                "typeId": [
+                    "tram",
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532005,
+                        52.020458
+                    ],
+                    [
+                        8.534489,
+                        52.020339
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Theater am Alten Markt",
+                    "p2": "Rathaus - Haltestelle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532005,
+                        52.020458
+                    ],
+                    [
+                        8.531742,
+                        52.020992
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Theater am Alten Markt",
+                    "p2": "Altstädter Nicolaikirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531742,
+                        52.020992
+                    ],
+                    [
+                        8.53276,
+                        52.021174
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Altstädter Nicolaikirche",
+                    "p2": "Leineweberdenkmal"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53276,
+                        52.021174
+                    ],
+                    [
+                        8.532005,
+                        52.020458
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Leineweberdenkmal",
+                    "p2": "Theater am Alten Markt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53276,
+                        52.021174
+                    ],
+                    [
+                        8.534489,
+                        52.020339
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Leineweberdenkmal",
+                    "p2": "Rathaus - Haltestelle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528792,
+                        52.020213
+                    ],
+                    [
+                        8.531742,
+                        52.020992
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Pfarrkirche St.Jodokus",
+                    "p2": "Altstädter Nicolaikirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534489,
+                        52.020339
+                    ],
+                    [
+                        8.5348,
+                        52.020732
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Rathaus - Haltestelle",
+                    "p2": "Stadttheater"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5348,
+                        52.020732
+                    ],
+                    [
+                        8.534902,
+                        52.021167
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadttheater",
+                    "p2": "Altes Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534902,
+                        52.021167
+                    ],
+                    [
+                        8.535567,
+                        52.02163
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Altes Rathaus",
+                    "p2": "Neues Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535567,
+                        52.02163
+                    ],
+                    [
+                        8.536818,
+                        52.021613
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neues Rathaus",
+                    "p2": "Turnerstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536818,
+                        52.021613
+                    ],
+                    [
+                        8.539687,
+                        52.021032
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Turnerstraße",
+                    "p2": "Filmhaus Bielefeld e. V."
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539687,
+                        52.021032
+                    ],
+                    [
+                        8.539016,
+                        52.022055
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Filmhaus Bielefeld e. V.",
+                    "p2": "Technisches Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536818,
+                        52.021613
+                    ],
+                    [
+                        8.539016,
+                        52.022055
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Turnerstraße",
+                    "p2": "Technisches Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534902,
+                        52.021167
+                    ],
+                    [
+                        8.536818,
+                        52.021613
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Altes Rathaus",
+                    "p2": "Turnerstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53276,
+                        52.021174
+                    ],
+                    [
+                        8.5348,
+                        52.020732
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Leineweberdenkmal",
+                    "p2": "Stadttheater"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53276,
+                        52.021174
+                    ],
+                    [
+                        8.534902,
+                        52.021167
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Leineweberdenkmal",
+                    "p2": "Altes Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531361,
+                        52.022557
+                    ],
+                    [
+                        8.531742,
+                        52.020992
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Süsterkirche",
+                    "p2": "Altstädter Nicolaikirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531361,
+                        52.022557
+                    ],
+                    [
+                        8.53276,
+                        52.021174
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Süsterkirche",
+                    "p2": "Leineweberdenkmal"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528239,
+                        52.021124
+                    ],
+                    [
+                        8.531742,
+                        52.020992
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Astoria",
+                    "p2": "Altstädter Nicolaikirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534489,
+                        52.020339
+                    ],
+                    [
+                        8.537058,
+                        52.017245
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Rathaus - Haltestelle",
+                    "p2": "Lutteroffenlegung"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534489,
+                        52.020339
+                    ],
+                    [
+                        8.539765,
+                        52.019045
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Rathaus - Haltestelle",
+                    "p2": "Marktstraße"
+                },
+                "typeId": [
+                    "tram",
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5348,
+                        52.020732
+                    ],
+                    [
+                        8.536818,
+                        52.021613
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadttheater",
+                    "p2": "Turnerstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5348,
+                        52.020732
+                    ],
+                    [
+                        8.539687,
+                        52.021032
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadttheater",
+                    "p2": "Filmhaus Bielefeld e. V."
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534489,
+                        52.020339
+                    ],
+                    [
+                        8.539687,
+                        52.021032
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Rathaus - Haltestelle",
+                    "p2": "Filmhaus Bielefeld e. V."
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531367,
+                        52.018718
+                    ],
+                    [
+                        8.534489,
+                        52.020339
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "DansArt Theater",
+                    "p2": "Rathaus - Haltestelle"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533089,
+                        52.02299
+                    ],
+                    [
+                        8.534902,
+                        52.021167
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Jahnplatz",
+                    "p2": "Altes Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533089,
+                        52.02299
+                    ],
+                    [
+                        8.53276,
+                        52.021174
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Jahnplatz",
+                    "p2": "Leineweberdenkmal"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533089,
+                        52.02299
+                    ],
+                    [
+                        8.535567,
+                        52.02163
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Jahnplatz",
+                    "p2": "Neues Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535041,
+                        52.02425
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Die Arcade",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535041,
+                        52.02425
+                    ],
+                    [
+                        8.535567,
+                        52.02163
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Die Arcade",
+                    "p2": "Neues Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535041,
+                        52.02425
+                    ],
+                    [
+                        8.537596,
+                        52.024808
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Die Arcade",
+                    "p2": "Kesselbrink"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.534778,
+                        52.024838
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Alte Post"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52972,
+                        52.02426
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Katholisch-Apostolische Gemeinde",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532638,
+                        52.02562
+                    ],
+                    [
+                        8.52972,
+                        52.02426
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Katholisch-Apostolische Gemeinde"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.52972,
+                        52.02426
+                    ],
+                    [
+                        8.534097,
+                        52.024241
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Katholisch-Apostolische Gemeinde",
+                    "p2": "Bielefelder Puppenspiele"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532638,
+                        52.02562
+                    ],
+                    [
+                        8.534097,
+                        52.024241
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Bielefelder Puppenspiele"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532638,
+                        52.02562
+                    ],
+                    [
+                        8.536538,
+                        52.025964
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Neumarkt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.537439,
+                        52.024151
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Grüner Würfel (GrüWü)"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.538373,
+                        52.023903
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Calisthenics Park Kesselbrink"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537439,
+                        52.024151
+                    ],
+                    [
+                        8.538373,
+                        52.023903
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Grüner Würfel (GrüWü)",
+                    "p2": "Calisthenics Park Kesselbrink"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535041,
+                        52.02425
+                    ],
+                    [
+                        8.537439,
+                        52.024151
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Die Arcade",
+                    "p2": "Grüner Würfel (GrüWü)"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537439,
+                        52.024151
+                    ],
+                    [
+                        8.535567,
+                        52.02163
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Grüner Würfel (GrüWü)",
+                    "p2": "Neues Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537439,
+                        52.024151
+                    ],
+                    [
+                        8.536818,
+                        52.021613
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Grüner Würfel (GrüWü)",
+                    "p2": "Turnerstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.538373,
+                        52.023903
+                    ],
+                    [
+                        8.539016,
+                        52.022055
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Calisthenics Park Kesselbrink",
+                    "p2": "Technisches Rathaus"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.538373,
+                        52.023903
+                    ],
+                    [
+                        8.536818,
+                        52.021613
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Calisthenics Park Kesselbrink",
+                    "p2": "Turnerstraße"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539819,
+                        52.029129
+                    ],
+                    [
+                        8.53687,
+                        52.026736
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Märkische Straße",
+                    "p2": "Stadtbibliothek"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536538,
+                        52.025964
+                    ],
+                    [
+                        8.539971,
+                        52.027089
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neumarkt",
+                    "p2": "Pauluskirche"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.539971,
+                        52.027089
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Pauluskirche"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.538373,
+                        52.023903
+                    ],
+                    [
+                        8.539494,
+                        52.023953
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Calisthenics Park Kesselbrink",
+                    "p2": "Kesselbrink/Skatepark"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539494,
+                        52.023953
+                    ],
+                    [
+                        8.542053,
+                        52.024673
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink/Skatepark",
+                    "p2": "Arbeitsamt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.539494,
+                        52.023953
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Kesselbrink/Skatepark"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535395,
+                        52.027737
+                    ],
+                    [
+                        8.536538,
+                        52.025964
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Spiegel",
+                    "p2": "Neumarkt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539016,
+                        52.022055
+                    ],
+                    [
+                        8.541901,
+                        52.021343
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Technisches Rathaus",
+                    "p2": "Volkshochschule"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539016,
+                        52.022055
+                    ],
+                    [
+                        8.542632,
+                        52.022451
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Technisches Rathaus",
+                    "p2": "Rochdale Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539016,
+                        52.022055
+                    ],
+                    [
+                        8.539494,
+                        52.023953
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Technisches Rathaus",
+                    "p2": "Kesselbrink/Skatepark"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.539494,
+                        52.023953
+                    ],
+                    [
+                        8.542632,
+                        52.022451
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink/Skatepark",
+                    "p2": "Rochdale Park"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542632,
+                        52.022451
+                    ],
+                    [
+                        8.542053,
+                        52.024673
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Rochdale Park",
+                    "p2": "Arbeitsamt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.542053,
+                        52.024673
+                    ],
+                    [
+                        8.543919,
+                        52.022356
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Arbeitsamt",
+                    "p2": "Historisches Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.544585,
+                        52.022491
+                    ],
+                    [
+                        8.545754,
+                        52.024204
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Freiluftkino Luna",
+                    "p2": "Freibad Wiesenbad"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.545754,
+                        52.024204
+                    ],
+                    [
+                        8.543919,
+                        52.022356
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Freibad Wiesenbad",
+                    "p2": "Historisches Museum"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533158,
+                        52.031053
+                    ],
+                    [
+                        8.534939,
+                        52.028591
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ishara",
+                    "p2": "Stadthalle Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.529371,
+                        52.025137
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Der Seher - Hommage an Laokoon"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.542053,
+                        52.024673
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Arbeitsamt"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533314,
+                        52.029109
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "tram",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.537596,
+                        52.024808
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kesselbrink",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.528643,
+                        52.024602
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Elsa-Brändström-Straße",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.529092,
+                        52.022508
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Notpfortenstraße",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.525911,
+                        52.0182
+                    ],
+                    [
+                        8.533089,
+                        52.02299
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Kunsthalle",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533089,
+                        52.02299
+                    ],
+                    [
+                        8.536818,
+                        52.021613
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Jahnplatz",
+                    "p2": "Turnerstraße"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536818,
+                        52.021613
+                    ],
+                    [
+                        8.541901,
+                        52.021343
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Turnerstraße",
+                    "p2": "Volkshochschule"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.541901,
+                        52.021343
+                    ],
+                    [
+                        8.54591,
+                        52.02129
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Volkshochschule",
+                    "p2": "Ravensberger Park"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533089,
+                        52.02299
+                    ],
+                    [
+                        8.534489,
+                        52.020339
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Jahnplatz",
+                    "p2": "Rathaus - Haltestelle"
+                },
+                "typeId": [
+                    "tram"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.5334,
+                        52.017576
+                    ],
+                    [
+                        8.525385,
+                        52.017242
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Landgericht - Haltestelle",
+                    "p2": "Adenauerplatz"
+                },
+                "typeId": [
+                    "tram"
+                ]
+            }
+        }
+    ]
+}

@@ -1,12 +1,14 @@
 package de.techfak.se.gflorensia;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,10 +16,38 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
+    String TAG = "GeoJson";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AssetManager assetManager = getAssets();
+        String path = "maps";
+
+
+        List<String> files = getFolder(path);
+
+        if (files != null && !files.isEmpty()) {
+            boolean geoJsonFound = false;
+
+            // Loop through the files and filter .geojson files
+            for (String file : files) {
+                if (file.endsWith(".geojson")) {
+                    Log.d(TAG, "GeoJson file found: " + file);
+                    geoJsonFound = true;
+                }
+            }
+
+            // If no .geojson files were found
+            if (!geoJsonFound) {
+                Log.d(TAG, "No GeoJson files found in folder: " + path);
+            }
+
+        } else {
+            // Log if the folder is empty or does not exist
+            Log.d(TAG, "The folder " + path + " is empty or does not exist.");
+        }
     }
 
     /**

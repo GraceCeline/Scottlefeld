@@ -1,0 +1,299 @@
+{
+    "type": "FeatureCollection",
+    "metadata": {
+        "name": "G-SE 2024 Scotland Yard in Bielefeld - kleine Map",
+        "types": {
+            "node": {
+                "name": "node"
+            },
+            "tram": {
+                "name": "tram-connection",
+                "Ticketanzahl Detectives": "4",
+                "Ticketanzahl M. X": "3"
+            },
+            "bus": {
+                "name": "bus-connection",
+                "Ticketanzahl Detectives": "8",
+                "Ticketanzahl M. X": "3"
+            },
+            "escooter": {
+                "name": "eScooter-connection",
+                "Ticketanzahl Detectives": "10",
+                "Ticketanzahl M. X": "4"
+            },
+            "black": {
+                "name": "Black-Tickets",
+                "Ticketanzahl M. X": "3-5 (Anzahl Detectives)"
+            }
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533314,
+                    52.029109
+                ]
+            },
+            "properties": {
+                "name": "Hauptbahnhof Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534939,
+                    52.028591
+                ]
+            },
+            "properties": {
+                "name": "Stadthalle Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533158,
+                    52.031053
+                ]
+            },
+            "properties": {
+                "name": "Ishara",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531324,
+                    52.029799
+                ]
+            },
+            "properties": {
+                "name": "Cinemaxx",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.532085,
+                    52.027436
+                ]
+            },
+            "properties": {
+                "name": "Bahnhofstraße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.533158,
+                        52.031053
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Ishara"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533158,
+                        52.031053
+                    ],
+                    [
+                        8.534939,
+                        52.028591
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ishara",
+                    "p2": "Stadthalle Bielefeld"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.532085,
+                        52.027436
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Bahnhofstraße"
+                },
+                "typeId": [
+                    "tram"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532085,
+                        52.027436
+                    ],
+                    [
+                        8.534939,
+                        52.028591
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bahnhofstraße",
+                    "p2": "Stadthalle Bielefeld"
+                },
+                "typeId": [
+                    "escooter",
+                    "tram"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531324,
+                        52.029799
+                    ],
+                    [
+                        8.533314,
+                        52.029109
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Cinemaxx",
+                    "p2": "Hauptbahnhof Bielefeld"
+                },
+                "typeId": [
+                    "tram",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533314,
+                        52.029109
+                    ],
+                    [
+                        8.534939,
+                        52.028591
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Stadthalle Bielefeld"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533158,
+                        52.031053
+                    ],
+                    [
+                        8.533314,
+                        52.029109
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Ishara",
+                    "p2": "Hauptbahnhof Bielefeld"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus",
+                    "tram"
+                ]
+            }
+        }
+    ]
+}

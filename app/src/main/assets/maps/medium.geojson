@@ -1,0 +1,635 @@
+{
+    "type": "FeatureCollection",
+    "metadata": {
+        "name": "G-SE 2024 Scotland Yard in Bielefeld - mittlere Map",
+        "types": {
+            "node": {
+                "name": "node"
+            },
+            "tram": {
+                "name": "tram-connection",
+                "Ticketanzahl Detectives": "4",
+                "Ticketanzahl M. X": "3"
+            },
+            "bus": {
+                "name": "bus-connection",
+                "Ticketanzahl Detectives": "8",
+                "Ticketanzahl M. X": "3"
+            },
+            "escooter": {
+                "name": "eScooter-connection",
+                "Ticketanzahl Detectives": "10",
+                "Ticketanzahl M. X": "4"
+            },
+            "black": {
+                "name": "Black-Tickets",
+                "Ticketanzahl M. X": "3-5 (Anzahl Detectives)"
+            }
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.533033,
+                    52.02909
+                ]
+            },
+            "properties": {
+                "name": "Hauptbahnhof Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.535477,
+                    52.028626
+                ]
+            },
+            "properties": {
+                "name": "Stadthalle Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.535395,
+                    52.027737
+                ]
+            },
+            "properties": {
+                "name": "Der Spiegel",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.53709,
+                    52.026715
+                ]
+            },
+            "properties": {
+                "name": "Stadtbibliothek",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.536613,
+                    52.026007
+                ]
+            },
+            "properties": {
+                "name": "Neumarkt",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.535242,
+                    52.026987
+                ]
+            },
+            "properties": {
+                "name": "Willy-Brandt-Platz",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.534073,
+                    52.024308
+                ]
+            },
+            "properties": {
+                "name": "Bielefelder Puppenspiele",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.532977,
+                    52.022881
+                ]
+            },
+            "properties": {
+                "name": "Jahnplatz",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.531431,
+                    52.025779
+                ]
+            },
+            "properties": {
+                "name": "Loom Bielefeld",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.532096,
+                    52.02737
+                ]
+            },
+            "properties": {
+                "name": "Bahnhofstraße",
+                "typeId": [
+                    "node"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533033,
+                        52.02909
+                    ],
+                    [
+                        8.535477,
+                        52.028626
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Stadthalle Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535477,
+                        52.028626
+                    ],
+                    [
+                        8.535395,
+                        52.027737
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadthalle Bielefeld",
+                    "p2": "Der Spiegel"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535395,
+                        52.027737
+                    ],
+                    [
+                        8.535242,
+                        52.026987
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Spiegel",
+                    "p2": "Willy-Brandt-Platz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533033,
+                        52.02909
+                    ],
+                    [
+                        8.532977,
+                        52.022881
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "tram"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533033,
+                        52.02909
+                    ],
+                    [
+                        8.532096,
+                        52.02737
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "L1",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Bahnhofstraße"
+                },
+                "typeId": [
+                    "escooter",
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532096,
+                        52.02737
+                    ],
+                    [
+                        8.532977,
+                        52.022881
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bahnhofstraße",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "bus"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532096,
+                        52.02737
+                    ],
+                    [
+                        8.531431,
+                        52.025779
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bahnhofstraße",
+                    "p2": "Loom Bielefeld"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531431,
+                        52.025779
+                    ],
+                    [
+                        8.532977,
+                        52.022881
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Jahnplatz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532977,
+                        52.022881
+                    ],
+                    [
+                        8.534073,
+                        52.024308
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Jahnplatz",
+                    "p2": "Bielefelder Puppenspiele"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531431,
+                        52.025779
+                    ],
+                    [
+                        8.534073,
+                        52.024308
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Bielefelder Puppenspiele"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.532096,
+                        52.02737
+                    ],
+                    [
+                        8.535242,
+                        52.026987
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bahnhofstraße",
+                    "p2": "Willy-Brandt-Platz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.533033,
+                        52.02909
+                    ],
+                    [
+                        8.535395,
+                        52.027737
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Hauptbahnhof Bielefeld",
+                    "p2": "Der Spiegel"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.535395,
+                        52.027737
+                    ],
+                    [
+                        8.53709,
+                        52.026715
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Der Spiegel",
+                    "p2": "Stadtbibliothek"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.53709,
+                        52.026715
+                    ],
+                    [
+                        8.536613,
+                        52.026007
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Stadtbibliothek",
+                    "p2": "Neumarkt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.536613,
+                        52.026007
+                    ],
+                    [
+                        8.535242,
+                        52.026987
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Neumarkt",
+                    "p2": "Willy-Brandt-Platz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.531431,
+                        52.025779
+                    ],
+                    [
+                        8.535242,
+                        52.026987
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Loom Bielefeld",
+                    "p2": "Willy-Brandt-Platz"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.534073,
+                        52.024308
+                    ],
+                    [
+                        8.536613,
+                        52.026007
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled line",
+                "routePoints": {
+                    "p1": "Bielefelder Puppenspiele",
+                    "p2": "Neumarkt"
+                },
+                "typeId": [
+                    "escooter"
+                ]
+            }
+        }
+    ]
+}
