@@ -4,12 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.lang.Math;
+import java.math.BigDecimal;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This is the MainActivity that is executed when the app is started.
@@ -36,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 if (file.endsWith(".geojson")) {
                     Log.d(TAG, "GeoJson file found: " + file);
                     geoJsonFound = true;
+
+                    String jsonContent = getJsonContent(path + "/" + file);
+                    try {
+                        extractPOI(jsonContent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -88,5 +105,50 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public String getJsonContent(String filePath){
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(getFileInputStream(filePath))
+        );
+        return br.lines().collect(Collectors.joining());
+    }
+
+    private void extractPOI(String jsonContent) throws JSONException {
+
+        ObjectMapper om = new ObjectMapper();
+        List<PointOfInterest> poiList = new ArrayList<>();
+
+        try {
+            JsonNode root = om.readTree(jsonContent);
+
+            //JSONObject geoJson = new JSONObject(geoJsonData);
+
+            //JSONArray features = geoJson.getJSONArray("features");
+
+            // Loop through each feature to extract POIs
+            for (JsonNode jn : root.get("features")) {
+                String featureType = jn.get("geometry").get("type").asText();
+                if (featureType.equals("Point")) {
+                    String name = jn.get("properties").get("name").asText();
+                    JsonNode coordinates = jn.get("geometry").get("coordinates");
+
+                    // Extract longitude and latitude from the coordinates array
+                    BigDecimal latitude = jn.get("geometry").get("coordinates").get(0).decimalValue();
+                    BigDecimal longitude = jn.get("geometry").get("coordinates").get(1).decimalValue();
+
+                    // Create a new PointOfInterest object
+                    PointOfInterest poi = new PointOfInterest(name, latitude, longitude);
+                    //poiList.add(poi);
+
+                    // Optionally log the POI
+                    Log.i("POI",poi.describePOI());
+                }
+
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        //return poiList;
     }
 }

@@ -30,6 +30,14 @@ android {
 }
 
 dependencies {
+    // Jackson Core for JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.0'
+
+    // Jackson Databind for converting JSON to and from Java objects
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+
+    // Jackson Annotations (optional, used for annotations support in data classes)
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
