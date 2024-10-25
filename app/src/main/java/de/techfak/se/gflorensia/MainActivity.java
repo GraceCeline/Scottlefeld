@@ -1,10 +1,6 @@
 package de.techfak.se.gflorensia;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.OptionalInt;
-import java.util.Set;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -16,7 +12,6 @@ import java.lang.Math;
 import java.math.BigDecimal;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

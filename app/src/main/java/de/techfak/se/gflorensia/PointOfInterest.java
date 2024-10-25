@@ -1,9 +1,5 @@
 package de.techfak.se.gflorensia;
-import java.lang.Math;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.Objects;
