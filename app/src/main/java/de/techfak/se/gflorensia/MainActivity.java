@@ -1,5 +1,10 @@
 package de.techfak.se.gflorensia;
-
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.OptionalInt;
+import java.util.Set;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -34,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AssetManager assetManager = getAssets();
         String path = "maps";
-
-
+        Map<String,PointOfInterest> poiMap = new HashMap<>();
         List<String> files = getFolder(path);
 
         if (files != null && !files.isEmpty()) {
@@ -49,10 +53,29 @@ public class MainActivity extends AppCompatActivity {
 
                     String jsonContent = getJsonContent(path + "/" + file);
                     try {
-                        extractPOI(jsonContent);
+                        poiMap = extractPOI(jsonContent);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
+                if (file.equals("small.geojson")) {
+                    String smallJson = getJsonContent(path + "/" + "small.geojson");
+                    try {
+                        createConnections(smallJson, poiMap);
+                    } catch (IOException | JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                if (file.equals("corrupted.geojson")){
+                    String corruptedJson = getJsonContent(path + "/" + "corrupted.geojson");
+                    try {
+                        createConnections(corruptedJson, poiMap);
+                    } catch (IOException | JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    findIsolatedPOI(poiMap);
                 }
             }
 
@@ -114,19 +137,14 @@ public class MainActivity extends AppCompatActivity {
         return br.lines().collect(Collectors.joining());
     }
 
-    private void extractPOI(String jsonContent) throws JSONException {
+    public Map<String,PointOfInterest> extractPOI(String jsonContent) throws JSONException {
 
         ObjectMapper om = new ObjectMapper();
-        List<PointOfInterest> poiList = new ArrayList<>();
+        Map<String,PointOfInterest> poiMap = new HashMap<>();
 
         try {
             JsonNode root = om.readTree(jsonContent);
 
-            //JSONObject geoJson = new JSONObject(geoJsonData);
-
-            //JSONArray features = geoJson.getJSONArray("features");
-
-            // Loop through each feature to extract POIs
             for (JsonNode jn : root.get("features")) {
                 String featureType = jn.get("geometry").get("type").asText();
                 if (featureType.equals("Point")) {
@@ -139,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Create a new PointOfInterest object
                     PointOfInterest poi = new PointOfInterest(name, latitude, longitude);
-                    //poiList.add(poi);
+                    poiMap.put(name, poi);
 
                     // Optionally log the POI
                     Log.i("POI",poi.describePOI());
@@ -149,6 +167,55 @@ public class MainActivity extends AppCompatActivity {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        //return poiList;
+        return poiMap;
+    }
+
+    public void createConnections(String jsonContent, Map<String, PointOfInterest> poiMap) throws IOException, JSONException {
+        ObjectMapper om = new ObjectMapper();
+
+        // Handle connections (if any)
+        JsonNode root = om.readTree(jsonContent);
+        for (JsonNode jn : root.get("features")) {
+            String featureType = jn.get("geometry").get("type").asText();
+            if (featureType.equals("LineString")) {
+                JsonNode destination = jn.get("properties").get("routePoints");
+                JsonNode transport = jn.get("properties").get("typeId");
+
+                List<String> typeId = new ArrayList<>();
+                for (JsonNode idNode : transport) {
+                    typeId.add(idNode.asText());
+                }
+
+                for (String transportMode : typeId) {
+                    if (poiMap.containsKey(destination.get("p1").asText())) {
+                        PointOfInterest poi = poiMap.get(destination.get("p1").asText());
+                        Connection connection = new Connection(transportMode, poi);
+                        assert poi != null;
+                        poi.addConnection(connection);
+                        Log.i("Connection", connection.describeConnection());
+                    }
+
+                    if (poiMap.containsKey(destination.get("p2").asText())) {
+                        PointOfInterest poi = poiMap.get(destination.get("p2").asText());
+                        Connection connection = new Connection(transportMode, poi);
+                        assert poi != null;
+                        poi.addConnection(connection);
+                        Log.i("Connection", connection.describeConnection());
+                    }
+                }
+            }
+        }
+    }
+
+    public List<PointOfInterest> findIsolatedPOI(Map<String,PointOfInterest> poiMap){
+        List<PointOfInterest> isolatedPOIs = new ArrayList<>();
+        for (PointOfInterest poi : poiMap.values()) {
+            boolean isIsolated = poi.getConnections().isEmpty(); // No outgoing connections
+            if (isIsolated) {
+                isolatedPOIs.add(poi);
+                Log.i("Isolated",poi.getName() + " is isolated");
+            }
+        }
+        return isolatedPOIs;
     }
 }
