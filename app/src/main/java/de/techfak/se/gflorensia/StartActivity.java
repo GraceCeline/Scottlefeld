@@ -33,8 +33,39 @@ public class StartActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String mapName = getIntent().getExtras().getString("chosen_map");
+        try {
+            loadGameMap(mapName); // Attempt to load map data
+        } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
+            showCorruptedMapDialog();  // Call dialog to handle the corrupted map
+        }
     }
 
+
+    public void showCorruptedMapDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Corrupted Map")
+                .setMessage("You picked a map with isolated POIs!") // Display the exception message
+                .setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                    // Navigate back to MainActivity after acknowledging the error
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish(); // Close GameActivity
+                })
+                .show();
+    }
+
+    public void loadGameMap(String mapChosen) throws CorruptedMapException, JSONException, IOException {
+        if (Objects.equals(mapChosen, "corrupted")){
+            throw new CorruptedMapException();
+        }
+        String filename = mapChosen + ".geojson";
+        String mapJson = getJsonContent("maps/" + filename);
+        Map<String, PointOfInterest> poiMap = extractPOI(mapJson);
+        createConnections(mapJson, poiMap);
+    }
 }
 
 

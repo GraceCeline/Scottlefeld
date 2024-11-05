@@ -45,43 +45,11 @@ public class MainActivity extends BaseActivity {
             // Loop through the files and filter .geojson files
             for (String file : files) {
                 if (file.endsWith(".geojson")) {
-                    Log.d(TAG, "GeoJson file found: " + file);
-                    geoJsonFound = true;
-                    String jsonContent = getJsonContent(path + "/" + file);
-                    try {
-                        poiMap = extractPOI(jsonContent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    //Add the file name without geojson as a possible map name
                     mapNames.add(getFileNameWithoutExtension(file));
                 }
-                if (file.equals("small.geojson")) {
-                    String smallJson = getJsonContent(path + "/" + "small.geojson");
-                    try {
-                        createConnections(smallJson, poiMap);
-                    } catch (IOException | JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (file.equals("corrupted.geojson")){
-                    String corruptedJson = getJsonContent(path + "/" + "corrupted.geojson");
-                    try {
-                        createConnections(corruptedJson, poiMap);
-                    } catch (IOException | JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    findIsolatedPOI(poiMap);
-                }
             }
-            // If no .geojson files were found
-            if (!geoJsonFound) {
-                Log.d(TAG, "No GeoJson files found in folder: " + path);
-            }
-        } else {
-            // Log if the folder is empty or does not exist
-            Log.d(TAG, "The folder " + path + " is empty or does not exist.");
         }
+
 
         /* Call the spinner */
         ArrayAdapter<String> adapter = new ArrayAdapter(
@@ -118,17 +86,12 @@ public class MainActivity extends BaseActivity {
         // Remove the extension
         String nameWithoutExtension = (lastDotIndex == -1) ? name : name.substring(0, lastDotIndex);
 
-        // Capitalize the first letter and concatenate the rest of the name
-        if (!nameWithoutExtension.isEmpty()) {
-            nameWithoutExtension = nameWithoutExtension.substring(0, 1).toUpperCase() + nameWithoutExtension.substring(1);
-        }
-
         return nameWithoutExtension;
     }
 
 
     public void onClick(View view) {
-        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+        Intent intent = new Intent(this, StartActivity.class);
         intent.putExtra("chosen_map",selectedMap);
         startActivity(intent);
     }

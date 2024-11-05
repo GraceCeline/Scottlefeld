@@ -62,6 +62,7 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
         public String getJsonContent (String filePath){
+
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(getFileInputStream(filePath))
             );
