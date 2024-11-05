@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  */
 public class MainActivity extends BaseActivity {
     String TAG = "GeoJson";
+    String selectedMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +94,8 @@ public class MainActivity extends BaseActivity {
         spinnerMap.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String map_chosen = spinnerMap.getSelectedItem().toString();
-                Log.i("Element gewählt", "Ein Element wurde ausgewählt " + map_chosen);
+                selectedMap = spinnerMap.getSelectedItem().toString();
+                Log.i("Element gewählt", "Ein Element wurde ausgewählt " + selectedMap);
             }
 
             @Override
@@ -124,4 +125,12 @@ public class MainActivity extends BaseActivity {
 
         return nameWithoutExtension;
     }
+
+
+    public void onClick(View view) {
+        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+        intent.putExtra("chosen_map",selectedMap);
+        startActivity(intent);
+    }
+
 }

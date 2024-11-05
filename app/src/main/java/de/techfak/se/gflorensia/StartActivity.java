@@ -1,12 +1,11 @@
 package de.techfak.se.gflorensia;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import java.util.Random;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,14 +13,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class StartActivity extends BaseActivity {
-
-    Intent intent = getIntent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class StartActivity extends BaseActivity {
             return insets;
         });
     }
+
 }
 
 
