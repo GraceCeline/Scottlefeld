@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.Objects;
-class PointOfInterest {
+
+public class PointOfInterest {
     private String name;
     private BigDecimal latitude;
     private BigDecimal longitude;

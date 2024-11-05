@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">gflorensia</string>
+    <string-array name="maps">
+        <item>Bielefeld : Big Map</item>
+        <item>Bielefeld : Medium Map</item>
+        <item>Bielefeld : Small Map</item>
+        <item>Bielefeld : Corrupted Map</item>
+    </string-array>
 </resources>
