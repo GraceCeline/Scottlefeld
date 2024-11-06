@@ -50,7 +50,6 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-
         /* Call the spinner */
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 this,
@@ -85,7 +84,6 @@ public class MainActivity extends BaseActivity {
 
         // Remove the extension
         String nameWithoutExtension = (lastDotIndex == -1) ? name : name.substring(0, lastDotIndex);
-
         return nameWithoutExtension;
     }
 

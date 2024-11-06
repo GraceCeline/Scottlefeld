@@ -2,21 +2,21 @@ package de.techfak.se.gflorensia;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,6 +37,13 @@ public class StartActivity extends BaseActivity {
         String mapName = getIntent().getExtras().getString("chosen_map");
         try {
             loadGameMap(mapName); // Attempt to load map data
+
+            Collection<PointOfInterest> poiCollection = loadGameMap(mapName).values();
+            List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
+            PointOfInterest randomPOI = getRandomPOI(poiList);
+
+            TextView textView = findViewById(R.id.textView2);
+            textView.setText(randomPOI.getName());
         } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
             showCorruptedMapDialog();  // Call dialog to handle the corrupted map
         }
@@ -57,7 +64,7 @@ public class StartActivity extends BaseActivity {
                 .show();
     }
 
-    public void loadGameMap(String mapChosen) throws CorruptedMapException, JSONException, IOException {
+    public Map<String, PointOfInterest> loadGameMap(String mapChosen) throws CorruptedMapException, JSONException, IOException {
         if (Objects.equals(mapChosen, "corrupted")){
             throw new CorruptedMapException();
         }
@@ -65,7 +72,15 @@ public class StartActivity extends BaseActivity {
         String mapJson = getJsonContent("maps/" + filename);
         Map<String, PointOfInterest> poiMap = extractPOI(mapJson);
         createConnections(mapJson, poiMap);
+        return poiMap;
     }
+
+    public static PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
+        Random random = new Random();
+        int randomIndex = random.nextInt(poiList.size());
+        return poiList.get(randomIndex);
+    }
+
 }
 
 
