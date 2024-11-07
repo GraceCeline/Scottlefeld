@@ -6,18 +6,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class StartActivity extends BaseActivity {
 
@@ -46,9 +48,9 @@ public class StartActivity extends BaseActivity {
         });
 
         String mapName = getIntent().getExtras().getString("chosen_map");
-        String filename = mapName + ".geojson";
         Collection<PointOfInterest> poiCollection = null;
         Spinner spinnerPOI = findViewById(R.id.spinner2);
+        Button finishTurnButton = findViewById(R.id.button3);
         Spinner spinnerTransport = findViewById(R.id.spinner3);
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
 
@@ -65,13 +67,13 @@ public class StartActivity extends BaseActivity {
 
         TextView textView = findViewById(R.id.textView2);
         textView.setText(randomPOI.getName());
-        Log.i("POI selected",randomPOI.getName());
+        Log.i("POI selected", randomPOI.getName());
 
-        List<String> connectionList;
+        List<String> connectionList = new ArrayList<>();
         try {
             connectionList = getConnectedPOIs(randomPOI);
         } catch (JSONException | IOException e) {
-            throw new RuntimeException(e);
+            // throw new CannotLoadConnectionException();
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter(
@@ -120,6 +122,28 @@ public class StartActivity extends BaseActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Optional: handle case where nothing is selected in the second dropdown
+            }
+        });
+
+        finishTurnButton.setOnClickListener(v -> {
+            PointOfInterest destination = getDestinationPOI(selectedPOI, poiList);
+            AtomicReference<PointOfInterest> randomPOIAtomic = new AtomicReference<>(randomPOI);
+            randomPOIAtomic.set(destination);
+            if (destination != null && selectedTransportMode != null) {
+                // Update current location to new destination
+                textView.setText(randomPOIAtomic.get().getName()); // Update displayed current location
+
+                // Refresh POIs and transport modes based on the new location
+                List<String> newConnections;
+                try {
+                    newConnections = getConnectedPOIs(randomPOIAtomic.get());
+                } catch (JSONException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+                updateDropdown(spinnerPOI, newConnections); // Update first dropdown with new connections
+
+                // Clear the second dropdown until a new POI is selected
+                spinnerTransport.setAdapter(null);
             }
         });
     }

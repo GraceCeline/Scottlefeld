@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="325dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="133dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="91dp"
         android:text="Your Starting Point : "
         app:layout_constraintBottom_toTopOf="@+id/spinner3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,34 +24,27 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="146dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginBottom="513dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="26dp"
         android:text="textView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/spinner2"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="145dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="472dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0" />
 
     <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="141dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="412dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/spinner2"
-        app:layout_constraintStart_toStartOf="@+id/spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:id="@+id/spinner2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/spinner3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -59,6 +52,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="452dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="113dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="378dp"
+        android:text="Finish your move"
+        android:onClick = "onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinner3"
+        app:layout_constraintStart_toStartOf="@+id/spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
