@@ -1,14 +1,24 @@
 package de.techfak.se.gflorensia;
 
+import android.util.Log;
+
 import java.util.Map;
 
 public class Connection {
 
-    private String transportMode;
-    private PointOfInterest destination;
+    String transportMode;
+    PointOfInterest destination;
     public Connection(String transportMode, PointOfInterest destination) {
         this.transportMode = transportMode;
         this.destination = destination;
+    }
+
+    public String getTransportMode(){
+        return this.transportMode;
+    }
+
+    public PointOfInterest getDestination(){
+        return this.destination;
     }
 
     String describeConnection(){

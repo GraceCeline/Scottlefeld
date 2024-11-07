@@ -2,11 +2,16 @@ package de.techfak.se.gflorensia;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -35,18 +40,41 @@ public class StartActivity extends BaseActivity {
         });
 
         String mapName = getIntent().getExtras().getString("chosen_map");
+        String filename = mapName + ".geojson";
+        Collection<PointOfInterest> poiCollection = null;
+        Spinner spinnerMap = findViewById(R.id.spinner2);
+
         try {
             loadGameMap(mapName); // Attempt to load map data
+            poiCollection = loadGameMap(mapName).values();
 
-            Collection<PointOfInterest> poiCollection = loadGameMap(mapName).values();
-            List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
-            PointOfInterest randomPOI = getRandomPOI(poiList);
-
-            TextView textView = findViewById(R.id.textView2);
-            textView.setText(randomPOI.getName());
-        } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
+        } catch (CorruptedMapException | JSONException |
+                 IOException e) {  // Catch the exception here
             showCorruptedMapDialog();  // Call dialog to handle the corrupted map
         }
+        List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
+        PointOfInterest randomPOI = getRandomPOI(poiList); //Pick a random POI
+
+        TextView textView = findViewById(R.id.textView2);
+        textView.setText(randomPOI.getName());
+        Log.i("POI selected",randomPOI.getName());
+
+        List<String> connectionList;
+        try {
+            connectionList = getConnectedPOIs(randomPOI);
+        } catch (JSONException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(
+                this,
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                connectionList.toArray()
+        );
+        spinnerMap.setAdapter(adapter);
+
+
+
     }
 
 
@@ -75,11 +103,25 @@ public class StartActivity extends BaseActivity {
         return poiMap;
     }
 
-    public static PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
+    public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
         Random random = new Random();
         int randomIndex = random.nextInt(poiList.size());
         return poiList.get(randomIndex);
     }
+
+    public List<String> getConnectedPOIs (PointOfInterest randomPOI) throws JSONException, IOException {
+        List<String> destinationListwithDups = new ArrayList<>();
+
+        for (Connection connection : randomPOI.getConnections()){
+            destinationListwithDups.add(connection.getDestination().getName());
+        }
+
+        Set<String> set = new HashSet<>(destinationListwithDups);
+        List<String> destinationList = new ArrayList<>(set);
+
+        return destinationList;
+    }
+
 
 }
 

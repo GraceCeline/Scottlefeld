@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class PointOfInterest {
-    private String name;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
-    private List<Connection> connections = new ArrayList<>();
+    String name;
+    BigDecimal latitude;
+    BigDecimal longitude;
+    List<Connection> connections = new ArrayList<>();
     public PointOfInterest(String name, BigDecimal latitude, BigDecimal longitude) {
         this.name = name;
         this.latitude = latitude;

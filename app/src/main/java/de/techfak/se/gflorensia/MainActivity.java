@@ -46,6 +46,16 @@ public class MainActivity extends BaseActivity {
             for (String file : files) {
                 if (file.endsWith(".geojson")) {
                     mapNames.add(getFileNameWithoutExtension(file));
+
+                    /* if (file.equals("medium.geojson")){
+                        String smallJson = getJsonContent(path + "/" + "medium.geojson");
+                        try {
+                            extractPOI(smallJson);
+                            createConnections(smallJson, poiMap);
+                        } catch (IOException | JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }*/
                 }
             }
         }
