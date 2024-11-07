@@ -112,17 +112,21 @@ public class BaseActivity extends AppCompatActivity {
                     }
                     for (String transportMode : typeId) {
                         if (poiMap.containsKey(destination.get("p1").asText())) {
-                            PointOfInterest poi = poiMap.get(destination.get("p1").asText());
-                            Connection connection = new Connection(transportMode, poi);
-                            assert poi != null;
-                            poi.addConnection(connection);
-                            Log.i("Connection", connection.describeConnection());
-                        }
-                        if (poiMap.containsKey(destination.get("p2").asText())) {
+                            PointOfInterest poiStart = poiMap.get(destination.get("p1").asText());
                             PointOfInterest poi = poiMap.get(destination.get("p2").asText());
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
-                            poi.addConnection(connection);
+                            poiStart.addConnection(connection);
+                            Log.i("From POI",poiStart.getName());
+                            Log.i("Connection", connection.describeConnection());
+                        }
+                        if (poiMap.containsKey(destination.get("p2").asText())) {
+                            PointOfInterest poiStart = poiMap.get(destination.get("p2").asText());
+                            PointOfInterest poi = poiMap.get(destination.get("p1").asText());
+                            Connection connection = new Connection(transportMode, poi);
+                            assert poi != null;
+                            poiStart.addConnection(connection);
+                            Log.i("From POI",poiStart.getName());
                             Log.i("Connection", connection.describeConnection());
                         }
                     }
