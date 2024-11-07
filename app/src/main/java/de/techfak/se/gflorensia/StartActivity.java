@@ -1,5 +1,6 @@
 package de.techfak.se.gflorensia;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import java.util.Random;
 import java.util.Set;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -58,8 +60,7 @@ public class StartActivity extends BaseActivity {
             loadGameMap(mapName); // Attempt to load map data
             poiCollection = loadGameMap(mapName).values();
 
-        } catch (CorruptedMapException | JSONException |
-                 IOException e) {  // Catch the exception here
+        } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
             showCorruptedMapDialog();  // Call dialog to handle the corrupted map
         }
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
@@ -75,15 +76,13 @@ public class StartActivity extends BaseActivity {
         } catch (JSONException | IOException e) {
             // throw new CannotLoadConnectionException();
         }
-
+        /* Create dropdown menu for Point of Interests */
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 this,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 connectionList.toArray()
         );
         spinnerPOI.setAdapter(adapter);
-
-
 
         spinnerPOI.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -98,6 +97,7 @@ public class StartActivity extends BaseActivity {
                 }
 
             }
+        /* Dropdown Menu POI done */
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -146,16 +146,32 @@ public class StartActivity extends BaseActivity {
                 spinnerTransport.setAdapter(null);
             }
         });
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                new AlertDialog.Builder(StartActivity.this)
+                        .setMessage("Are you sure you want to exit?")
+                        .setPositiveButton("Yes", (dialog, id) -> {
+                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton("No", (dialog, id) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
     }
 
 
     public void showCorruptedMapDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Corrupted Map")
-                .setMessage("You picked a map with isolated POIs!") // Display the exception message
+                .setMessage("You picked a map with isolated POIs!")
                 .setPositiveButton("OK", (dialog, which) -> {
                     dialog.dismiss();
-                    // Navigate back to MainActivity after acknowledging the error
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish(); // Close GameActivity
@@ -219,8 +235,6 @@ public class StartActivity extends BaseActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
     }
-
-
 }
 
 
