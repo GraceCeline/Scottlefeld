@@ -3,6 +3,8 @@ package de.techfak.se.gflorensia;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import java.util.Set;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.TaskStackBuilder;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,6 +30,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class StartActivity extends BaseActivity {
+
+    String selectedPOI;
+    String selectedTransportMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,9 @@ public class StartActivity extends BaseActivity {
         String mapName = getIntent().getExtras().getString("chosen_map");
         String filename = mapName + ".geojson";
         Collection<PointOfInterest> poiCollection = null;
-        Spinner spinnerMap = findViewById(R.id.spinner2);
+        Spinner spinnerPOI = findViewById(R.id.spinner2);
+        Spinner spinnerTransport = findViewById(R.id.spinner3);
+        AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
 
         try {
             loadGameMap(mapName); // Attempt to load map data
@@ -71,10 +79,49 @@ public class StartActivity extends BaseActivity {
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 connectionList.toArray()
         );
-        spinnerMap.setAdapter(adapter);
+        spinnerPOI.setAdapter(adapter);
 
 
 
+        spinnerPOI.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedPOI = spinnerPOI.getSelectedItem().toString();
+                Log.i("Element gewählt", "Ein POI wurde ausgewählt " + selectedPOI);
+
+                PointOfInterest destination = getDestinationPOI(selectedPOI, poiList);
+                if (destination != null){
+                    List<String> availableTransportModes = getTransportModeforPOI(randomPOI, destination);
+                    updateDropdown(spinnerTransport, availableTransportModes);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                    AlertDialog noMapSelected = builder.create();
+                    noMapSelected.show();
+                    try {
+                        throw new NoMapSelectedException();
+                    } catch (NoMapSelectedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        spinnerTransport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedTransportMode = spinnerTransport.getSelectedItem().toString();
+
+                Log.i("Selected Transport Mode", selectedTransportMode);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Optional: handle case where nothing is selected in the second dropdown
+            }
+        });
     }
 
 
@@ -120,6 +167,33 @@ public class StartActivity extends BaseActivity {
         List<String> destinationList = new ArrayList<>(set);
 
         return destinationList;
+    }
+
+    PointOfInterest getDestinationPOI (String poiName, List<PointOfInterest> poiList){
+        for ( PointOfInterest poi : poiList){
+            if (poi.getName().equals(poiName)){
+                Log.i("Destination", poi.getName());
+                return poi;
+            }
+        }
+        return null;
+    }
+
+    public List<String> getTransportModeforPOI (PointOfInterest randomPOI, PointOfInterest destinationPOI){
+        List<String> transportmodeList = new ArrayList<>();
+        List<Connection> poiConnection = randomPOI.getConnections();
+        for (Connection connection : poiConnection){
+            if (connection.getDestination().equals(destinationPOI)) {
+                transportmodeList.add(connection.getTransportMode());
+            }
+        }
+        return transportmodeList;
+    }
+
+    private void updateDropdown(Spinner dropdown, List<String> options) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
     }
 
 
