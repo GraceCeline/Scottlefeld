@@ -10,7 +10,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.6.0'
-        classpath "io.freefair.gradle:android-gradle-plugins:7.2.0-m1"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -23,7 +22,6 @@ plugins {
 
 subprojects {
     apply plugin: 'checkstyle'
-    apply plugin: "io.freefair.android-javadoc"
 
     checkstyle {
         toolVersion '9.3'
