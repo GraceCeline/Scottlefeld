@@ -1,8 +1,14 @@
 package de.techfak.se.gflorensia;
+import org.json.JSONException;
+import org.osmdroid.util.GeoPoint;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Set;
 
 public class PointOfInterest {
     String name;
@@ -35,5 +41,45 @@ public class PointOfInterest {
     }
     public List<Connection> getConnections() {
         return connections;
+    }
+
+    GeoPoint createGeoPoint(){
+       return new GeoPoint(latitude.doubleValue(), longitude.doubleValue());
+    }
+
+
+
+    GeoPoint marginPOI(){
+        return new GeoPoint(latitude.doubleValue()-0.03, longitude.doubleValue()-0.03);
+    }
+
+    List<GeoPoint> boundPOI(){
+        List<GeoPoint> boundaries = new ArrayList<>();
+        boundaries.add(this.createGeoPoint());
+        boundaries.add(this.marginPOI());
+        return boundaries;
+    }
+
+    public List<String> getConnectedPOIs() throws JSONException, IOException {
+        List<String> destinationListwithDups = new ArrayList<>();
+
+        for (Connection connection : this.getConnections()){
+            destinationListwithDups.add(connection.getDestination().getName());
+        }
+
+        Set<String> set = new HashSet<>(destinationListwithDups);
+
+        return new ArrayList<>(set);
+    }
+
+    public List<String> getTransportModeforPOI(PointOfInterest destinationPOI){
+        List<String> transportmodeList = new ArrayList<>();
+        List<Connection> poiConnection = this.getConnections();
+        for (Connection connection : poiConnection){
+            if (connection.getDestination().equals(destinationPOI)) {
+                transportmodeList.add(connection.getTransportMode());
+            }
+        }
+        return transportmodeList;
     }
 }

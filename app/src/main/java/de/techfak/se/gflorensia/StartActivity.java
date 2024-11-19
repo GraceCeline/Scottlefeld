@@ -1,6 +1,7 @@
 package de.techfak.se.gflorensia;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +22,20 @@ import java.util.Set;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.config.IConfigurationProvider;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +47,7 @@ public class StartActivity extends BaseActivity {
 
     String selectedPOI;
     String selectedTransportMode;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,16 @@ public class StartActivity extends BaseActivity {
         Button finishTurnButton = findViewById(R.id.button3);
         Spinner spinnerTransport = findViewById(R.id.spinner3);
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
+        mapView = findViewById(R.id.map1);
+
+        Context ctx = getApplicationContext();
+
+        IConfigurationProvider provider = Configuration.getInstance();
+        provider.setUserAgentValue(ctx.getPackageName());
+        provider.load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setMultiTouchControls(true);
 
         try {
             loadGameMap(mapName); // Attempt to load map data
@@ -65,14 +86,34 @@ public class StartActivity extends BaseActivity {
         }
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
         PointOfInterest randomPOI = getRandomPOI(poiList); //Pick a random POI
+        TextView center = findViewById(R.id.textView3);
+
+
+        mapView.post(() -> {
+            mapView.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(randomPOI.boundPOI()), false);
+
+            mapView.getController().setCenter(randomPOI.createGeoPoint());
+            center.setText(describeGeoPoint(randomPOI.createGeoPoint()));
+
+        });
+
+
+        Marker marker = new Marker(mapView);
+        marker.setPosition(randomPOI.createGeoPoint());
 
         TextView textView = findViewById(R.id.textView2);
-        textView.setText(randomPOI.getName());
+        textView.setText(randomPOI.getName()); //Display selected POI in a text view
         Log.i("POI selected", randomPOI.getName());
+
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setTitle(String.valueOf(textView));
+        marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.person, null));
+
+        mapView.getOverlays().add(marker);
 
         List<String> connectionList = new ArrayList<>();
         try {
-            connectionList = getConnectedPOIs(randomPOI);
+            connectionList = randomPOI.getConnectedPOIs();
         } catch (JSONException | IOException e) {
             // throw new CannotLoadConnectionException();
         }
@@ -92,7 +133,7 @@ public class StartActivity extends BaseActivity {
 
                 PointOfInterest destination = getDestinationPOI(selectedPOI, poiList);
                 if (destination != null){
-                    List<String> availableTransportModes = getTransportModeforPOI(randomPOI, destination);
+                    List<String> availableTransportModes = randomPOI.getTransportModeforPOI(destination);
                     updateDropdown(spinnerTransport, availableTransportModes);
                 }
 
@@ -136,7 +177,7 @@ public class StartActivity extends BaseActivity {
                 // Refresh POIs and transport modes based on the new location
                 List<String> newConnections;
                 try {
-                    newConnections = getConnectedPOIs(randomPOIAtomic.get());
+                    newConnections = randomPOIAtomic.get().getConnectedPOIs();
                 } catch (JSONException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -165,6 +206,11 @@ public class StartActivity extends BaseActivity {
         getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
 
     public void showCorruptedMapDialog() {
         new AlertDialog.Builder(this)
@@ -189,25 +235,13 @@ public class StartActivity extends BaseActivity {
         createConnections(mapJson, poiMap);
         return poiMap;
     }
-
     public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
         Random random = new Random();
         int randomIndex = random.nextInt(poiList.size());
         return poiList.get(randomIndex);
     }
 
-    public List<String> getConnectedPOIs (PointOfInterest randomPOI) throws JSONException, IOException {
-        List<String> destinationListwithDups = new ArrayList<>();
 
-        for (Connection connection : randomPOI.getConnections()){
-            destinationListwithDups.add(connection.getDestination().getName());
-        }
-
-        Set<String> set = new HashSet<>(destinationListwithDups);
-        List<String> destinationList = new ArrayList<>(set);
-
-        return destinationList;
-    }
 
     PointOfInterest getDestinationPOI (String poiName, List<PointOfInterest> poiList){
         for ( PointOfInterest poi : poiList){
@@ -219,22 +253,16 @@ public class StartActivity extends BaseActivity {
         return null;
     }
 
-    public List<String> getTransportModeforPOI (PointOfInterest randomPOI, PointOfInterest destinationPOI){
-        List<String> transportmodeList = new ArrayList<>();
-        List<Connection> poiConnection = randomPOI.getConnections();
-        for (Connection connection : poiConnection){
-            if (connection.getDestination().equals(destinationPOI)) {
-                transportmodeList.add(connection.getTransportMode());
-            }
-        }
-        return transportmodeList;
-    }
-
     private void updateDropdown(Spinner dropdown, List<String> options) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
     }
+
+    String describeGeoPoint(GeoPoint geo){
+        return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
+    }
+
 }
 
 

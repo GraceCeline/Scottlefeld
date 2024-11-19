@@ -81,8 +81,8 @@ public class BaseActivity extends AppCompatActivity {
                             String name = jn.get("properties").get("name").asText();
                             JsonNode coordinates = jn.get("geometry").get("coordinates");
                             // Extract longitude and latitude from the coordinates array
-                            BigDecimal latitude = jn.get("geometry").get("coordinates").get(0).decimalValue();
-                            BigDecimal longitude = jn.get("geometry").get("coordinates").get(1).decimalValue();
+                            BigDecimal latitude = jn.get("geometry").get("coordinates").get(1).decimalValue();
+                            BigDecimal longitude = jn.get("geometry").get("coordinates").get(0).decimalValue();
                             // Create a new PointOfInterest object
                             PointOfInterest poi = new PointOfInterest(name, latitude, longitude);
                             poiMap.put(name, poi);
