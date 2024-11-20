@@ -50,7 +50,7 @@ public class PointOfInterest {
 
 
     GeoPoint marginPOI(){
-        return new GeoPoint(latitude.doubleValue()-0.03, longitude.doubleValue()-0.03);
+        return new GeoPoint(latitude.doubleValue()-0.01, longitude.doubleValue()-0.01);
     }
 
     List<GeoPoint> boundPOI(){
@@ -72,14 +72,5 @@ public class PointOfInterest {
         return new ArrayList<>(set);
     }
 
-    public List<String> getTransportModeforPOI(PointOfInterest destinationPOI){
-        List<String> transportmodeList = new ArrayList<>();
-        List<Connection> poiConnection = this.getConnections();
-        for (Connection connection : poiConnection){
-            if (connection.getDestination().equals(destinationPOI)) {
-                transportmodeList.add(connection.getTransportMode());
-            }
-        }
-        return transportmodeList;
-    }
+
 }
