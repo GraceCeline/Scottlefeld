@@ -91,7 +91,18 @@ public class StartActivity extends BaseActivity {
             poiCollection = loadGameMap(mapName).values();
 
         } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
-            showCorruptedMapDialog();  // Call dialog to handle the corrupted map
+            Log.i("Corrupted", "corrupt map chosen");
+            new AlertDialog.Builder(this)
+                    .setTitle("Corrupted Map")
+                    .setMessage("You picked a map with isolated POIs!")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    })
+                    .show();
+            // showCorruptedMapDialog();  // Call dialog to handle the corrupted map
         }
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
         PointOfInterest randomPOI = getRandomPOI(poiList); //Pick a random POI
@@ -195,8 +206,8 @@ public class StartActivity extends BaseActivity {
                 new AlertDialog.Builder(StartActivity.this)
                         .setMessage("Are you sure you want to exit?")
                         .setPositiveButton("Yes", (dialog, id) -> {
-                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            StartActivity.super.onBackPressed();
+                            finish();
                         })
                         .setNegativeButton("No", (dialog, id) -> {
                             dialog.dismiss();
@@ -236,13 +247,20 @@ public class StartActivity extends BaseActivity {
     }
 
     public Map<String, PointOfInterest> loadGameMap(String mapChosen) throws CorruptedMapException, JSONException, IOException {
-        if (Objects.equals(mapChosen, "corrupted")){
+        /* if (Objects.equals(mapChosen, "corrupted")){
             throw new CorruptedMapException();
-        }
+        }*/
         String filename = mapChosen + ".geojson";
         String mapJson = getJsonContent("maps/" + filename);
         Map<String, PointOfInterest> poiMap = extractPOI(mapJson);
         createConnections(mapJson, poiMap);
+
+        for (PointOfInterest poi : poiMap.values()) {
+            if (poi.getConnections().isEmpty()) {
+                throw new CorruptedMapException();
+            }
+        }
+
         return poiMap;
     }
     public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
