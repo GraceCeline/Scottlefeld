@@ -43,7 +43,6 @@ import org.osmdroid.views.overlay.Polyline;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class StartActivity extends BaseActivity {
@@ -317,7 +316,9 @@ public class StartActivity extends BaseActivity {
                 marker.setOnMarkerClickListener((m, map) -> {
                     Toast.makeText(this, "Point of Interest: " + poi.getName(), Toast.LENGTH_SHORT).show();
                     return true;
+
                 });
+                poi.displayConnection(mapView);
                 mapView.getOverlays().add(marker);
             }
 
