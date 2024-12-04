@@ -92,17 +92,6 @@ public class StartActivity extends BaseActivity {
             poiCollection = loadGameMap(mapName).values();
 
         } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
-            Log.i("Corrupted", "corrupt map chosen");
-//            new AlertDialog.Builder(this)
-//                    .setTitle("Corrupted Map")
-//                    .setMessage("You picked a map with isolated POIs!")
-//                    .setPositiveButton("OK", (dialog, which) -> {
-//                        dialog.dismiss();
-//                        // Intent intent = new Intent(StartActivity.this, MainActivity.class);
-//                        // startActivity(intent);
-//                        StartActivity.super
-//                        finish();
-//                    }).show();
             showCorruptedMapDialog();  // Call dialog to handle the corrupted map
             return;
         }
@@ -115,7 +104,7 @@ public class StartActivity extends BaseActivity {
         textView.setText(randomPOI.getName()); //Display selected POI in a text view
         Log.i("POI selected", randomPOI.getName());
 
-        postMap(randomPOI);
+        postMap(randomPOI, poiList);
 
         List<String> connectionList = new ArrayList<>();
         try {
@@ -173,7 +162,6 @@ public class StartActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Optional: handle case where nothing is selected in the second dropdown
             }
         });
 
@@ -300,7 +288,7 @@ public class StartActivity extends BaseActivity {
         return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
     }
 
-    void postMap(PointOfInterest poi_chosen /*List<PointOfInterest> poiList*/){
+    void postMap(PointOfInterest poi_chosen, List<PointOfInterest> poiList){
 
         mapView.post(() -> {
             mapView.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(poi_chosen.boundPOI()), false);
@@ -318,20 +306,20 @@ public class StartActivity extends BaseActivity {
 
             mapView.getOverlays().add(marker);
 
-//            for (PointOfInterest poi: poiList) {
-//                if (poi == currentLocation)
-//                    continue;
-//
-//
-//                Marker marker = new Marker(mapView);
-//                marker.setPosition(poi.createGeoPoint());
-//                marker.setIcon(ResourcesCompat.getDrawable(getResources(), android.R.drawable.ic_menu_mylocation, null));
-//                marker.setOnMarkerClickListener((m, map) -> {
-//                    Toast.makeText(this, "Point of Interest: " + poi.getName(), Toast.LENGTH_SHORT).show();
-//                    return true;
-//                });
-//                mapView.getOverlays().add(marker);
-//            }
+            for (PointOfInterest poi: poiList) {
+                if (poi == currentLocation)
+                    continue;
+
+
+                Marker marker = new Marker(mapView);
+                marker.setPosition(poi.createGeoPoint());
+                marker.setIcon(ResourcesCompat.getDrawable(getResources(), android.R.drawable.ic_menu_mylocation, null));
+                marker.setOnMarkerClickListener((m, map) -> {
+                    Toast.makeText(this, "Point of Interest: " + poi.getName(), Toast.LENGTH_SHORT).show();
+                    return true;
+                });
+                mapView.getOverlays().add(marker);
+            }
 
         });
     }
