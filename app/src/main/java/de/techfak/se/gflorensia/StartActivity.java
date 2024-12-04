@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -92,27 +93,29 @@ public class StartActivity extends BaseActivity {
 
         } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
             Log.i("Corrupted", "corrupt map chosen");
-            new AlertDialog.Builder(this)
-                    .setTitle("Corrupted Map")
-                    .setMessage("You picked a map with isolated POIs!")
-                    .setPositiveButton("OK", (dialog, which) -> {
-                        dialog.dismiss();
-                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    })
-                    .show();
-            // showCorruptedMapDialog();  // Call dialog to handle the corrupted map
+//            new AlertDialog.Builder(this)
+//                    .setTitle("Corrupted Map")
+//                    .setMessage("You picked a map with isolated POIs!")
+//                    .setPositiveButton("OK", (dialog, which) -> {
+//                        dialog.dismiss();
+//                        // Intent intent = new Intent(StartActivity.this, MainActivity.class);
+//                        // startActivity(intent);
+//                        StartActivity.super
+//                        finish();
+//                    }).show();
+            showCorruptedMapDialog();  // Call dialog to handle the corrupted map
+            return;
         }
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
         PointOfInterest randomPOI = getRandomPOI(poiList); //Pick a random POI
         currentLocation = randomPOI; //current Location set as random POI
         center = findViewById(R.id.textView3);
-        postMap(randomPOI); // Show POI on map with boundaries
 
         TextView textView = findViewById(R.id.textView2);
         textView.setText(randomPOI.getName()); //Display selected POI in a text view
         Log.i("POI selected", randomPOI.getName());
+
+        postMap(randomPOI);
 
         List<String> connectionList = new ArrayList<>();
         try {
@@ -247,9 +250,6 @@ public class StartActivity extends BaseActivity {
     }
 
     public Map<String, PointOfInterest> loadGameMap(String mapChosen) throws CorruptedMapException, JSONException, IOException {
-        /* if (Objects.equals(mapChosen, "corrupted")){
-            throw new CorruptedMapException();
-        }*/
         String filename = mapChosen + ".geojson";
         String mapJson = getJsonContent("maps/" + filename);
         Map<String, PointOfInterest> poiMap = extractPOI(mapJson);
@@ -300,23 +300,38 @@ public class StartActivity extends BaseActivity {
         return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
     }
 
-    void postMap(PointOfInterest poi){
+    void postMap(PointOfInterest poi_chosen /*List<PointOfInterest> poiList*/){
 
         mapView.post(() -> {
-            mapView.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(poi.boundPOI()), false);
+            mapView.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(poi_chosen.boundPOI()), false);
 
             // mapView.getController().setCenter(poi.createGeoPoint());
-            center.setText(describeGeoPoint(poi.createGeoPoint()));
+            center.setText(describeGeoPoint(poi_chosen.createGeoPoint()));
 
             marker = new Marker(mapView);
 
-            marker.setPosition(poi.createGeoPoint());
+            marker.setPosition(poi_chosen.createGeoPoint());
 
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setTitle(currentLocation.getName());
             marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.person, null));
 
             mapView.getOverlays().add(marker);
+
+//            for (PointOfInterest poi: poiList) {
+//                if (poi == currentLocation)
+//                    continue;
+//
+//
+//                Marker marker = new Marker(mapView);
+//                marker.setPosition(poi.createGeoPoint());
+//                marker.setIcon(ResourcesCompat.getDrawable(getResources(), android.R.drawable.ic_menu_mylocation, null));
+//                marker.setOnMarkerClickListener((m, map) -> {
+//                    Toast.makeText(this, "Point of Interest: " + poi.getName(), Toast.LENGTH_SHORT).show();
+//                    return true;
+//                });
+//                mapView.getOverlays().add(marker);
+//            }
 
         });
     }
@@ -335,6 +350,7 @@ public class StartActivity extends BaseActivity {
         mapView.getOverlays().add(line);
         mapView.invalidate(); // Refresh the map
     }
+
 
 
 }
