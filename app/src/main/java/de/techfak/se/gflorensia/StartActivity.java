@@ -3,12 +3,14 @@ package de.techfak.se.gflorensia;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -57,6 +60,9 @@ public class StartActivity extends BaseActivity {
     Marker marker;
     Polyline line;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +82,7 @@ public class StartActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
         mapView = findViewById(R.id.map1);
         line = new Polyline();
+        Player player = new Player("Celine");
 
         Context ctx = getApplicationContext();
 
@@ -215,6 +222,31 @@ public class StartActivity extends BaseActivity {
                 Log.i("Center", describeGeoPoint(currentLocation.createGeoPoint()));
             }
         });
+
+//        HashMap<String, Integer> legendData = new HashMap<>();
+//        legendData.put("bus", Color.BLUE);
+//        legendData.put("escooter", Color.RED);
+//        legendData.put("tram", Color.GREEN);
+//
+//        LinearLayout legendContainer = findViewById(R.id.legendContainer);
+//        for (Map.Entry<String, Integer> entry : legendData.entrySet()) {
+//            String transportMode = entry.getKey();
+//            int color = entry.getValue();
+//
+//            // Inflate the legend item layout
+//            View legendItem = getLayoutInflater().inflate(R.layout.activity_start, legendContainer, false);
+//
+//            // Set the color and label
+//            View colorBox = legendItem.findViewById(R.id.colorBox);
+//            TextView label = legendItem.findViewById(R.id.colorName);
+//
+//            colorBox.setBackgroundColor(color);
+//            label.setText(transportMode);
+//
+//            // Add the legend item to the container
+//            legendContainer.addView(legendItem);
+//        }
+
     }
 
     @Override
