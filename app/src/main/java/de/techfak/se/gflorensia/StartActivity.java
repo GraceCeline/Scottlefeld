@@ -48,6 +48,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import de.techfak.gse24.botlib.MX;
+import de.techfak.gse24.botlib.PlayerFactory;
+import de.techfak.gse24.botlib.Turn;
+import de.techfak.gse24.botlib.exceptions.JSONParseException;
+import de.techfak.gse24.botlib.exceptions.NoFreePositionException;
+import de.techfak.gse24.botlib.exceptions.NoTicketAvailableException;
+
 public class StartActivity extends BaseActivity {
 
     String selectedPOI;
@@ -60,7 +67,7 @@ public class StartActivity extends BaseActivity {
     Marker marker;
     Polyline line;
 
-
+    PlayerFactory playerFactory;
 
 
     @Override
@@ -73,7 +80,7 @@ public class StartActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+// Datas needed
         String mapName = getIntent().getExtras().getString("chosen_map");
         Collection<PointOfInterest> poiCollection = null;
         Spinner spinnerPOI = findViewById(R.id.spinner2);
@@ -82,7 +89,6 @@ public class StartActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
         mapView = findViewById(R.id.map1);
         line = new Polyline();
-        Player player = new Player("Celine");
 
         Context ctx = getApplicationContext();
 
@@ -93,13 +99,25 @@ public class StartActivity extends BaseActivity {
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
 
+        Player player = new Player();
+
+        // Load game map and create POI Connections
         try {
             loadGameMap(mapName); // Attempt to load map data
             poiCollection = loadGameMap(mapName).values();
 
-        } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
-            showCorruptedMapDialog();  // Call dialog to handle the corrupted map
+            // Create MX
+            MX mxPlayer = createMX(mapName, player);
+            Log.i("MX Start", mxPlayer.getPosition());
+        } catch (CorruptedMapException | JSONException |
+                 IOException e) {  // Catch the exception here
+            showErrorMapDialog("Corrupted Map", "You picked a map with isolated POIs!");  // Call dialog to handle the corrupted map
             return;
+        } catch (JSONParseException e) {
+            showErrorMapDialog("JsonParseException", "Cannot parse Json");
+            return;
+        } catch (NoFreePositionException e) {
+            showErrorMapDialog("No free Position", "No free positions available! Please choose another action.");
         }
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
         PointOfInterest randomPOI = getRandomPOI(poiList); //Pick a random POI
@@ -110,7 +128,7 @@ public class StartActivity extends BaseActivity {
         textView.setText(randomPOI.getName()); //Display selected POI in a text view
         Log.i("POI selected", randomPOI.getName());
 
-        postMap(randomPOI, poiList);
+        postMap(randomPOI, poiList); // Display map
 
         List<String> connectionList = new ArrayList<>();
         try {
@@ -133,30 +151,28 @@ public class StartActivity extends BaseActivity {
                 Log.i("Element gewählt", "Ein POI wurde ausgewählt " + selectedPOI);
 
                 destination = getDestinationPOI(selectedPOI, poiList);
-                if (destination != null){
+                if (destination != null) {
                     List<String> availableTransportModes = getTransportModeforPOI(currentLocation, destination);
                     updateDropdown(spinnerTransport, availableTransportModes);
                     Log.i("Transport Modes", availableTransportModes.toString());
 
                     updatePolyline(currentLocation.createGeoPoint(), destination.createGeoPoint());
-                    // mapView.invalidate();
-
                 }
 
             }
-        /* Dropdown Menu POI done */
+            /* Dropdown Menu POI done */
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                    AlertDialog noMapSelected = builder.create();
-                    noMapSelected.show();
-                    try {
-                        throw new NoMapSelectedException();
-                    } catch (NoMapSelectedException e) {
-                        e.printStackTrace();
-                    }
+                AlertDialog noMapSelected = builder.create();
+                noMapSelected.show();
+                try {
+                    throw new NoMapSelectedException();
+                } catch (NoMapSelectedException e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
 
         spinnerTransport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -212,7 +228,7 @@ public class StartActivity extends BaseActivity {
                         .show();
             }
         };
-        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         Button button_center = findViewById(R.id.button2);
         button_center.setOnClickListener(v -> {
@@ -222,31 +238,6 @@ public class StartActivity extends BaseActivity {
                 Log.i("Center", describeGeoPoint(currentLocation.createGeoPoint()));
             }
         });
-
-//        HashMap<String, Integer> legendData = new HashMap<>();
-//        legendData.put("bus", Color.BLUE);
-//        legendData.put("escooter", Color.RED);
-//        legendData.put("tram", Color.GREEN);
-//
-//        LinearLayout legendContainer = findViewById(R.id.legendContainer);
-//        for (Map.Entry<String, Integer> entry : legendData.entrySet()) {
-//            String transportMode = entry.getKey();
-//            int color = entry.getValue();
-//
-//            // Inflate the legend item layout
-//            View legendItem = getLayoutInflater().inflate(R.layout.activity_start, legendContainer, false);
-//
-//            // Set the color and label
-//            View colorBox = legendItem.findViewById(R.id.colorBox);
-//            TextView label = legendItem.findViewById(R.id.colorName);
-//
-//            colorBox.setBackgroundColor(color);
-//            label.setText(transportMode);
-//
-//            // Add the legend item to the container
-//            legendContainer.addView(legendItem);
-//        }
-
     }
 
     @Override
@@ -255,10 +246,10 @@ public class StartActivity extends BaseActivity {
         mapView.onResume();
     }
 
-    public void showCorruptedMapDialog() {
+    public void showErrorMapDialog(String title, String message) {
         new AlertDialog.Builder(this)
-                .setTitle("Corrupted Map")
-                .setMessage("You picked a map with isolated POIs!")
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton("OK", (dialog, which) -> {
                     dialog.dismiss();
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
@@ -281,6 +272,18 @@ public class StartActivity extends BaseActivity {
         }
 
         return poiMap;
+    }
+
+
+    MX createMX(String mapChosen, Player player) throws JSONParseException, NoFreePositionException {
+        String filename = mapChosen + ".geojson";
+        String jsonContent = getJsonContent("maps/" + filename);
+
+        playerFactory = new PlayerFactory(jsonContent,player);
+        Log.i("Player Bus ticket", String.valueOf(player.getBusTickets()));
+        MX mxPlayer = playerFactory.createMx(1,1,1) ; // Tickets will be extracted in US 11
+
+        return mxPlayer;
     }
     public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
         Random random = new Random();
