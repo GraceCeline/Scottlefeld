@@ -123,9 +123,9 @@ public class StartActivity extends BaseActivity {
             roundCounter.setText("Round: "+gameApplication.round);
 
             extractTickets(getJsonContent("maps/"+ mapName +".geojson"), gameApplication.detectiveTickets, gameApplication.mxTickets);
-            player.setBusTickets(gameApplication.detectiveTickets.get("bus-connection"));
-            player.setTramTickets(gameApplication.detectiveTickets.get("tram-connection"));
-            player.setScooterTickets(gameApplication.detectiveTickets.get("eScooter-connection"));
+            player.setBusTickets(gameApplication.detectiveTickets.get("bus"));
+            player.setTramTickets(gameApplication.detectiveTickets.get("tram"));
+            player.setScooterTickets(gameApplication.detectiveTickets.get("eScooter"));
 
             mxPlayer = createMX(mapName, player, gameApplication.mxTickets);
             Log.i("MX Start", mxPlayer.getPosition());
@@ -168,7 +168,7 @@ public class StartActivity extends BaseActivity {
             // throw new CannotLoadConnectionException();
         }
 
-        // MX Turn
+        // MX TurnF
         try {
             Turn turn = mxTurn(mxPlayer);
             Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
@@ -340,7 +340,7 @@ public class StartActivity extends BaseActivity {
 
         playerFactory = new PlayerFactory(jsonContent,player);
 
-        return playerFactory.createMx(mxTickets.get("bus-connection"),mxTickets.get("tram-connection"),mxTickets.get("eScooter-connection"));
+        return playerFactory.createMx(mxTickets.get("bus"),mxTickets.get("tram"),mxTickets.get("eScooter"));
     }
     Turn mxTurn(MX mxplayer) throws NoTicketAvailableException {
         Turn turn = mxplayer.getTurn();
