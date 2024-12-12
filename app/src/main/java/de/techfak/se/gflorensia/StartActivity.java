@@ -167,23 +167,38 @@ public class StartActivity extends BaseActivity {
             // throw new CannotLoadConnectionException();
         }
 
+        // MX Turn
         try {
-            turn = mxPlayer.getTurn();
-            Log.i("Turn", turn.toString());
+            Turn turn = mxTurn(mxPlayer);
+            Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
+            Log.i("Tram Ticket", String.valueOf(mxPlayer.getTramTickets()));
+            Log.i("Scooter Ticket", String.valueOf(mxPlayer.getScooterTickets()));
         } catch (NoTicketAvailableException e) {
-            Log.e("Error", Objects.requireNonNull(e.getMessage()));
-        } catch (NullPointerException e) {
-            Log.e("Turn Debug", "Encountered a NullPointerException: " + e.getMessage());
+            Log.i("MX Exception", "No ticket available!");
+            Log.i("MX Position", mxPlayer.getPosition());
+            Log.i("MX Transport", "none");
         }
 
+//        try {
+//            turn = mxPlayer.getTurn();
+//            Log.i("Turn", turn.toString());
+//            Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
+//            Log.i("Tram Ticket", String.valueOf(mxPlayer.getTramTickets()));
+//            Log.i("Scooter Ticket", String.valueOf(mxPlayer.getScooterTickets()));
+//        } catch (NoTicketAvailableException e) {
+//            Log.e("Error", Objects.requireNonNull(e.getMessage()));
+//        } catch (NullPointerException e) {
+//            Log.e("Turn Debug", "Encountered a NullPointerException: " + e.getMessage());
+//        }
 
-        if (showMXrounds.contains(gameApplication.round)){
-            Marker mx = new Marker(mapView);
-            PointOfInterest mxPosition = getDestinationPOI(mxPlayer.getPosition(), poiList);
-            mx.setPosition(mxPosition.createGeoPoint());
-            mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
-            mapView.getOverlays().add(marker);
-        }
+
+//        if (showMXrounds.contains(gameApplication.round)){
+//            Marker mx = new Marker(mapView);
+//            PointOfInterest mxPosition = getDestinationPOI(mxPlayer.getPosition(), poiList);
+//            mx.setPosition(mxPosition.createGeoPoint());
+//            mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
+//            mapView.getOverlays().add(marker);
+//        }
         /* Create dropdown menu for Point of Interests */
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 this,
@@ -227,7 +242,6 @@ public class StartActivity extends BaseActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTransportMode = spinnerTransport.getSelectedItem().toString();
 
-                Log.i("Selected Transport Mode", selectedTransportMode);
             }
 
             @Override
@@ -241,8 +255,9 @@ public class StartActivity extends BaseActivity {
             center.setText(describeGeoPoint(destination.createGeoPoint()));
 
             if (destination != null && selectedTransportMode != null) {
+                Log.i("Detective ", "Transport"+ selectedTransportMode);
                 gameApplication.round++;
-                roundCounter.setText("Round: "+gameApplication.round);
+                roundCounter.setText("Round: " + gameApplication.round);
                 // Update current location to new destination
                 textView.setText(randomPOIAtomic.get().getName()); // Update displayed current location
                 currentLocation = destination; // set currentLocation as destination
@@ -257,6 +272,16 @@ public class StartActivity extends BaseActivity {
                     throw new RuntimeException(e);
                 }
                 updateDropdown(spinnerPOI, newConnections); // Update first dropdown with new connections
+
+                try {
+                    Turn turn = mxTurn(mxPlayer);
+                    Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
+                    Log.i("Tram Ticket", String.valueOf(mxPlayer.getTramTickets()));
+                    Log.i("Scooter Ticket", String.valueOf(mxPlayer.getScooterTickets()));
+                } catch (NoTicketAvailableException e) {
+                    Log.i("MX Position", mxPlayer.getPosition());
+                    Log.i("MX Transport", "none");
+                }
 
                 // Clear the second dropdown until a new POI is selected
                 spinnerTransport.setAdapter(null);
@@ -334,6 +359,13 @@ public class StartActivity extends BaseActivity {
         playerFactory = new PlayerFactory(jsonContent,player);
 
         return playerFactory.createMx(mxTickets.get("bus-connection"),mxTickets.get("tram-connection"),mxTickets.get("eScooter-connection"));
+    }
+    Turn mxTurn(MX mxplayer) throws NoTicketAvailableException {
+        Turn turn = mxplayer.getTurn();
+        Log.i("MX", "Transport: " +turn.ticketType().toString());
+        Log.i("MX","Position: "+ turn.target());
+
+        return turn;
     }
     public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
         Random random = new Random();
