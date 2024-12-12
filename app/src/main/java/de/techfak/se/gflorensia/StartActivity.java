@@ -71,6 +71,7 @@ public class StartActivity extends BaseActivity {
 
     TextView center;
     Marker marker;
+    Marker mx = null;
     Polyline line;
     Player player;
 
@@ -179,26 +180,6 @@ public class StartActivity extends BaseActivity {
             Log.i("MX Transport", "none");
         }
 
-//        try {
-//            turn = mxPlayer.getTurn();
-//            Log.i("Turn", turn.toString());
-//            Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
-//            Log.i("Tram Ticket", String.valueOf(mxPlayer.getTramTickets()));
-//            Log.i("Scooter Ticket", String.valueOf(mxPlayer.getScooterTickets()));
-//        } catch (NoTicketAvailableException e) {
-//            Log.e("Error", Objects.requireNonNull(e.getMessage()));
-//        } catch (NullPointerException e) {
-//            Log.e("Turn Debug", "Encountered a NullPointerException: " + e.getMessage());
-//        }
-
-
-//        if (showMXrounds.contains(gameApplication.round)){
-//            Marker mx = new Marker(mapView);
-//            PointOfInterest mxPosition = getDestinationPOI(mxPlayer.getPosition(), poiList);
-//            mx.setPosition(mxPosition.createGeoPoint());
-//            mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
-//            mapView.getOverlays().add(marker);
-//        }
         /* Create dropdown menu for Point of Interests */
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 this,
@@ -282,6 +263,7 @@ public class StartActivity extends BaseActivity {
                     Log.i("MX Position", mxPlayer.getPosition());
                     Log.i("MX Transport", "none");
                 }
+                showMXMarker(gameApplication.round, poiList);
 
                 // Clear the second dropdown until a new POI is selected
                 spinnerTransport.setAdapter(null);
@@ -443,6 +425,32 @@ public class StartActivity extends BaseActivity {
         });
     }
 
+    void showMXMarker(Integer number, List<PointOfInterest> poiList){
+
+        if (showMXrounds.contains(number)) {
+            if(mx == null) {
+                mx = new Marker(mapView);
+                mx.setTitle("MX here, I'm in " + mxPlayer.getPosition());
+                mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
+                PointOfInterest mxPosition = getDestinationPOI(mxPlayer.getPosition(), poiList);
+                mx.setPosition(mxPosition.createGeoPoint());
+            }
+            Log.i("MX Marker", "Position " + mxPlayer.getPosition());
+
+
+            mapView.getOverlays().add(mx);
+            mx.setVisible(true);
+            Log.i("Marker", "Shown");
+        } else {
+            if (mx != null) {
+                // Hide the marker if it's not in a valid round
+                mx.setVisible(false);
+                mapView.getOverlays().remove(mx);
+                Log.i("Marker", "Not Shown");
+            }
+        }
+    }
+
     void updatePolyline(GeoPoint startPoint, GeoPoint endPoint) {
         // Remove the existing polyline
         if (line != null) {
@@ -458,6 +466,3 @@ public class StartActivity extends BaseActivity {
         mapView.invalidate(); // Refresh the map
     }
 }
-
-
-
