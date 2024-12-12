@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -32,6 +33,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.json.JSONException;
 import org.osmdroid.config.Configuration;
@@ -61,13 +64,18 @@ public class StartActivity extends BaseActivity {
     String selectedTransportMode;
     PointOfInterest currentLocation;
     PointOfInterest destination;
-    private MapView mapView;
+    MapView mapView;
+    Turn turn;
 
     TextView center;
     Marker marker;
     Polyline line;
+    Player player;
 
     PlayerFactory playerFactory;
+    MX mxPlayer;
+
+    Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(3, 8, 13, 18));
 
 
     @Override
@@ -80,7 +88,8 @@ public class StartActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-// Datas needed
+
+        // Datas needed
         String mapName = getIntent().getExtras().getString("chosen_map");
         Collection<PointOfInterest> poiCollection = null;
         Spinner spinnerPOI = findViewById(R.id.spinner2);
@@ -89,6 +98,7 @@ public class StartActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
         mapView = findViewById(R.id.map1);
         line = new Polyline();
+        GameApplication gameApplication = (GameApplication) getApplication();
 
         Context ctx = getApplicationContext();
 
@@ -99,42 +109,79 @@ public class StartActivity extends BaseActivity {
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
 
-        Player player = new Player();
+        player = new Player();
 
-        // Load game map and create POI Connections
+        // Right after game is started
         try {
             loadGameMap(mapName); // Attempt to load map data
             poiCollection = loadGameMap(mapName).values();
 
-            // Create MX
-            MX mxPlayer = createMX(mapName, player);
+            extractTickets(getJsonContent("maps/"+ mapName +".geojson"), gameApplication.detectiveTickets, gameApplication.mxTickets);
+            player.setBusTickets(gameApplication.detectiveTickets.get("bus-connection"));
+            player.setTramTickets(gameApplication.detectiveTickets.get("tram-connection"));
+            player.setScooterTickets(gameApplication.detectiveTickets.get("eScooter-connection"));
+
+            mxPlayer = createMX(mapName, player, gameApplication.mxTickets);
             Log.i("MX Start", mxPlayer.getPosition());
-        } catch (CorruptedMapException | JSONException |
-                 IOException e) {  // Catch the exception here
+
+            Log.i("MX Ticket", String.valueOf(mxPlayer.getBusTickets()));
+            Log.i("MX Ticket", String.valueOf(mxPlayer.getTramTickets()));
+            Log.i("MX Ticket", String.valueOf(mxPlayer.getScooterTickets()));
+        } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
             showErrorMapDialog("Corrupted Map", "You picked a map with isolated POIs!");  // Call dialog to handle the corrupted map
             return;
+        } catch (NullPointerException e) {
+            Log.e("Ticket", "Encountered a NullPointerException: " + e.getMessage());
         } catch (JSONParseException e) {
             showErrorMapDialog("JsonParseException", "Cannot parse Json");
             return;
         } catch (NoFreePositionException e) {
             showErrorMapDialog("No free Position", "No free positions available! Please choose another action.");
         }
+
+
+        // List all POI in the map
+
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
         PointOfInterest randomPOI = getRandomPOI(poiList); //Pick a random POI
         currentLocation = randomPOI; //current Location set as random POI
-        center = findViewById(R.id.textView3);
+        Log.i("POI selected", randomPOI.getName());
+        postMap(randomPOI, poiList); // Display map
+        player.setPosition(currentLocation.getName());
 
-        TextView textView = findViewById(R.id.textView2);
+        //////////////////////////////////////////////
+
+        // View management
+        center = findViewById(R.id.textView3); // Button to center the map
+        TextView textView = findViewById(R.id.textView2); // Show the name of the map
         textView.setText(randomPOI.getName()); //Display selected POI in a text view
         Log.i("POI selected", randomPOI.getName());
 
-        postMap(randomPOI, poiList); // Display map
+        // Show all connections
 
         List<String> connectionList = new ArrayList<>();
         try {
             connectionList = randomPOI.getConnectedPOIs();
         } catch (JSONException | IOException e) {
             // throw new CannotLoadConnectionException();
+        }
+
+        try {
+            turn = mxPlayer.getTurn();
+            Log.i("Turn", turn.toString());
+        } catch (NoTicketAvailableException e) {
+            Log.e("Error", Objects.requireNonNull(e.getMessage()));
+        } catch (NullPointerException e) {
+            Log.e("Turn Debug", "Encountered a NullPointerException: " + e.getMessage());
+        }
+
+
+        if (showMXrounds.contains(gameApplication.round)){
+            Marker mx = new Marker(mapView);
+            PointOfInterest mxPosition = getDestinationPOI(mxPlayer.getPosition(), poiList);
+            mx.setPosition(mxPosition.createGeoPoint());
+            mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
+            mapView.getOverlays().add(marker);
         }
         /* Create dropdown menu for Point of Interests */
         ArrayAdapter<String> adapter = new ArrayAdapter(
@@ -210,6 +257,8 @@ public class StartActivity extends BaseActivity {
 
                 // Clear the second dropdown until a new POI is selected
                 spinnerTransport.setAdapter(null);
+
+                mapView.invalidate();
             }
         });
 
@@ -275,15 +324,13 @@ public class StartActivity extends BaseActivity {
     }
 
 
-    MX createMX(String mapChosen, Player player) throws JSONParseException, NoFreePositionException {
+    MX createMX(String mapChosen, Player player, Map<String,Integer> mxTickets) throws JSONParseException, NoFreePositionException {
         String filename = mapChosen + ".geojson";
         String jsonContent = getJsonContent("maps/" + filename);
 
         playerFactory = new PlayerFactory(jsonContent,player);
-        Log.i("Player Bus ticket", String.valueOf(player.getBusTickets()));
-        MX mxPlayer = playerFactory.createMx(1,1,1) ; // Tickets will be extracted in US 11
 
-        return mxPlayer;
+        return playerFactory.createMx(mxTickets.get("bus-connection"),mxTickets.get("tram-connection"),mxTickets.get("eScooter-connection"));
     }
     public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
         Random random = new Random();
@@ -357,6 +404,7 @@ public class StartActivity extends BaseActivity {
                 mapView.getOverlays().add(marker);
             }
 
+
         });
     }
 
@@ -374,9 +422,6 @@ public class StartActivity extends BaseActivity {
         mapView.getOverlays().add(line);
         mapView.invalidate(); // Refresh the map
     }
-
-
-
 }
 
 

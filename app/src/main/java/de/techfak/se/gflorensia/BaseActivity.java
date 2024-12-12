@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.snackbar.Snackbar;
@@ -95,6 +96,34 @@ public class BaseActivity extends AppCompatActivity {
                 }
                 return poiMap;
             }
+        }
+
+        public void extractTickets(String jsonContent, Map<String, Integer> detectivesTicketsMap, Map<String, Integer> mxTicketsMap) throws JsonProcessingException {
+            ObjectMapper om = new ObjectMapper();
+            JsonNode root = om.readTree(jsonContent);
+
+                // Navigate to the "types" object within the "metadata"
+                JsonNode types = root.get("metadata").get("types");
+
+                // Iterate through each type (tram, bus, escooter, etc.)
+                for (JsonNode jn : types) {
+                    // Get the transport type (e.g., "tram", "bus", etc.)
+                    String transportType = jn.get("name").asText();
+
+                    // Extract ticket amounts for Detectives and M. X
+                    int detectivesTickets = jn.has("Ticketanzahl Detectives")
+                            ? jn.get("Ticketanzahl Detectives").asInt() : 0; // Default if not present
+
+                    int mxTickets = jn.has("Ticketanzahl M. X")
+                            ? jn.get("Ticketanzahl M. X").asInt()
+                            : 0; // Default if not present
+
+                    // Add the extracted information to the maps
+                    detectivesTicketsMap.put(transportType, detectivesTickets);
+                    mxTicketsMap.put(transportType, mxTickets);
+                }
+                Log.i("Detectives Tickets", detectivesTicketsMap.toString());
+                Log.i("M.X Tickets", mxTicketsMap.toString());
         }
         public void createConnections (String jsonContent, Map < String, PointOfInterest > poiMap) throws
         IOException, JSONException {
