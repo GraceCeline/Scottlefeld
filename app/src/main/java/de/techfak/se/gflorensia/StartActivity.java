@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -95,6 +97,7 @@ public class StartActivity extends BaseActivity {
         Spinner spinnerPOI = findViewById(R.id.spinner2);
         Button finishTurnButton = findViewById(R.id.button3);
         Spinner spinnerTransport = findViewById(R.id.spinner3);
+        TextView roundCounter = findViewById(R.id.textView7);
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
         mapView = findViewById(R.id.map1);
         line = new Polyline();
@@ -115,6 +118,8 @@ public class StartActivity extends BaseActivity {
         try {
             loadGameMap(mapName); // Attempt to load map data
             poiCollection = loadGameMap(mapName).values();
+            gameApplication.setRound(1);
+            roundCounter.setText("Round: "+gameApplication.round);
 
             extractTickets(getJsonContent("maps/"+ mapName +".geojson"), gameApplication.detectiveTickets, gameApplication.mxTickets);
             player.setBusTickets(gameApplication.detectiveTickets.get("bus-connection"));
@@ -123,10 +128,6 @@ public class StartActivity extends BaseActivity {
 
             mxPlayer = createMX(mapName, player, gameApplication.mxTickets);
             Log.i("MX Start", mxPlayer.getPosition());
-
-            Log.i("MX Ticket", String.valueOf(mxPlayer.getBusTickets()));
-            Log.i("MX Ticket", String.valueOf(mxPlayer.getTramTickets()));
-            Log.i("MX Ticket", String.valueOf(mxPlayer.getScooterTickets()));
         } catch (CorruptedMapException | JSONException | IOException e) {  // Catch the exception here
             showErrorMapDialog("Corrupted Map", "You picked a map with isolated POIs!");  // Call dialog to handle the corrupted map
             return;
@@ -240,6 +241,8 @@ public class StartActivity extends BaseActivity {
             center.setText(describeGeoPoint(destination.createGeoPoint()));
 
             if (destination != null && selectedTransportMode != null) {
+                gameApplication.round++;
+                roundCounter.setText("Round: "+gameApplication.round);
                 // Update current location to new destination
                 textView.setText(randomPOIAtomic.get().getName()); // Update displayed current location
                 currentLocation = destination; // set currentLocation as destination
