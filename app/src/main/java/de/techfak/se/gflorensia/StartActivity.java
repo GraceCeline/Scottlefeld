@@ -1,17 +1,13 @@
 package de.techfak.se.gflorensia;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -22,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
@@ -37,7 +32,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -71,7 +65,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     PointOfInterest destination;
     MapView mapView;
     View view;
-    Turn turn;
 
     TextView center;
     Marker marker;
@@ -82,6 +75,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     PlayerFactory playerFactory;
     GameApplication gameApplication;
     MX mxPlayer;
+    String mxPosition = "";
 
     Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(3, 8, 13, 18));
 
@@ -242,19 +236,15 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         });
 
         finishTurnButton.setOnClickListener(v -> {
+
             try {
                 Map<String, Integer> tickets = gameApplication.detectiveTickets;
                 boolean allTicketZero = gameApplication.returnAllZero(currentLocation, tickets);
-                if (allTicketZero){
-                    new AlertDialog.Builder(StartActivity.this)
-                            .setTitle("No more ticket available!")
-                            .setMessage("Please exit the game")
-                            .setNeutralButton("Exit", (dialog, id) -> {
-                                StartActivity.super.onBackPressed();
-                                finish();
-                            })
-                            .setCancelable(false)
-                            .show();
+
+                if (allTicketZero || gameApplication.round == 22){
+                    endGame("MX has won the game", poiList);
+                } else if (destination.getName().equals(mxPosition)) {
+                    endGame("Detective has won the game! Congratulations", poiList);
                 }
 
                 AtomicReference<PointOfInterest> randomPOIAtomic = new AtomicReference<>(randomPOI);
@@ -266,14 +256,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     validateMove(currentLocation, destination, selectedTransportMode, tickets);
 
                     Log.i("Detective ", "Transport" + selectedTransportMode);
-                    gameApplication.incRound();
-                    roundCounter.setText("Round " + gameApplication.getRound());
+
                     // Update current location to new destination
                     textView.setText(randomPOIAtomic.get().getName()); // Update displayed current location
                     currentLocation = destination; // set currentLocation as destination
                     marker.setPosition(destination.createGeoPoint());
 
-
+                    gameApplication.incRound();
+                    roundCounter.setText("Round " + gameApplication.getRound());
 
                         Log.i("Game", "let's get tickets");
                         if (Objects.equals(selectedTransportMode, "bus")) {
@@ -398,6 +388,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     }
     Turn mxTurn(MX mxplayer) throws NoTicketAvailableException {
         Turn turn = mxplayer.getTurn();
+        mxPosition = mxplayer.getPosition();
         Log.i("MX", "Transport: " +turn.ticketType().toString());
         Log.i("MX","Position: "+ turn.target());
 
@@ -530,6 +521,26 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
     }
 
+    private void endGame(String message, List<PointOfInterest> poiList) {
+        // Standort von M. X anzeigen
+        Marker mxMarker = new Marker(mapView);
+        mxMarker.setPosition(getDestinationPOI(mxPosition, poiList).createGeoPoint());
+        mxMarker.setTitle("MX Position");
+        mxMarker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
+        mapView.getOverlays().add(mxMarker);
+        mapView.invalidate();
+
+        // Gewinner anzeigen
+        new AlertDialog.Builder(StartActivity.this)
+                .setTitle("End of game")
+                .setMessage(message)
+                .setNeutralButton("Exit", (dialog, id) -> {
+                    StartActivity.super.onBackPressed();
+                    finish();
+                })
+                .setCancelable(false)
+                .show();
+    }
 
 
 }
