@@ -15,6 +15,7 @@ import java.util.List;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PointOfInterest {
     String name;
@@ -77,6 +78,7 @@ public class PointOfInterest {
 
         return new ArrayList<>(set);
     }
+
 
 
     void displayConnection (MapView mapView) {
