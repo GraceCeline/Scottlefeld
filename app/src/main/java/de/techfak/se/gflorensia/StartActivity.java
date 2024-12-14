@@ -196,6 +196,8 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         );
         spinnerPOI.setAdapter(adapter);
 
+        List<String> availableTransportModes;
+
         spinnerPOI.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -231,6 +233,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTransportMode = spinnerTransport.getSelectedItem().toString();
 
+                Log.d("Selected Transport", selectedTransportMode);
             }
 
             @Override
@@ -241,6 +244,18 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         finishTurnButton.setOnClickListener(v -> {
             try {
                 Map<String, Integer> tickets = gameApplication.detectiveTickets;
+                boolean allTicketZero = gameApplication.returnAllZero(currentLocation, tickets);
+                if (allTicketZero){
+                    new AlertDialog.Builder(StartActivity.this)
+                            .setTitle("No more ticket available!")
+                            .setMessage("Please exit the game")
+                            .setNeutralButton("Exit", (dialog, id) -> {
+                                StartActivity.super.onBackPressed();
+                                finish();
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
 
                 AtomicReference<PointOfInterest> randomPOIAtomic = new AtomicReference<>(randomPOI);
                 randomPOIAtomic.set(destination);
@@ -258,26 +273,28 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     currentLocation = destination; // set currentLocation as destination
                     marker.setPosition(destination.createGeoPoint());
 
-                    Log.i("Game", "let's get tickets");
-                    if (Objects.equals(selectedTransportMode, "bus")) {
-                        Log.i("Game", "bus");
-                        tickets.compute("bus", (k, ticket) -> ticket - 1);
-                        mxPlayer.giveBusTicket();
-                        Log.i("Player ticket", tickets.get("bus").toString());
-                        Log.i("MX gets", String.valueOf(mxPlayer.getBusTickets()));
-                    } else if (Objects.equals(selectedTransportMode, "tram")) {
-                        Log.i("Game", "tram");
-                        tickets.compute("tram", (k, ticket) -> ticket - 1);
-                        mxPlayer.giveTramTicket();
-                        Log.i("Player ticket", tickets.get("tram").toString());
-                        Log.i("MX gets", String.valueOf(mxPlayer.getTramTickets()));
-                    } else if (Objects.equals(selectedTransportMode, "escooter")) {
-                        Log.i("Game", "escooter");
-                        tickets.compute("escooter", (k, ticket) -> ticket - 1);
-                        mxPlayer.giveScooterTicket();
-                        Log.i("Player ticket", tickets.get("escooter").toString());
-                        Log.i("MX gets", String.valueOf(mxPlayer.getScooterTickets()));
-                    }
+
+
+                        Log.i("Game", "let's get tickets");
+                        if (Objects.equals(selectedTransportMode, "bus")) {
+                            Log.i("Game", "bus");
+                            tickets.compute("bus", (k, ticket) -> ticket - 1);
+                            mxPlayer.giveBusTicket();
+                            Log.i("Player ticket", tickets.get("bus").toString());
+                            Log.i("MX gets", String.valueOf(mxPlayer.getBusTickets()));
+                        } else if (Objects.equals(selectedTransportMode, "tram")) {
+                            Log.i("Game", "tram");
+                            tickets.compute("tram", (k, ticket) -> ticket - 1);
+                            mxPlayer.giveTramTicket();
+                            Log.i("Player ticket", tickets.get("tram").toString());
+                            Log.i("MX gets", String.valueOf(mxPlayer.getTramTickets()));
+                        } else if (Objects.equals(selectedTransportMode, "escooter")) {
+                            Log.i("Game", "escooter");
+                            tickets.compute("escooter", (k, ticket) -> ticket - 1);
+                            mxPlayer.giveScooterTicket();
+                            Log.i("Player ticket", tickets.get("escooter").toString());
+                            Log.i("MX gets", String.valueOf(mxPlayer.getScooterTickets()));
+                        }
 
                     // Refresh POIs and transport modes based on the new location
                     List<String> newConnections;
@@ -512,5 +529,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         roundCounter.setText(text);
 
     }
+
+
 
 }
