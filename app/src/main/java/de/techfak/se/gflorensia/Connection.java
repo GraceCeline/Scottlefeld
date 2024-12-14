@@ -1,9 +1,5 @@
 package de.techfak.se.gflorensia;
 
-import android.util.Log;
-
-import java.util.Map;
-
 public class Connection {
 
     String transportMode;
@@ -24,4 +20,5 @@ public class Connection {
     String describeConnection(){
         return "Connection with " + this.transportMode + " to " + this.destination.getName();
     }
+
 }

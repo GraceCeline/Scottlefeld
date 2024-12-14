@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity {
                 } catch (NoMapSelectedException e) {
                     e.printStackTrace();
                 }
-                }
+            }
         });
     }
     public static String getFileNameWithoutExtension(String filename) {

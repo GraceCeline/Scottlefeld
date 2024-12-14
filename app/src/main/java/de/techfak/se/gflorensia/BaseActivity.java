@@ -119,8 +119,8 @@ public class BaseActivity extends AppCompatActivity {
                             : 0; // Default if not present
 
                     // Add the extracted information to the maps
-                    detectivesTicketsMap.put(transportType.replace("-connection", ""), detectivesTickets);
-                    mxTicketsMap.put(transportType.replace("-connection", ""), mxTickets);
+                    detectivesTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), detectivesTickets);
+                    mxTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), mxTickets);
                 }
                 Log.i("Detectives Tickets", detectivesTicketsMap.toString());
                 Log.i("M.X Tickets", mxTicketsMap.toString());

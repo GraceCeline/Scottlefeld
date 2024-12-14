@@ -60,7 +60,7 @@ import de.techfak.gse24.botlib.exceptions.JSONParseException;
 import de.techfak.gse24.botlib.exceptions.NoFreePositionException;
 import de.techfak.gse24.botlib.exceptions.NoTicketAvailableException;
 
-public class StartActivity extends BaseActivity {
+public class StartActivity extends BaseActivity implements PropertyChangeListener{
 
     String selectedPOI;
     String selectedTransportMode;
@@ -76,9 +76,12 @@ public class StartActivity extends BaseActivity {
     Player player;
 
     PlayerFactory playerFactory;
+    GameApplication gameApplication;
     MX mxPlayer;
 
     Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(3, 8, 13, 18));
+
+    TextView roundCounter;
 
 
     @Override
@@ -98,12 +101,12 @@ public class StartActivity extends BaseActivity {
         Spinner spinnerPOI = findViewById(R.id.spinner2);
         Button finishTurnButton = findViewById(R.id.button3);
         Spinner spinnerTransport = findViewById(R.id.spinner3);
-        TextView roundCounter = findViewById(R.id.textView7);
         AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
         mapView = findViewById(R.id.map1);
+        roundCounter = findViewById(R.id.textView7);
         line = new Polyline();
-        GameApplication gameApplication = (GameApplication) getApplication();
-
+        gameApplication = (GameApplication) getApplication();
+        gameApplication.addListener(this);
         Context ctx = getApplicationContext();
 
         IConfigurationProvider provider = Configuration.getInstance();
@@ -119,13 +122,14 @@ public class StartActivity extends BaseActivity {
         try {
             loadGameMap(mapName); // Attempt to load map data
             poiCollection = loadGameMap(mapName).values();
+            Log.i("POI Collection", poiCollection.toString());
             gameApplication.setRound(1);
-            roundCounter.setText("Round: "+gameApplication.round);
+            roundCounter.setText("Round " + gameApplication.getRound());
 
             extractTickets(getJsonContent("maps/"+ mapName +".geojson"), gameApplication.detectiveTickets, gameApplication.mxTickets);
             player.setBusTickets(gameApplication.detectiveTickets.get("bus"));
             player.setTramTickets(gameApplication.detectiveTickets.get("tram"));
-            player.setScooterTickets(gameApplication.detectiveTickets.get("eScooter"));
+            player.setScooterTickets(gameApplication.detectiveTickets.get("escooter"));
 
             mxPlayer = createMX(mapName, player, gameApplication.mxTickets);
             Log.i("MX Start", mxPlayer.getPosition());
@@ -140,7 +144,6 @@ public class StartActivity extends BaseActivity {
         } catch (NoFreePositionException e) {
             showErrorMapDialog("No free Position", "No free positions available! Please choose another action.");
         }
-
 
         // List all POI in the map
 
@@ -168,7 +171,7 @@ public class StartActivity extends BaseActivity {
             // throw new CannotLoadConnectionException();
         }
 
-        // MX TurnF
+        // MX Turn
         try {
             Turn turn = mxTurn(mxPlayer);
             Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
@@ -236,14 +239,40 @@ public class StartActivity extends BaseActivity {
             center.setText(describeGeoPoint(destination.createGeoPoint()));
 
             if (destination != null && selectedTransportMode != null) {
-                Log.i("Detective ", "Transport"+ selectedTransportMode);
-                gameApplication.round++;
-                roundCounter.setText("Round: " + gameApplication.round);
+                Log.i("Detective ", "Transport" + selectedTransportMode);
+                gameApplication.incRound();
+                roundCounter.setText("Round "+gameApplication.getRound());
                 // Update current location to new destination
                 textView.setText(randomPOIAtomic.get().getName()); // Update displayed current location
                 currentLocation = destination; // set currentLocation as destination
                 marker.setPosition(destination.createGeoPoint());
-                // postMap(destination);
+
+                if (gameApplication.detectiveTickets.containsKey(selectedTransportMode)) {
+                    Map<String, Integer> tickets = gameApplication.detectiveTickets;
+                    Log.i("Game", "let's get tickets");
+                    if (tickets.get(selectedTransportMode) > 0) {
+                        Log.i("Game", "let's get transport mode");
+                        if (Objects.equals(selectedTransportMode, "bus")){
+                            Log.i("Game", "bus");
+                            tickets.compute("bus", (k, ticket) -> ticket - 1);
+                            mxPlayer.giveBusTicket();
+                            Log.i("Player ticket", tickets.get("bus").toString());
+                            Log.i("MX gets", String.valueOf(mxPlayer.getBusTickets()));
+                        } else if (Objects.equals(selectedTransportMode, "tram")) {
+                            Log.i("Game", "tram");
+                            tickets.compute("tram", (k, ticket) -> ticket - 1);
+                            mxPlayer.giveTramTicket();
+                            Log.i("Player ticket", tickets.get("tram").toString());
+                            Log.i("MX gets", String.valueOf(mxPlayer.getTramTickets()));
+                        } else if (Objects.equals(selectedTransportMode, "escooter")) {
+                            Log.i("Game", "escooter");
+                            tickets.compute("escooter", (k, ticket) -> ticket - 1);
+                            mxPlayer.giveScooterTicket();
+                            Log.i("Player ticket", tickets.get("escooter").toString());
+                            Log.i("MX gets", String.valueOf(mxPlayer.getScooterTickets()));
+                        }
+                    }
+                }
 
                 // Refresh POIs and transport modes based on the new location
                 List<String> newConnections;
@@ -266,7 +295,7 @@ public class StartActivity extends BaseActivity {
                 showMXMarker(gameApplication.round, poiList);
 
                 // Clear the second dropdown until a new POI is selected
-                spinnerTransport.setAdapter(null);
+                updateDropdown(spinnerTransport, Collections.emptyList()); // Set an empty list
 
                 mapView.invalidate();
             }
@@ -340,7 +369,7 @@ public class StartActivity extends BaseActivity {
 
         playerFactory = new PlayerFactory(jsonContent,player);
 
-        return playerFactory.createMx(mxTickets.get("bus"),mxTickets.get("tram"),mxTickets.get("eScooter"));
+        return playerFactory.createMx(mxTickets.get("bus"),mxTickets.get("tram"),mxTickets.get("escooter"));
     }
     Turn mxTurn(MX mxplayer) throws NoTicketAvailableException {
         Turn turn = mxplayer.getTurn();
@@ -465,4 +494,14 @@ public class StartActivity extends BaseActivity {
         mapView.getOverlays().add(line);
         mapView.invalidate(); // Refresh the map
     }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Log.i("PropertyChange", "Property changed: " + evt.getPropertyName() + " to " + evt.getNewValue());
+        roundCounter = findViewById(R.id.textView7);
+        String text = "Round " + gameApplication.getRound();
+        roundCounter.setText(text);
+
+    }
+
 }
