@@ -93,7 +93,6 @@ public class PointOfInterest {
             connectionMap.computeIfAbsent(connectedPOI, k -> new ArrayList<>()).add(transportMode);
 
         }
-        Log.i("Connection Map", connectionMap.toString());
 
         for (Map.Entry<PointOfInterest, List<String>> entry : connectionMap.entrySet()) {
             PointOfInterest connectedPOI = entry.getKey();
