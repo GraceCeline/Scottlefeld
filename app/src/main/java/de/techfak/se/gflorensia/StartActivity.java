@@ -302,6 +302,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                         Log.i("MX Position", mxPlayer.getPosition());
                         Log.i("MX Transport", "none");
                     }
+
                     showMXMarker(game.player.round, poiList); // Show MX marker on certain rounds
 
                     // Clear the second dropdown until a new POI is selected
