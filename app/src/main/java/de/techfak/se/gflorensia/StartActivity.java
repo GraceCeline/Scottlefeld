@@ -241,10 +241,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         finishTurnButton.setOnClickListener(v -> {
 
             try {
-                Map<String, Integer> tickets = game.detectiveTickets;
-                boolean allTicketZero = game.returnAllZero(currentLocation, tickets);
+                // Map<String, Integer> tickets = game.detectiveTickets;
+                boolean allTicketZero = game.player.returnAllZero(currentLocation);
 
-                if (allTicketZero || game.player.round == 22){
+                if (allTicketZero ){
+                    Log.i("ALl ticket", "zero");
+                    endGame("MX has won the game", poiList);
+                } else if (game.player.round == 22){
+                    Log.i("Game", String.valueOf(game.player.getRound()));
                     endGame("MX has won the game", poiList);
                 } else if (destination.getName().equals(mxPosition)) {
                     endGame("Detective has won the game! Congratulations", poiList);
@@ -256,7 +260,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
-                    validateMove(currentLocation, destination, selectedTransportMode, tickets);
+                    validateMove(currentLocation, destination, selectedTransportMode, game.player);
 
                     Log.i("Detective ", "Transport" + selectedTransportMode);
 
@@ -530,5 +534,41 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 .show();
     }
 
+    public void validateMove (PointOfInterest poiStart, PointOfInterest destinationPOI, String transportMode, Player player) throws InvalidConnectionException, ZeroTicketException {
+
+        boolean connectionFound = false;
+        for (Connection connection : poiStart.getConnections()) {
+            if (connection.getDestination().equals(destinationPOI)) {
+                if (connection.getTransportMode().equals(transportMode)) {
+                    connectionFound = true;
+                    break; // Valid connection found, exit the loop
+                }
+            }
+        }
+
+        if (!connectionFound) {
+            throw new InvalidConnectionException("Invalid connection: Either no direct connection exists or transport mode is invalid!");
+        }
+
+        switch (transportMode){
+            case "bus":
+                if (player.getBusTickets() == 0){
+                    throw new ZeroTicketException("No ticket available for bus");
+                }
+                break;
+            case "escooter":
+                if (player.getScooterTickets() == 0){
+                    throw new ZeroTicketException("No ticket available for scooter");
+                }
+                break;
+            case "tram":
+                if (player.getTramTickets() == 0){
+                    throw new ZeroTicketException("No ticket available for tram");
+                }
+                break;
+        }
+
+        Log.i("Validation", "Move is valid");
+    }
 
 }

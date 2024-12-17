@@ -177,40 +177,6 @@ public class BaseActivity extends AppCompatActivity {
             return isolatedPOIs;
         }
 
-    public void validateMove (PointOfInterest poiStart, PointOfInterest destinationPOI, String transportMode, Map<String, Integer> ticketList) throws InvalidConnectionException, ZeroTicketException {
-            Log.d("POI Start", poiStart.getName());
-            Log.d("POI destination", destinationPOI.getName());
-            Log.i("Transport Mode Chosen ", transportMode);
-//            if (destinationPOI.equals(poiStart)){
-//                throw new InvalidConnectionException("Chosen connection invalid!");
-//            }
-//
-//            if (!(poiStart.getConnections().contains(new Connection(transportMode, destinationPOI)) || destinationPOI.getConnections().contains(new Connection(transportMode, poiStart)))){
-//                throw new InvalidConnectionException("Transport mode invalid!");
-//            }
-        boolean connectionFound = false;
-        for (Connection connection : poiStart.getConnections()) {
-            if (connection.getDestination().equals(destinationPOI)) {
-                if (connection.getTransportMode().equals(transportMode)) {
-                    connectionFound = true;
-                    break; // Valid connection found, exit the loop
-                }
-            }
-        }
-
-        if (!connectionFound) {
-            throw new InvalidConnectionException("Invalid connection: Either no direct connection exists or transport mode is invalid!");
-        }
-
-        if (!(ticketList.containsKey(transportMode) && ticketList.get(transportMode) > 0)){
-            throw new ZeroTicketException("No ticket available for this transport Mode");
-        }
-
-        Log.i("Validation", "Move is valid");
-
-    }
-
-
     String describeGeoPoint(GeoPoint geo){
         return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
     }

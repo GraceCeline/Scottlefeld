@@ -2,6 +2,11 @@ package de.techfak.se.gflorensia;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Player implements de.techfak.gse24.botlib.Player {
     int round;
@@ -94,5 +99,33 @@ public class Player implements de.techfak.gse24.botlib.Player {
         int oldRound = this.getRound();
         this.round++;
         this.support.firePropertyChange("round", oldRound, this.round);
+    }
+
+    public boolean returnAllZero(PointOfInterest poi){
+        List<String> transport = new ArrayList<>();
+        for (Connection connection : poi.getConnections()){
+            transport.add(connection.getTransportMode());
+        }
+        Set<String> availableTransport = new HashSet<>(transport);
+        for (String transportMode : availableTransport){
+            switch (transportMode){
+                case "bus":
+                    if (this.getBusTickets() > 0){
+                        return false;
+                    }
+                    break;
+                case "escooter":
+                    if (this.getScooterTickets() > 0){
+                        return false;
+                    }
+                    break;
+                case "tram":
+                    if (this.getTramTickets() > 0){
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
     }
 }

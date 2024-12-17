@@ -1,7 +1,6 @@
 package de.techfak.se.gflorensia;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.osmdroid.util.GeoPoint;
@@ -126,4 +125,6 @@ public class PointOfInterest {
             }
         }
     }
+
+
 }

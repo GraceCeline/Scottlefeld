@@ -35,21 +35,6 @@ public class GameApplication extends Application {
         // this.support.firePropertyChange("tickets", this.detectiveTickets, this.detectiveTickets);
     }
 
-
-
-    public boolean returnAllZero(PointOfInterest poi, Map<String, Integer> map){
-        List<String> transport = new ArrayList<>();
-        for (Connection connection : poi.getConnections()){
-            transport.add(connection.getTransportMode());
-        }
-        Set<String> availableTransport = new HashSet<>(transport);
-        for (String transportMode : availableTransport){
-            if (map.get(transportMode) != 0){
-                return false;
-            }
-        }
-        return true;
-    }
     public GameApplication(){
         this.support = new PropertyChangeSupport(this);
     }
