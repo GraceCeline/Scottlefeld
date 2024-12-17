@@ -18,7 +18,9 @@ public class Player implements de.techfak.gse24.botlib.Player {
     }
 
     public void setBusTickets(int busTickets) {
+        int oldTickets = this.tramTickets;
         this.busTickets = busTickets;
+        this.support.firePropertyChange("bus", oldTickets, this.busTickets);
     }
 
     public void setPosition(String position) {
@@ -26,11 +28,33 @@ public class Player implements de.techfak.gse24.botlib.Player {
     }
 
     public void setTramTickets(int tramTickets) {
+        int oldTickets = this.tramTickets;
         this.tramTickets = tramTickets;
+        this.support.firePropertyChange("tram", oldTickets, this.tramTickets);
     }
 
     public void setScooterTickets(int scooterTickets) {
+        int oldTickets = this.scooterTickets;
         this.scooterTickets = scooterTickets;
+        this.support.firePropertyChange("escooter", oldTickets, this.scooterTickets);
+    }
+
+    public void decBusTickets() {
+        int oldTickets = this.busTickets;
+        this.busTickets--;
+        this.support.firePropertyChange("bus", oldTickets, this.busTickets);
+    }
+
+    public void decTramTickets() {
+        int oldTickets = this.tramTickets;
+        this.tramTickets--;
+        this.support.firePropertyChange("tram", oldTickets, this.tramTickets);
+    }
+
+    public void decScooterTickets() {
+        int oldTickets = this.scooterTickets;
+        this.scooterTickets--;
+        this.support.firePropertyChange("escooter", oldTickets, this.scooterTickets);
     }
 
 

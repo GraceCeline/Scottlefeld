@@ -20,6 +20,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.math.BigDecimal;
 
 import org.json.JSONException;
+import org.osmdroid.util.GeoPoint;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class BaseActivity extends AppCompatActivity {
@@ -205,5 +208,37 @@ public class BaseActivity extends AppCompatActivity {
 
         Log.i("Validation", "Move is valid");
 
+    }
+
+
+    String describeGeoPoint(GeoPoint geo){
+        return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
+    }
+
+    public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
+        Random random = new Random();
+        int randomIndex = random.nextInt(poiList.size());
+        return poiList.get(randomIndex);
+    }
+
+    PointOfInterest getDestinationPOI (String poiName, List<PointOfInterest> poiList){
+        for ( PointOfInterest poi : poiList){
+            if (poi.getName().equals(poiName)){
+                Log.i("Destination", poi.getName());
+                return poi;
+            }
+        }
+        return null;
+    }
+
+    public List<String> getTransportModeforPOI (PointOfInterest randomPOI, PointOfInterest destinationPOI){
+        List<String> transportmodeList = new ArrayList<>();
+        List<Connection> poiConnection = randomPOI.getConnections();
+        for (Connection connection : poiConnection){
+            if (connection.getDestination().equals(destinationPOI)) {
+                transportmodeList.add(connection.getTransportMode());
+            }
+        }
+        return transportmodeList;
     }
 }

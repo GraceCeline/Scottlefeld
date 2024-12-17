@@ -80,6 +80,9 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(3, 8, 13, 18));
 
     TextView roundCounter;
+    TextView busTicket;
+    TextView escooterTicket;
+    TextView tramTicket;
 
 
     @Override
@@ -126,9 +129,9 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             game.player.incRound();
 
             extractTickets(getJsonContent("maps/"+ mapName +".geojson"), game.detectiveTickets, game.mxTickets);
-            player.setBusTickets(game.detectiveTickets.get("bus"));
-            player.setTramTickets(game.detectiveTickets.get("tram"));
-            player.setScooterTickets(game.detectiveTickets.get("escooter"));
+            game.player.setBusTickets(game.detectiveTickets.get("bus"));
+            game.player.setTramTickets(game.detectiveTickets.get("tram"));
+            game.player.setScooterTickets(game.detectiveTickets.get("escooter"));
 
             mxPlayer = createMX(mapName, player, game.mxTickets);
             Log.i("MX Start", mxPlayer.getPosition());
@@ -241,7 +244,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 Map<String, Integer> tickets = game.detectiveTickets;
                 boolean allTicketZero = game.returnAllZero(currentLocation, tickets);
 
-                if (allTicketZero || game.round == 22){
+                if (allTicketZero || game.player.round == 22){
                     endGame("MX has won the game", poiList);
                 } else if (destination.getName().equals(mxPosition)) {
                     endGame("Detective has won the game! Congratulations", poiList);
@@ -264,24 +267,20 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                     game.player.incRound();
 
-                        Log.i("Game", "let's get tickets");
                         if (Objects.equals(selectedTransportMode, "bus")) {
-                            Log.i("Game", "bus");
-                            tickets.compute("bus", (k, ticket) -> ticket - 1);
+                            game.player.decBusTickets();
                             mxPlayer.giveBusTicket();
-                            Log.i("Player ticket", tickets.get("bus").toString());
+                            Log.i("Player ticket", String.valueOf(player.getBusTickets()));
                             Log.i("MX gets", String.valueOf(mxPlayer.getBusTickets()));
                         } else if (Objects.equals(selectedTransportMode, "tram")) {
-                            Log.i("Game", "tram");
-                            tickets.compute("tram", (k, ticket) -> ticket - 1);
+                            game.player.decTramTickets();
                             mxPlayer.giveTramTicket();
-                            Log.i("Player ticket", tickets.get("tram").toString());
+                            Log.i("Player ticket", String.valueOf(player.getTramTickets()));
                             Log.i("MX gets", String.valueOf(mxPlayer.getTramTickets()));
                         } else if (Objects.equals(selectedTransportMode, "escooter")) {
-                            Log.i("Game", "escooter");
-                            tickets.compute("escooter", (k, ticket) -> ticket - 1);
+                            game.player.decScooterTickets();
                             mxPlayer.giveScooterTicket();
-                            Log.i("Player ticket", tickets.get("escooter").toString());
+                            Log.i("Player ticket", String.valueOf(player.getScooterTickets()));
                             Log.i("MX gets", String.valueOf(mxPlayer.getScooterTickets()));
                         }
 
@@ -303,7 +302,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                         Log.i("MX Position", mxPlayer.getPosition());
                         Log.i("MX Transport", "none");
                     }
-                    showMXMarker(game.round, poiList); // Show MX marker on certain rounds
+                    showMXMarker(game.player.round, poiList); // Show MX marker on certain rounds
 
                     // Clear the second dropdown until a new POI is selected
                     updateDropdown(spinnerTransport, Collections.emptyList()); // Set an empty list
@@ -328,6 +327,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                             dialog.dismiss();
                         })
                         .show();
+                game.player.removeListener(StartActivity.this);
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
@@ -393,32 +393,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         return turn;
     }
-    public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
-        Random random = new Random();
-        int randomIndex = random.nextInt(poiList.size());
-        return poiList.get(randomIndex);
-    }
 
-    PointOfInterest getDestinationPOI (String poiName, List<PointOfInterest> poiList){
-        for ( PointOfInterest poi : poiList){
-            if (poi.getName().equals(poiName)){
-                Log.i("Destination", poi.getName());
-                return poi;
-            }
-        }
-        return null;
-    }
-
-    public List<String> getTransportModeforPOI (PointOfInterest randomPOI, PointOfInterest destinationPOI){
-        List<String> transportmodeList = new ArrayList<>();
-        List<Connection> poiConnection = randomPOI.getConnections();
-        for (Connection connection : poiConnection){
-            if (connection.getDestination().equals(destinationPOI)) {
-                transportmodeList.add(connection.getTransportMode());
-            }
-        }
-        return transportmodeList;
-    }
 
 
     private void updateDropdown(Spinner dropdown, List<String> options) {
@@ -427,9 +402,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         dropdown.setAdapter(adapter);
     }
 
-    String describeGeoPoint(GeoPoint geo){
-        return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
-    }
 
     void postMap(PointOfInterest poi_chosen, List<PointOfInterest> poiList){
 
@@ -514,9 +486,25 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Log.i("PropertyChange", "Property changed: " + evt.getPropertyName() + " to " + evt.getNewValue());
-        roundCounter = findViewById(R.id.textView7);
-        String text = "Round " + game.player.getRound();
-        roundCounter.setText(text);
+        switch (evt.getPropertyName()) {
+            case "round":
+                roundCounter = findViewById(R.id.textView7);
+                String text = "Round " + game.player.getRound();
+                roundCounter.setText(text);
+                break;
+            case "bus":
+                busTicket = findViewById(R.id.textView4);
+                busTicket.setText(evt.getNewValue().toString());
+                break;
+            case "escooter":
+                escooterTicket = findViewById(R.id.textView5);
+                escooterTicket.setText(evt.getNewValue().toString());
+                break;
+            case "tram":
+                tramTicket = findViewById(R.id.textView6);
+                tramTicket.setText(evt.getNewValue().toString());
+                break;
+        }
 
     }
 
