@@ -182,6 +182,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         try {
             connectionList = randomPOI.getConnectedPOIs();
         } catch (JSONException | IOException e) {
+            e.printStackTrace();
         }
 
         // MX Turn
