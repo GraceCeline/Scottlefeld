@@ -67,3 +67,14 @@ tasks.register('javadocDebug', Javadoc) {
     })
     exclude '**/R.html', '**/R.*.html', '**/index.html'
 }
+afterEvaluate {
+    tasks.register('javadocDebug', Javadoc) {
+        dependsOn(tasks.processDebugResources)
+        source = android.sourceSets.main.java.srcDirs
+        destinationDir = file("$buildDir/docs/javadoc/debug")
+        classpath = files(android.getBootClasspath()) + files(android.applicationVariants.collect { variant ->
+            variant.javaCompileProvider.get().classpath.files
+        })
+        exclude '**/R.html', '**/R.*.html', '**/index.html'
+    }
+}

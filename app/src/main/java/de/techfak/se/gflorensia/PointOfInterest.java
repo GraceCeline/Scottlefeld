@@ -37,11 +37,11 @@ public class PointOfInterest {
     public String getName() {
         return name;
     }
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        PointOfInterest that = (PointOfInterest) o;
+        PointOfInterest that = (PointOfInterest) object;
         return name.equals(that.name) && longitude.equals(that.longitude) && latitude.equals(that.latitude);
     }
     @Override
@@ -74,7 +74,7 @@ public class PointOfInterest {
     public List<String> getConnectedPOIs() throws JSONException, IOException {
         List<String> destinationListwithDups = new ArrayList<>();
 
-        for (Connection connection : this.getConnections()){
+        for (Connection connection : this.getConnections()) {
             destinationListwithDups.add(connection.getDestination().getName());
         }
 
@@ -126,18 +126,4 @@ public class PointOfInterest {
         }
     }
 
-    private String createConnectionKey(PointOfInterest poi1, PointOfInterest poi2) {
-        String name1 = poi1.getName();
-        String name2 = poi2.getName();
-        return (name1.compareTo(name2) < 0) ? name1 + "->" + name2 : name2 + "->" + name1;
-    }
-
-    private PointOfInterest getPOIByName(String name, List<PointOfInterest> poiList) {
-        for (PointOfInterest poi : poiList) {
-            if (poi.getName().equals(name)) {
-                return poi;
-            }
-        }
-        return null; // Handle appropriately if POI is not found
-    }
 }

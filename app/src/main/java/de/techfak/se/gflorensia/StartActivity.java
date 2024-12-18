@@ -78,15 +78,17 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     MX mxPlayer;
     String mxPosition = "";
 
+
+    public static final String BUS = "bus";
+    public static final String TRAM = "tram";
+    public static final String SCOOTER = "escooter";
     public static final int ROUND_3 = 3;
     public static final int ROUND_8 = 8;
     public static final int ROUND_13 = 13;
     public static final int ROUND_18 = 18;
     public static final int ENDGAME = 22;
-    public static final String BUS = "bus";
-    public static final String TRAM = "tram";
-    public static final String SCOOTER = "escooter";
     public static final String MX_WON = "MX has won the game";
+    private static final float THICKNESS = 5.0f;
 
     Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(ROUND_3, ROUND_8, ROUND_13, ROUND_18));
 
@@ -136,7 +138,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         try {
             loadGameMap(mapName);
             poiCollection = loadGameMap(mapName).values();
-            Log.i("POI Collection", poiCollection.toString());
             game.player.incRound();
             String mapFile = "maps/" + mapName + ".geojson";
 
@@ -188,8 +189,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             Turn turn = mxTurn(mxPlayer);
         } catch (NoTicketAvailableException e) {
             Log.i("MX Exception", "No ticket available!");
-            Log.i("MX Position", mxPlayer.getPosition());
-            Log.i("MX Transport", "none");
         }
 
         /* Create dropdown menu for Point of Interests */
@@ -304,7 +303,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                         Log.i("Scooter Ticket", String.valueOf(mxPlayer.getScooterTickets()));
                     } catch (NoTicketAvailableException e) {
                         Log.i("MX Position", mxPlayer.getPosition());
-                        Log.i("MX Transport", "none");
                     }
 
                     showMXMarker(game.player.round, poiList);
@@ -394,8 +392,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     Turn mxTurn(MX mxplayer) throws NoTicketAvailableException {
         Turn turn = mxplayer.getTurn();
         mxPosition = mxplayer.getPosition();
-        Log.i("MX", "Transport: " +turn.ticketType().toString());
-        Log.i("MX","Position: "+ turn.target());
 
         return turn;
     }
@@ -410,7 +406,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         mapView.post(() -> {
             mapView.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(poiChosen.boundPOI()), false);
 
-            // mapView.getController().setCenter(poi.createGeoPoint());
             center.setText(describeGeoPoint(poiChosen.createGeoPoint()));
 
             marker = new Marker(mapView);
@@ -451,7 +446,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
     void showMXMarker(Integer number, List<PointOfInterest> poiList) {
         if (showMXrounds.contains(number)) {
-            if(mx == null) {
+            if (mx == null) {
                 mx = new Marker(mapView);
                 mx.setTitle("MX here, I'm in " + mxPlayer.getPosition());
                 mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
@@ -467,7 +462,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 // Hide the marker if it's not in a valid round
                 mx.setVisible(false);
                 mapView.getOverlays().remove(mx);
-                Log.i("Marker", "Not Shown");
             }
         }
     }
@@ -605,15 +599,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             String[] keyParts = connectionKey.split("->");
             PointOfInterest startPOI = getPOIByName(keyParts[0], poiList);
             PointOfInterest destinationPOI = getPOIByName(keyParts[1], poiList);
-
-            float baseThickness = 5.0f; // Base thickness for the lines
+ // Base thickness for the lines
 
             // Iterate over transport modes and draw lines
             for (int i = 0; i < transportModes.size(); i++) {
                 String transportMode = transportModes.get(i);
 
                 // Adjust thickness based on transport mode index
-                float thickness = baseThickness + (i * 2);
+                float thickness = THICKNESS + (i * 2);
 
                 // Create a polyline for this connection
                 Polyline line = new Polyline();
@@ -634,6 +627,8 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     case "tram":
                         paint.setColor(Color.GREEN);
                         break;
+                    default:
+                        break;
                 }
                 line.getOutlinePaint().setStrokeWidth(thickness);
 
@@ -647,9 +642,9 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
     }
 
-    String createConnectionKey(PointOfInterest poi1, PointOfInterest poi2) {
-        String name1 = poi1.getName();
-        String name2 = poi2.getName();
+    String createConnectionKey(PointOfInterest startPoi, PointOfInterest endPoi) {
+        String name1 = startPoi.getName();
+        String name2 = endPoi.getName();
         return (name1.compareTo(name2) < 0) ? name1 + "->" + name2 : name2 + "->" + name1;
     }
 
@@ -659,7 +654,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 return poi;
             }
         }
-        return null; // Handle appropriately if POI is not found
+        return null;
     }
 
 }

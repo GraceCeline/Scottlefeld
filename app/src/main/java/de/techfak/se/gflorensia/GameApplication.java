@@ -1,7 +1,6 @@
 package de.techfak.se.gflorensia;
 import android.app.Application;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.Map;
