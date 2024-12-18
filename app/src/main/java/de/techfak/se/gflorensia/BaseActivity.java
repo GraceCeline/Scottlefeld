@@ -26,8 +26,18 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class BaseActivity extends AppCompatActivity {
+    static final String FEATURES = "features";
+    static final String GEOMETRY = "geometry";
+    static final String TYPE = "type";
+    static final String NAME = "name";
+    static final String P1 = "p1";
+    static final String P2 = "p2";
+    static final String PROPERTIES = "properties";
+    static final String COORDINATES = "coordinates";
+    static final String DETECTIVE = "Ticketanzahl Detectives";
+    static final String MX = "Ticketanzahl M. X";
 
-        public List<String> getFolder (String path){
+        public List<String> getFolder(String path) {
             if (path == null) {
                 return null;
             }
@@ -48,34 +58,34 @@ public class BaseActivity extends AppCompatActivity {
          * @param path The path of the file. Relative to the assets folder.
          * @return The file InputStream or null if an error occurred.
          */
-        public InputStream getFileInputStream (String path) {
+        public InputStream getFileInputStream(String path) {
             try {
                 return getAssets().open(path);
             } catch (IOException e) {
                 return null;
             }
         }
-        public String getJsonContent (String filePath) {
+        public String getJsonContent(String filePath) {
 
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(getFileInputStream(filePath))
             );
             return br.lines().collect(Collectors.joining());
         }
-        public Map<String, PointOfInterest> extractPOI (String jsonContent) throws JSONException {
+        public Map<String, PointOfInterest> extractPOI(String jsonContent) throws JSONException {
             Map<String, PointOfInterest> poiMap;
             ObjectMapper om = new ObjectMapper();
             poiMap = new HashMap<>();
             try {
                 JsonNode root = om.readTree(jsonContent);
-                for (JsonNode jn : root.get("features")) {
-                    String featureType = jn.get("geometry").get("type").asText();
+                for (JsonNode jn : root.get(FEATURES)) {
+                    String featureType = jn.get(GEOMETRY).get(TYPE).asText();
                     if (featureType.equals("Point")) {
-                        String name = jn.get("properties").get("name").asText();
-                        JsonNode coordinates = jn.get("geometry").get("coordinates");
+                        String name = jn.get("properties").get(NAME).asText();
+                        JsonNode coordinates = jn.get(GEOMETRY).get(COORDINATES);
                         // Extract longitude and latitude from the coordinates array
-                        BigDecimal latitude = jn.get("geometry").get("coordinates").get(1).decimalValue();
-                        BigDecimal longitude = jn.get("geometry").get("coordinates").get(0).decimalValue();
+                        BigDecimal latitude = jn.get(GEOMETRY).get(COORDINATES).get(1).decimalValue();
+                        BigDecimal longitude = jn.get(GEOMETRY).get(COORDINATES).get(0).decimalValue();
                         poiMap.put(name, new PointOfInterest(name, latitude, longitude));
                     }
                 }
@@ -85,7 +95,10 @@ public class BaseActivity extends AppCompatActivity {
             return poiMap;
         }
 
-        public void extractTickets(String jsonContent, Map<String, Integer> detectivesTicketsMap, Map<String, Integer> mxTicketsMap) throws JsonProcessingException {
+        public void extractTickets(String jsonContent,
+                                   Map<String, Integer> detectivesTicketsMap,
+                                   Map<String, Integer> mxTicketsMap)
+                throws JsonProcessingException {
             ObjectMapper om = new ObjectMapper();
             JsonNode root = om.readTree(jsonContent);
 
@@ -95,21 +108,21 @@ public class BaseActivity extends AppCompatActivity {
             // Iterate through each type (tram, bus, escooter, etc.)
             for (JsonNode jn : types) {
                 // Get the transport type (e.g., "tram", "bus", etc.)
-                String transportType = jn.get("name").asText();
+                String transportType = jn.get(NAME).asText();
 
                 // Extract ticket amounts for Detectives and M. X
                 int detectivesTickets;
-                if (jn.has("Ticketanzahl Detectives")) {
-                    detectivesTickets = jn.get("Ticketanzahl Detectives").asInt();
+                if (jn.has(DETECTIVE)) {
+                    detectivesTickets = jn.get(DETECTIVE).asInt();
                 } else {
-                    detectivesTickets = 0; // Default if not present
+                    detectivesTickets = 0;
                 }
 
                 int mxTickets;
-                if (jn.has("Ticketanzahl M. X")) {
-                    mxTickets = jn.get("Ticketanzahl M. X").asInt();
+                if (jn.has(MX)) {
+                    mxTickets = jn.get(MX).asInt();
                 } else {
-                    mxTickets = 0; // Default if not present
+                    mxTickets = 0;
                 }
 
                 // Add the extracted information to the maps
@@ -119,30 +132,30 @@ public class BaseActivity extends AppCompatActivity {
             Log.i("Detectives Tickets", detectivesTicketsMap.toString());
             Log.i("M.X Tickets", mxTicketsMap.toString());
         }
-        public void createConnections (String jsonContent, Map < String, PointOfInterest > poiMap) throws IOException {
+        public void createConnections(String jsonContent, Map<String, PointOfInterest> poiMap) throws IOException {
             ObjectMapper om = new ObjectMapper();
             // Handle connections (if any)
             JsonNode root = om.readTree(jsonContent);
             for (JsonNode jn : root.get("features")) {
-                String featureType = jn.get("geometry").get("type").asText();
+                String featureType = jn.get(GEOMETRY).get(TYPE).asText();
                 if (featureType.equals("LineString")) {
-                    JsonNode destination = jn.get("properties").get("routePoints");
-                    JsonNode transport = jn.get("properties").get("typeId");
+                    JsonNode destination = jn.get(PROPERTIES).get("routePoints");
+                    JsonNode transport = jn.get(PROPERTIES).get("typeId");
                     List<String> typeId = new ArrayList<>();
                     for (JsonNode idNode : transport) {
                         typeId.add(idNode.asText());
                     }
                     for (String transportMode : typeId) {
-                        if (poiMap.containsKey(destination.get("p1").asText())) {
-                            PointOfInterest poiStart = poiMap.get(destination.get("p1").asText());
-                            PointOfInterest poi = poiMap.get(destination.get("p2").asText());
+                        if (poiMap.containsKey(destination.get(P1).asText())) {
+                            PointOfInterest poiStart = poiMap.get(destination.get(P1).asText());
+                            PointOfInterest poi = poiMap.get(destination.get(P2).asText());
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
                             poiStart.addConnection(connection);
                         }
-                        if (poiMap.containsKey(destination.get("p2").asText())) {
-                            PointOfInterest poiStart = poiMap.get(destination.get("p2").asText());
-                            PointOfInterest poi = poiMap.get(destination.get("p1").asText());
+                        if (poiMap.containsKey(destination.get(P2).asText())) {
+                            PointOfInterest poiStart = poiMap.get(destination.get(P2).asText());
+                            PointOfInterest poi = poiMap.get(destination.get(P1).asText());
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
                             poiStart.addConnection(connection);
@@ -162,7 +175,7 @@ public class BaseActivity extends AppCompatActivity {
             return isolatedPOIs;
         }
 
-    String describeGeoPoint(GeoPoint geo){
+    String describeGeoPoint(GeoPoint geo) {
         return "Latitude " + geo.getLatitude() + " Longitude " + geo.getLongitude();
     }
 

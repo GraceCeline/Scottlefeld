@@ -76,12 +76,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     PlayerFactory playerFactory;
     GameApplication game;
     MX mxPlayer;
-    String mxPosition = "";
-
+    static final String MAPS = "maps/";
+    static final String GEO = ".geojson";
+    static final String ARROW = "->";
 
     public static final String BUS = "bus";
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
+    static String mxPosition = "";
     public static final int ROUND_3 = 3;
     public static final int ROUND_8 = 8;
     public static final int ROUND_13 = 13;
@@ -139,7 +141,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             loadGameMap(mapName);
             poiCollection = loadGameMap(mapName).values();
             game.player.incRound();
-            String mapFile = "maps/" + mapName + ".geojson";
+            String mapFile = MAPS + mapName + GEO;
 
             extractTickets(getJsonContent(mapFile), game.detectiveTickets, game.mxTickets);
             game.player.setBusTickets(game.detectiveTickets.get(BUS));
@@ -380,10 +382,11 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         return poiMap;
     }
+
     MX createMX(String mapChosen, Player player, Map<String,Integer> mxTickets)
             throws JSONParseException, NoFreePositionException {
-        String filename = mapChosen + ".geojson";
-        String jsonContent = getJsonContent("maps/" + filename);
+        String filename = mapChosen + GEO;
+        String jsonContent = getJsonContent(MAPS + filename);
 
         playerFactory = new PlayerFactory(jsonContent, player);
 
@@ -491,15 +494,15 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 String text = "Round " + game.player.getRound();
                 roundCounter.setText(text);
                 break;
-            case "bus":
+            case BUS:
                 busTicket = findViewById(R.id.textView4);
                 busTicket.setText(evt.getNewValue().toString());
                 break;
-            case "escooter":
+            case SCOOTER:
                 escooterTicket = findViewById(R.id.textView5);
                 escooterTicket.setText(evt.getNewValue().toString());
                 break;
-            case "tram":
+            case TRAM:
                 tramTicket = findViewById(R.id.textView6);
                 tramTicket.setText(evt.getNewValue().toString());
                 break;
@@ -551,17 +554,17 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         }
 
         switch (transportMode) {
-            case "bus":
+            case BUS:
                 if (player.getBusTickets() == 0) {
                     throw new ZeroTicketException("No ticket available for bus");
                 }
                 break;
-            case "escooter":
+            case SCOOTER:
                 if (player.getScooterTickets() == 0) {
                     throw new ZeroTicketException("No ticket available for scooter");
                 }
                 break;
-            case "tram":
+            case TRAM:
                 if (player.getTramTickets() == 0) {
                     throw new ZeroTicketException("No ticket available for tram");
                 }
@@ -597,7 +600,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             List<String> transportModes = entry.getValue();
 
             // Parse the key to get the start and destination POIs
-            String[] keyParts = connectionKey.split("->");
+            String[] keyParts = connectionKey.split(ARROW);
             PointOfInterest startPOI = getPOIByName(keyParts[0], poiList);
             PointOfInterest destinationPOI = getPOIByName(keyParts[1], poiList);
  // Base thickness for the lines
@@ -619,13 +622,13 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 // Set line color based on the transport mode
                 Paint paint = line.getOutlinePaint();
                 switch (transportMode) {
-                    case "bus":
+                    case BUS:
                         paint.setColor(Color.BLUE);
                         break;
-                    case "escooter":
+                    case SCOOTER:
                         paint.setColor(Color.RED);
                         break;
-                    case "tram":
+                    case TRAM:
                         paint.setColor(Color.GREEN);
                         break;
                     default:
@@ -644,9 +647,13 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     }
 
     String createConnectionKey(PointOfInterest startPoi, PointOfInterest endPoi) {
-        String name1 = startPoi.getName();
-        String name2 = endPoi.getName();
-        return (name1.compareTo(name2) < 0) ? name1 + "->" + name2 : name2 + "->" + name1;
+        String poiStart = startPoi.getName();
+        String poiEnd = endPoi.getName();
+        if (poiStart.compareTo(poiEnd) < 0) {
+            return poiStart + ARROW + poiEnd;
+        } else {
+            return poiEnd + ARROW + poiStart;
+        }
     }
 
     PointOfInterest getPOIByName(String name, List<PointOfInterest> poiList) {

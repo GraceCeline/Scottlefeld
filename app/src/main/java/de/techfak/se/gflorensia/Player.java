@@ -111,17 +111,17 @@ public class Player implements de.techfak.gse24.botlib.Player {
         Set<String> availableTransport = new HashSet<>(transport);
         for (String transportMode : availableTransport) {
             switch (transportMode) {
-                case "bus":
+                case PROPERTY_BUS:
                     if (this.getBusTickets() > 0) {
                         return false;
                     }
                     break;
-                case "escooter":
+                case PROPERTY_SCOOTER:
                     if (this.getScooterTickets() > 0) {
                         return false;
                     }
                     break;
-                case "tram":
+                case PROPERTY_TRAM:
                     if (this.getTramTickets() > 0) {
                         return false;
                     }
