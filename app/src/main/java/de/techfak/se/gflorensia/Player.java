@@ -5,10 +5,12 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Player implements de.techfak.gse24.botlib.Player {
+    private static final String PROPERTY_BUS = "bus";
+    private static final String PROPERTY_TRAM = "tram";
+    private static final String PROPERTY_SCOOTER = "escooter";
     int round;
     int busTickets;
     int scooterTickets;
@@ -16,7 +18,7 @@ public class Player implements de.techfak.gse24.botlib.Player {
     String position;
 
 
-    private final PropertyChangeSupport support ;
+    private final PropertyChangeSupport support;
 
     public Player() {
         this.support = new PropertyChangeSupport(this);
@@ -25,7 +27,7 @@ public class Player implements de.techfak.gse24.botlib.Player {
     public void setBusTickets(int busTickets) {
         int oldTickets = this.tramTickets;
         this.busTickets = busTickets;
-        this.support.firePropertyChange("bus", oldTickets, this.busTickets);
+        this.support.firePropertyChange(PROPERTY_BUS, oldTickets, this.busTickets);
     }
 
     public void setPosition(String position) {
@@ -35,31 +37,31 @@ public class Player implements de.techfak.gse24.botlib.Player {
     public void setTramTickets(int tramTickets) {
         int oldTickets = this.tramTickets;
         this.tramTickets = tramTickets;
-        this.support.firePropertyChange("tram", oldTickets, this.tramTickets);
+        this.support.firePropertyChange(PROPERTY_TRAM, oldTickets, this.tramTickets);
     }
 
     public void setScooterTickets(int scooterTickets) {
         int oldTickets = this.scooterTickets;
         this.scooterTickets = scooterTickets;
-        this.support.firePropertyChange("escooter", oldTickets, this.scooterTickets);
+        this.support.firePropertyChange(PROPERTY_SCOOTER, oldTickets, this.scooterTickets);
     }
 
     public void decBusTickets() {
         int oldTickets = this.busTickets;
         this.busTickets--;
-        this.support.firePropertyChange("bus", oldTickets, this.busTickets);
+        this.support.firePropertyChange(PROPERTY_BUS, oldTickets, this.busTickets);
     }
 
     public void decTramTickets() {
         int oldTickets = this.tramTickets;
         this.tramTickets--;
-        this.support.firePropertyChange("tram", oldTickets, this.tramTickets);
+        this.support.firePropertyChange(PROPERTY_TRAM, oldTickets, this.tramTickets);
     }
 
     public void decScooterTickets() {
         int oldTickets = this.scooterTickets;
         this.scooterTickets--;
-        this.support.firePropertyChange("escooter", oldTickets, this.scooterTickets);
+        this.support.firePropertyChange(PROPERTY_SCOOTER, oldTickets, this.scooterTickets);
     }
 
 
@@ -101,28 +103,30 @@ public class Player implements de.techfak.gse24.botlib.Player {
         this.support.firePropertyChange("round", oldRound, this.round);
     }
 
-    public boolean returnAllZero(PointOfInterest poi){
+    public boolean returnAllZero(PointOfInterest poi) {
         List<String> transport = new ArrayList<>();
-        for (Connection connection : poi.getConnections()){
+        for (Connection connection : poi.getConnections()) {
             transport.add(connection.getTransportMode());
         }
         Set<String> availableTransport = new HashSet<>(transport);
-        for (String transportMode : availableTransport){
-            switch (transportMode){
+        for (String transportMode : availableTransport) {
+            switch (transportMode) {
                 case "bus":
-                    if (this.getBusTickets() > 0){
+                    if (this.getBusTickets() > 0) {
                         return false;
                     }
                     break;
                 case "escooter":
-                    if (this.getScooterTickets() > 0){
+                    if (this.getScooterTickets() > 0) {
                         return false;
                     }
                     break;
                 case "tram":
-                    if (this.getTramTickets() > 0){
+                    if (this.getTramTickets() > 0) {
                         return false;
                     }
+                    break;
+                default:
                     break;
             }
         }

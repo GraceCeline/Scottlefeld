@@ -2,20 +2,13 @@ package de.techfak.se.gflorensia;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.io.File;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.res.AssetManager;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.math.BigDecimal;
 
@@ -55,17 +48,14 @@ public class BaseActivity extends AppCompatActivity {
          * @param path The path of the file. Relative to the assets folder.
          * @return The file InputStream or null if an error occurred.
          */
-        public InputStream getFileInputStream (String path){
-            if (path == null) {
-                return null;
-            }
+        public InputStream getFileInputStream (String path) {
             try {
                 return getAssets().open(path);
             } catch (IOException e) {
                 return null;
             }
         }
-        public String getJsonContent (String filePath){
+        public String getJsonContent (String filePath) {
 
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(getFileInputStream(filePath))
@@ -74,31 +64,25 @@ public class BaseActivity extends AppCompatActivity {
         }
         public Map<String, PointOfInterest> extractPOI (String jsonContent) throws JSONException {
             Map<String, PointOfInterest> poiMap;
-            {
-                ObjectMapper om = new ObjectMapper();
-                poiMap = new HashMap<>();
-                try {
-                    JsonNode root = om.readTree(jsonContent);
-                    for (JsonNode jn : root.get("features")) {
-                        String featureType = jn.get("geometry").get("type").asText();
-                        if (featureType.equals("Point")) {
-                            String name = jn.get("properties").get("name").asText();
-                            JsonNode coordinates = jn.get("geometry").get("coordinates");
-                            // Extract longitude and latitude from the coordinates array
-                            BigDecimal latitude = jn.get("geometry").get("coordinates").get(1).decimalValue();
-                            BigDecimal longitude = jn.get("geometry").get("coordinates").get(0).decimalValue();
-                            // Create a new PointOfInterest object
-                            PointOfInterest poi = new PointOfInterest(name, latitude, longitude);
-                            poiMap.put(name, poi);
-                            // Optionally log the POI
-                            Log.i("POI", poi.describePOI());
-                        }
+            ObjectMapper om = new ObjectMapper();
+            poiMap = new HashMap<>();
+            try {
+                JsonNode root = om.readTree(jsonContent);
+                for (JsonNode jn : root.get("features")) {
+                    String featureType = jn.get("geometry").get("type").asText();
+                    if (featureType.equals("Point")) {
+                        String name = jn.get("properties").get("name").asText();
+                        JsonNode coordinates = jn.get("geometry").get("coordinates");
+                        // Extract longitude and latitude from the coordinates array
+                        BigDecimal latitude = jn.get("geometry").get("coordinates").get(1).decimalValue();
+                        BigDecimal longitude = jn.get("geometry").get("coordinates").get(0).decimalValue();
+                        poiMap.put(name, new PointOfInterest(name, latitude, longitude));
                     }
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
                 }
-                return poiMap;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
             }
+            return poiMap;
         }
 
         public void extractTickets(String jsonContent, Map<String, Integer> detectivesTicketsMap, Map<String, Integer> mxTicketsMap) throws JsonProcessingException {
@@ -106,30 +90,36 @@ public class BaseActivity extends AppCompatActivity {
             JsonNode root = om.readTree(jsonContent);
 
                 // Navigate to the "types" object within the "metadata"
-                JsonNode types = root.get("metadata").get("types");
+            JsonNode types = root.get("metadata").get("types");
 
-                // Iterate through each type (tram, bus, escooter, etc.)
-                for (JsonNode jn : types) {
-                    // Get the transport type (e.g., "tram", "bus", etc.)
-                    String transportType = jn.get("name").asText();
+            // Iterate through each type (tram, bus, escooter, etc.)
+            for (JsonNode jn : types) {
+                // Get the transport type (e.g., "tram", "bus", etc.)
+                String transportType = jn.get("name").asText();
 
-                    // Extract ticket amounts for Detectives and M. X
-                    int detectivesTickets = jn.has("Ticketanzahl Detectives")
-                            ? jn.get("Ticketanzahl Detectives").asInt() : 0; // Default if not present
-
-                    int mxTickets = jn.has("Ticketanzahl M. X")
-                            ? jn.get("Ticketanzahl M. X").asInt()
-                            : 0; // Default if not present
-
-                    // Add the extracted information to the maps
-                    detectivesTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), detectivesTickets);
-                    mxTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), mxTickets);
+                // Extract ticket amounts for Detectives and M. X
+                int detectivesTickets;
+                if (jn.has("Ticketanzahl Detectives")) {
+                    detectivesTickets = jn.get("Ticketanzahl Detectives").asInt();
+                } else {
+                    detectivesTickets = 0; // Default if not present
                 }
-                Log.i("Detectives Tickets", detectivesTicketsMap.toString());
-                Log.i("M.X Tickets", mxTicketsMap.toString());
+
+                int mxTickets;
+                if (jn.has("Ticketanzahl M. X")) {
+                    mxTickets = jn.get("Ticketanzahl M. X").asInt();
+                } else {
+                    mxTickets = 0; // Default if not present
+                }
+
+                // Add the extracted information to the maps
+                detectivesTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), detectivesTickets);
+                mxTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), mxTickets);
+            }
+            Log.i("Detectives Tickets", detectivesTicketsMap.toString());
+            Log.i("M.X Tickets", mxTicketsMap.toString());
         }
-        public void createConnections (String jsonContent, Map < String, PointOfInterest > poiMap) throws
-        IOException, JSONException {
+        public void createConnections (String jsonContent, Map < String, PointOfInterest > poiMap) throws IOException {
             ObjectMapper om = new ObjectMapper();
             // Handle connections (if any)
             JsonNode root = om.readTree(jsonContent);
@@ -149,8 +139,6 @@ public class BaseActivity extends AppCompatActivity {
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
                             poiStart.addConnection(connection);
-                            Log.i("From POI",poiStart.getName());
-                            Log.i("Connection", connection.describeConnection());
                         }
                         if (poiMap.containsKey(destination.get("p2").asText())) {
                             PointOfInterest poiStart = poiMap.get(destination.get("p2").asText());
@@ -158,18 +146,15 @@ public class BaseActivity extends AppCompatActivity {
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
                             poiStart.addConnection(connection);
-                            Log.i("From POI",poiStart.getName());
-                            Log.i("Connection", connection.describeConnection());
                         }
                     }
                 }
             }
         }
-        public List<PointOfInterest> findIsolatedPOI (Map < String, PointOfInterest > poiMap){
+        public List<PointOfInterest> findIsolatedPOI(Map<String, PointOfInterest> poiMap) {
             List<PointOfInterest> isolatedPOIs = new ArrayList<>();
             for (PointOfInterest poi : poiMap.values()) {
-                boolean isIsolated = poi.getConnections().isEmpty(); // No outgoing connections
-                if (isIsolated) {
+                if (poi.getConnections().isEmpty()) {
                     isolatedPOIs.add(poi);
                     Log.i("Isolated", poi.getName() + " is isolated");
                 }
@@ -178,7 +163,7 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     String describeGeoPoint(GeoPoint geo){
-        return "Latitude " + geo.getLatitude()+ " Longitude " + geo.getLongitude();
+        return "Latitude " + geo.getLatitude() + " Longitude " + geo.getLongitude();
     }
 
     public PointOfInterest getRandomPOI(List<PointOfInterest> poiList) {
@@ -187,8 +172,8 @@ public class BaseActivity extends AppCompatActivity {
         return poiList.get(randomIndex);
     }
 
-    PointOfInterest getDestinationPOI (String poiName, List<PointOfInterest> poiList){
-        for ( PointOfInterest poi : poiList){
+    PointOfInterest getDestinationPOI(String poiName, List<PointOfInterest> poiList) {
+        for (PointOfInterest poi : poiList){
             if (poi.getName().equals(poiName)){
                 Log.i("Destination", poi.getName());
                 return poi;
@@ -197,10 +182,10 @@ public class BaseActivity extends AppCompatActivity {
         return null;
     }
 
-    public List<String> getTransportModeforPOI (PointOfInterest randomPOI, PointOfInterest destinationPOI){
+    public List<String> getTransportModeforPOI(PointOfInterest randomPOI, PointOfInterest destinationPOI) {
         List<String> transportmodeList = new ArrayList<>();
         List<Connection> poiConnection = randomPOI.getConnections();
-        for (Connection connection : poiConnection){
+        for (Connection connection : poiConnection) {
             if (connection.getDestination().equals(destinationPOI)) {
                 transportmodeList.add(connection.getTransportMode());
             }

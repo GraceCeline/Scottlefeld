@@ -17,9 +17,10 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PointOfInterest {
+    private static final double MARGIN = 0.01;
+    private static final float THICKNESS = 5.0f;
     String name;
     BigDecimal latitude;
     BigDecimal longitude;
@@ -32,12 +33,14 @@ public class PointOfInterest {
     public String describePOI() {
         return "Name: " + name + ", Lat: " + latitude + ", Long: " + longitude;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PointOfInterest that = (PointOfInterest) o;
         return name.equals(that.name) && longitude.equals(that.longitude) && latitude.equals(that.latitude);
     }
@@ -49,20 +52,19 @@ public class PointOfInterest {
         connections.add(connection);
     }
     public List<Connection> getConnections() {
+
         return connections;
     }
 
-    GeoPoint createGeoPoint(){
+    GeoPoint createGeoPoint() {
        return new GeoPoint(latitude.doubleValue(), longitude.doubleValue());
     }
 
-
-
-    GeoPoint marginPOI(){
-        return new GeoPoint(latitude.doubleValue()-0.01, longitude.doubleValue()-0.01);
+    GeoPoint marginPOI() {
+        return new GeoPoint(latitude.doubleValue() - MARGIN, longitude.doubleValue() - MARGIN);
     }
 
-    List<GeoPoint> boundPOI(){
+    List<GeoPoint> boundPOI() {
         List<GeoPoint> boundaries = new ArrayList<>();
         boundaries.add(this.createGeoPoint());
         boundaries.add(this.marginPOI());
@@ -77,13 +79,11 @@ public class PointOfInterest {
         }
 
         Set<String> set = new HashSet<>(destinationListwithDups);
-
         return new ArrayList<>(set);
     }
 
 
-
-    void displayConnection (MapView mapView) {
+    void displayConnection(MapView mapView) {
         Map<PointOfInterest, List<String>> connectionMap = new HashMap<>();
         for (Connection connection : this.getConnections()) {
 
@@ -98,11 +98,11 @@ public class PointOfInterest {
             PointOfInterest connectedPOI = entry.getKey();
             List<String> transportModes = entry.getValue();
 
-            for (int i = 0; i < transportModes.size(); i++){
+            for (int i = 0; i < transportModes.size(); i++) {
                 String transportMode = transportModes.get(i);
 
                 // Adjust thickness for each transport mode
-                float thickness = 5.0f + (i * 2);
+                float thickness = THICKNESS + (i * 2);
                 Polyline line = new Polyline();
                 line.setPoints(Arrays.asList(this.createGeoPoint(), connectedPOI.createGeoPoint()));
 
@@ -117,13 +117,27 @@ public class PointOfInterest {
                     case "tram":
                         paint.setColor(Color.GREEN);
                         break;
+                    default:
+                        break;
                 }
                 line.getOutlinePaint().setStrokeWidth(thickness);
                 mapView.getOverlays().add(line);
-
             }
         }
     }
 
+    private String createConnectionKey(PointOfInterest poi1, PointOfInterest poi2) {
+        String name1 = poi1.getName();
+        String name2 = poi2.getName();
+        return (name1.compareTo(name2) < 0) ? name1 + "->" + name2 : name2 + "->" + name1;
+    }
 
+    private PointOfInterest getPOIByName(String name, List<PointOfInterest> poiList) {
+        for (PointOfInterest poi : poiList) {
+            if (poi.getName().equals(name)) {
+                return poi;
+            }
+        }
+        return null; // Handle appropriately if POI is not found
+    }
 }

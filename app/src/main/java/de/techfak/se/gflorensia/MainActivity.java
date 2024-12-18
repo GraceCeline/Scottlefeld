@@ -4,7 +4,6 @@ import java.util.Map;
 import java.io.File;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,16 +14,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import org.json.JSONException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 /**
  * This is the MainActivity that is executed when the app is started.
  */
 public class MainActivity extends BaseActivity {
-    String TAG = "GeoJson";
+
     String selectedMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,20 +83,25 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     public static String getFileNameWithoutExtension(String filename) {
         File file = new File(filename);
         String name = file.getName();
         int lastDotIndex = name.lastIndexOf(".");
 
         // Remove the extension
-        String nameWithoutExtension = (lastDotIndex == -1) ? name : name.substring(0, lastDotIndex);
+        String nameWithoutExtension;
+        if (lastDotIndex == -1) {
+            nameWithoutExtension = name;
+        } else {
+            nameWithoutExtension = name.substring(0, lastDotIndex);
+        }
         return nameWithoutExtension;
     }
 
-
     public void onClick(View view) {
         Intent intent = new Intent(this, StartActivity.class);
-        intent.putExtra("chosen_map",selectedMap);
+        intent.putExtra("chosen_map", selectedMap);
         startActivity(intent);
     }
 
