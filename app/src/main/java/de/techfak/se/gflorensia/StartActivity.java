@@ -60,6 +60,25 @@ import de.techfak.gse24.botlib.exceptions.NoTicketAvailableException;
 
 public class StartActivity extends BaseActivity implements PropertyChangeListener {
 
+
+    // 1. Static constants
+    static final String MAPS = "maps/";
+    static final String GEO = ".geojson";
+    public static final String BUS = "bus";
+    public static final String TRAM = "tram";
+    public static final String SCOOTER = "escooter";
+    private static final float THICKNESS = 5.0f;
+    static final String ARROW = "->";
+    public static final String MX_WON = "MX has won the game";
+    public static final int ENDGAME = 22;
+    public static final int ROUND_THREE = 3;
+    public static final int ROUND_EIGHT = 8;
+    public static final int ROUND_THIRTEEN = 13;
+    public static final int ROUND_EIGHTEEN = 18;
+
+    static String mxPosition = "";
+
+    Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(ROUND_THREE, ROUND_EIGHT, ROUND_THIRTEEN, ROUND_EIGHTEEN));
     String selectedPOI;
     String selectedTransportMode;
     PointOfInterest currentLocation;
@@ -71,28 +90,11 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     Marker marker;
     Marker mx = null;
     Polyline line;
-    Player player;
 
+    Player player;
     PlayerFactory playerFactory;
     GameApplication game;
     MX mxPlayer;
-    static final String MAPS = "maps/";
-    static final String GEO = ".geojson";
-    static final String ARROW = "->";
-
-    public static final String BUS = "bus";
-    public static final String TRAM = "tram";
-    public static final String SCOOTER = "escooter";
-    static String mxPosition = "";
-    public static final int ROUND_3 = 3;
-    public static final int ROUND_8 = 8;
-    public static final int ROUND_13 = 13;
-    public static final int ROUND_18 = 18;
-    public static final int ENDGAME = 22;
-    public static final String MX_WON = "MX has won the game";
-    private static final float THICKNESS = 5.0f;
-
-    Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(ROUND_3, ROUND_8, ROUND_13, ROUND_18));
 
     TextView roundCounter;
     TextView busTicket;
@@ -202,7 +204,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         );
         spinnerPOI.setAdapter(adapter);
 
-        List<String> availableTransportModes;
 
         spinnerPOI.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -277,13 +278,13 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                     game.player.incRound();
 
-                        if (Objects.equals(selectedTransportMode, "bus")) {
+                        if (Objects.equals(selectedTransportMode, BUS)) {
                             game.player.decBusTickets();
                             mxPlayer.giveBusTicket();
-                        } else if (Objects.equals(selectedTransportMode, "tram")) {
+                        } else if (Objects.equals(selectedTransportMode, TRAM)) {
                             game.player.decTramTickets();
                             mxPlayer.giveTramTicket();
-                        } else if (Objects.equals(selectedTransportMode, "escooter")) {
+                        } else if (Objects.equals(selectedTransportMode, SCOOTER)) {
                             game.player.decScooterTickets();
                             mxPlayer.giveScooterTicket();
                             Log.i("Player ticket", String.valueOf(player.getScooterTickets()));
@@ -516,7 +517,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         // Standort von M. X anzeigen
         Marker mxMarker = new Marker(mapView);
         mxMarker.setPosition(getDestinationPOI(mxPosition, poiList).createGeoPoint());
-        mxMarker.setTitle("MX Position");
         mxMarker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
         mapView.getOverlays().add(mxMarker);
         mapView.invalidate();

@@ -30,8 +30,8 @@ public class BaseActivity extends AppCompatActivity {
     static final String GEOMETRY = "geometry";
     static final String TYPE = "type";
     static final String NAME = "name";
-    static final String P1 = "p1";
-    static final String P2 = "p2";
+    static final String POI_ONE = "p1";
+    static final String POI_TWO = "p2";
     static final String PROPERTIES = "properties";
     static final String COORDINATES = "coordinates";
     static final String DETECTIVE = "Ticketanzahl Detectives";
@@ -81,7 +81,7 @@ public class BaseActivity extends AppCompatActivity {
                 for (JsonNode jn : root.get(FEATURES)) {
                     String featureType = jn.get(GEOMETRY).get(TYPE).asText();
                     if (featureType.equals("Point")) {
-                        String name = jn.get("properties").get(NAME).asText();
+                        String name = jn.get(PROPERTIES).get(NAME).asText();
                         JsonNode coordinates = jn.get(GEOMETRY).get(COORDINATES);
                         // Extract longitude and latitude from the coordinates array
                         BigDecimal latitude = jn.get(GEOMETRY).get(COORDINATES).get(1).decimalValue();
@@ -127,7 +127,6 @@ public class BaseActivity extends AppCompatActivity {
 
                 // Add the extracted information to the maps
                 detectivesTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), detectivesTickets);
-                mxTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), mxTickets);
             }
             Log.i("Detectives Tickets", detectivesTicketsMap.toString());
             Log.i("M.X Tickets", mxTicketsMap.toString());
@@ -136,7 +135,7 @@ public class BaseActivity extends AppCompatActivity {
             ObjectMapper om = new ObjectMapper();
             // Handle connections (if any)
             JsonNode root = om.readTree(jsonContent);
-            for (JsonNode jn : root.get("features")) {
+            for (JsonNode jn : root.get(FEATURES)) {
                 String featureType = jn.get(GEOMETRY).get(TYPE).asText();
                 if (featureType.equals("LineString")) {
                     JsonNode destination = jn.get(PROPERTIES).get("routePoints");
@@ -146,16 +145,16 @@ public class BaseActivity extends AppCompatActivity {
                         typeId.add(idNode.asText());
                     }
                     for (String transportMode : typeId) {
-                        if (poiMap.containsKey(destination.get(P1).asText())) {
-                            PointOfInterest poiStart = poiMap.get(destination.get(P1).asText());
-                            PointOfInterest poi = poiMap.get(destination.get(P2).asText());
+                        if (poiMap.containsKey(destination.get(POI_ONE).asText())) {
+                            PointOfInterest poiStart = poiMap.get(destination.get(POI_ONE).asText());
+                            PointOfInterest poi = poiMap.get(destination.get(POI_TWO).asText());
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
                             poiStart.addConnection(connection);
                         }
-                        if (poiMap.containsKey(destination.get(P2).asText())) {
-                            PointOfInterest poiStart = poiMap.get(destination.get(P2).asText());
-                            PointOfInterest poi = poiMap.get(destination.get(P1).asText());
+                        if (poiMap.containsKey(destination.get(POI_TWO).asText())) {
+                            PointOfInterest poiStart = poiMap.get(destination.get(POI_TWO).asText());
+                            PointOfInterest poi = poiMap.get(destination.get(POI_ONE).asText());
                             Connection connection = new Connection(transportMode, poi);
                             assert poi != null;
                             poiStart.addConnection(connection);
@@ -186,8 +185,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     PointOfInterest getDestinationPOI(String poiName, List<PointOfInterest> poiList) {
-        for (PointOfInterest poi : poiList){
-            if (poi.getName().equals(poiName)){
+        for (PointOfInterest poi : poiList) {
+            if (poi.getName().equals(poiName)) {
                 Log.i("Destination", poi.getName());
                 return poi;
             }
