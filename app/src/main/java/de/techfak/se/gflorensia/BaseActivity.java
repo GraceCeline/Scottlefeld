@@ -34,6 +34,8 @@ public class BaseActivity extends AppCompatActivity {
     static final String POI_TWO = "p2";
     static final String PROPERTIES = "properties";
     static final String COORDINATES = "coordinates";
+
+    static final String CONNECTION = "-connection";
     static final String DETECTIVE = "Ticketanzahl Detectives";
     static final String MX = "Ticketanzahl M. X";
 
@@ -126,7 +128,8 @@ public class BaseActivity extends AppCompatActivity {
                 }
 
                 // Add the extracted information to the maps
-                detectivesTicketsMap.put(transportType.replace("-connection", "").toLowerCase(), detectivesTickets);
+                detectivesTicketsMap.put(transportType.replace(CONNECTION, "").toLowerCase(), detectivesTickets);
+                mxTicketsMap.put(transportType.replace(CONNECTION, "").toLowerCase(), mxTickets);
             }
             Log.i("Detectives Tickets", detectivesTicketsMap.toString());
             Log.i("M.X Tickets", mxTicketsMap.toString());

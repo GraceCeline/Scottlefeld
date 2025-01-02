@@ -1,5 +1,4 @@
 package de.techfak.se.gflorensia;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -60,15 +59,9 @@ import de.techfak.gse24.botlib.exceptions.NoTicketAvailableException;
 
 public class StartActivity extends BaseActivity implements PropertyChangeListener {
 
-
-    // 1. Static constants
-    static final String MAPS = "maps/";
-    static final String GEO = ".geojson";
     public static final String BUS = "bus";
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
-    private static final float THICKNESS = 5.0f;
-    static final String ARROW = "->";
     public static final String MX_WON = "MX has won the game";
     public static final int ENDGAME = 22;
     public static final int ROUND_THREE = 3;
@@ -76,7 +69,12 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     public static final int ROUND_THIRTEEN = 13;
     public static final int ROUND_EIGHTEEN = 18;
 
+    static final String MAPS = "maps/";
+    static final String GEO = ".geojson";
+    static final String ARROW = "->";
     static String mxPosition = "";
+
+    private static final float THICKNESS = 15.0f;
 
     Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(ROUND_THREE, ROUND_EIGHT, ROUND_THIRTEEN, ROUND_EIGHTEEN));
     String selectedPOI;
@@ -150,7 +148,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             game.player.setTramTickets(game.detectiveTickets.get(TRAM));
             game.player.setScooterTickets(game.detectiveTickets.get(SCOOTER));
 
-            mxPlayer = createMX(mapName, player, game.mxTickets);
+            mxPlayer = createMX(mapName, game.player, game.mxTickets);
             Log.i("MX Start", mxPlayer.getPosition());
         } catch (CorruptedMapException | JSONException | IOException e) {
             showErrorMapDialog("Corrupted Map", "You picked a map with isolated POIs!");
@@ -171,6 +169,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         PointOfInterest randomPOI = getRandomPOI(poiList);
         currentLocation = randomPOI;
         postMap(randomPOI, poiList);
+        displayConnection(mapView, poiList);
         player.setPosition(currentLocation.getName());
 
         //////////////////////////////////////////////
@@ -370,8 +369,8 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
     public Map<String, PointOfInterest> loadGameMap(String mapChosen)
             throws CorruptedMapException, JSONException, IOException {
-        String filename = mapChosen + ".geojson";
-        String mapJson = getJsonContent("maps/" + filename);
+        String filename = mapChosen + GEO;
+        String mapJson = getJsonContent(MAPS + filename);
         Map<String, PointOfInterest> poiMap = extractPOI(mapJson);
         createConnections(mapJson, poiMap);
 
@@ -384,7 +383,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         return poiMap;
     }
 
-    MX createMX(String mapChosen, Player player, Map<String,Integer> mxTickets)
+    MX createMX(String mapChosen, Player player, Map<String, Integer> mxTickets)
             throws JSONParseException, NoFreePositionException {
         String filename = mapChosen + GEO;
         String jsonContent = getJsonContent(MAPS + filename);
@@ -437,12 +436,8 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 marker.setOnMarkerClickListener((m, map) -> {
                     Toast.makeText(this, "Point of Interest: " + poi.getName(), Toast.LENGTH_SHORT).show();
                     return true;
-
                 });
 
-                Map<String, List<String>> groupedConnections = new HashMap<>();
-
-                poi.displayConnection(mapView);
                 mapView.getOverlays().add(marker);
             }
         });
@@ -597,7 +592,9 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 // Draw lines for each unique connection
         for (Map.Entry<String, List<String>> entry : groupedConnections.entrySet()) {
             String connectionKey = entry.getKey();
-            List<String> transportModes = entry.getValue();
+            List<String> transportModes = new ArrayList<>(new HashSet<>(entry.getValue()));
+            Log.i("Key", connectionKey);
+            Log.i("Value", transportModes.toString());
 
             // Parse the key to get the start and destination POIs
             String[] keyParts = connectionKey.split(ARROW);
@@ -610,7 +607,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 String transportMode = transportModes.get(i);
 
                 // Adjust thickness based on transport mode index
-                float thickness = THICKNESS + (i * 2);
+                float thickness = THICKNESS - (i * 5);
 
                 // Create a polyline for this connection
                 Polyline line = new Polyline();
@@ -640,8 +637,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 mapView.getOverlayManager().add(line);
             }
         }
-
-// Refresh the map view
         mapView.invalidate();
 
     }
