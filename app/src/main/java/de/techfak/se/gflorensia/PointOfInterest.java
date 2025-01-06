@@ -81,49 +81,4 @@ public class PointOfInterest {
         Set<String> set = new HashSet<>(destinationListwithDups);
         return new ArrayList<>(set);
     }
-
-
-    void displayConnection(MapView mapView) {
-        Map<PointOfInterest, List<String>> connectionMap = new HashMap<>();
-        for (Connection connection : this.getConnections()) {
-
-            PointOfInterest connectedPOI = connection.getDestination();
-            String transportMode = connection.getTransportMode();
-
-            connectionMap.computeIfAbsent(connectedPOI, k -> new ArrayList<>()).add(transportMode);
-
-        }
-
-        for (Map.Entry<PointOfInterest, List<String>> entry : connectionMap.entrySet()) {
-            PointOfInterest connectedPOI = entry.getKey();
-            List<String> transportModes = entry.getValue();
-
-            for (int i = 0; i < transportModes.size(); i++) {
-                String transportMode = transportModes.get(i);
-
-                // Adjust thickness for each transport mode
-                float thickness = THICKNESS + (i * 2);
-                Polyline line = new Polyline();
-                line.setPoints(Arrays.asList(this.createGeoPoint(), connectedPOI.createGeoPoint()));
-
-                Paint paint = line.getPaint();
-                switch (transportMode) {
-                    case "bus":
-                        paint.setColor(Color.BLUE);
-                        break;
-                    case "escooter":
-                        paint.setColor(Color.RED);
-                        break;
-                    case "tram":
-                        paint.setColor(Color.GREEN);
-                        break;
-                    default:
-                        break;
-                }
-                line.getOutlinePaint().setStrokeWidth(thickness);
-                mapView.getOverlays().add(line);
-            }
-        }
-    }
-
 }

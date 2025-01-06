@@ -74,7 +74,7 @@ public class BaseActivity extends AppCompatActivity {
             );
             return br.lines().collect(Collectors.joining());
         }
-        public Map<String, PointOfInterest> extractPOI(String jsonContent) throws JSONException {
+        public Map<String, PointOfInterest> extractPOI(String jsonContent) {
             Map<String, PointOfInterest> poiMap;
             ObjectMapper om = new ObjectMapper();
             poiMap = new HashMap<>();

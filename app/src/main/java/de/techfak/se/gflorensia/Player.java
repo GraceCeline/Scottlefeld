@@ -30,10 +30,6 @@ public class Player implements de.techfak.gse24.botlib.Player {
         this.support.firePropertyChange(PROPERTY_BUS, oldTickets, this.busTickets);
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public void setTramTickets(int tramTickets) {
         int oldTickets = this.tramTickets;
         this.tramTickets = tramTickets;
@@ -44,6 +40,10 @@ public class Player implements de.techfak.gse24.botlib.Player {
         int oldTickets = this.scooterTickets;
         this.scooterTickets = scooterTickets;
         this.support.firePropertyChange(PROPERTY_SCOOTER, oldTickets, this.scooterTickets);
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public void decBusTickets() {

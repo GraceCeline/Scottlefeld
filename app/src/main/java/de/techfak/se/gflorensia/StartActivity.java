@@ -75,6 +75,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     static String mxPosition = "";
 
     private static final float THICKNESS = 15.0f;
+    private static final float DIF = 5;
 
     Set<Integer> showMXrounds = new HashSet<>(Arrays.asList(ROUND_THREE, ROUND_EIGHT, ROUND_THIRTEEN, ROUND_EIGHTEEN));
     String selectedPOI;
@@ -166,6 +167,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         }
 
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
+        game.setPOIList(poiList);
         PointOfInterest randomPOI = getRandomPOI(poiList);
         currentLocation = randomPOI;
         postMap(randomPOI, poiList);
@@ -528,10 +530,10 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 .show();
     }
 
-    public void validateMove(PointOfInterest poiStart,
-                              PointOfInterest destinationPOI,
-                              String transportMode,
-                              Player player)
+    public static void validateMove(PointOfInterest poiStart,
+                                    PointOfInterest destinationPOI,
+                                    String transportMode,
+                                    Player player)
             throws InvalidConnectionException, ZeroTicketException {
 
         boolean connectionFound = false;
@@ -607,7 +609,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 String transportMode = transportModes.get(i);
 
                 // Adjust thickness based on transport mode index
-                float thickness = THICKNESS - (i * 5);
+                float thickness = THICKNESS - (i * DIF);
 
                 // Create a polyline for this connection
                 Polyline line = new Polyline();
