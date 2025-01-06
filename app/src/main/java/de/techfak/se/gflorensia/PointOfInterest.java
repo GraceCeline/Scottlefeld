@@ -1,20 +1,13 @@
 package de.techfak.se.gflorensia;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 import org.json.JSONException;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Polyline;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.math.BigDecimal;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 

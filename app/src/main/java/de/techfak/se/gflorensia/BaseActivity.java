@@ -11,8 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
-
-import org.json.JSONException;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.BufferedReader;
