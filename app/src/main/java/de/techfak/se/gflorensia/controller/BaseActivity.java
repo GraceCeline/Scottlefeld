@@ -1,4 +1,4 @@
-package de.techfak.se.gflorensia;
+package de.techfak.se.gflorensia.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import de.techfak.se.gflorensia.model.Connection;
+import de.techfak.se.gflorensia.model.PointOfInterest;
 
 public class BaseActivity extends AppCompatActivity {
     static final String FEATURES = "features";
@@ -175,7 +178,7 @@ public class BaseActivity extends AppCompatActivity {
             return isolatedPOIs;
         }
 
-    String describeGeoPoint(GeoPoint geo) {
+    public String describeGeoPoint(GeoPoint geo) {
         return "Latitude " + geo.getLatitude() + " Longitude " + geo.getLongitude();
     }
 
@@ -185,7 +188,7 @@ public class BaseActivity extends AppCompatActivity {
         return poiList.get(randomIndex);
     }
 
-    PointOfInterest getDestinationPOI(String poiName, List<PointOfInterest> poiList) {
+    public PointOfInterest getDestinationPOI(String poiName, List<PointOfInterest> poiList) {
         for (PointOfInterest poi : poiList) {
             if (poi.getName().equals(poiName)) {
                 Log.i("Destination", poi.getName());

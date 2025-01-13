@@ -1,15 +1,13 @@
 package de.techfak.se.gflorensia;
 import junit.framework.TestCase;
-
-import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Map;
 
-import javax.xml.validation.Validator;
+import de.techfak.se.gflorensia.controller.StartActivity;
+import de.techfak.se.gflorensia.model.Connection;
+import de.techfak.se.gflorensia.model.Player;
+import de.techfak.se.gflorensia.model.PointOfInterest;
 
 public class ValidateMoveTest extends TestCase {
     private final String BUS = "bus";

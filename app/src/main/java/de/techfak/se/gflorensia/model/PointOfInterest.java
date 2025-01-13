@@ -1,4 +1,4 @@
-package de.techfak.se.gflorensia;
+package de.techfak.se.gflorensia.model;
 
 import org.json.JSONException;
 import org.osmdroid.util.GeoPoint;
@@ -49,15 +49,15 @@ public class PointOfInterest {
         return connections;
     }
 
-    GeoPoint createGeoPoint() {
+    public GeoPoint createGeoPoint() {
        return new GeoPoint(latitude.doubleValue(), longitude.doubleValue());
     }
 
-    GeoPoint marginPOI() {
+    public GeoPoint marginPOI() {
         return new GeoPoint(latitude.doubleValue() - MARGIN, longitude.doubleValue() - MARGIN);
     }
 
-    List<GeoPoint> boundPOI() {
+    public List<GeoPoint> boundPOI() {
         List<GeoPoint> boundaries = new ArrayList<>();
         boundaries.add(this.createGeoPoint());
         boundaries.add(this.marginPOI());

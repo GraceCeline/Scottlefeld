@@ -1,4 +1,4 @@
-package de.techfak.se.gflorensia;
+package de.techfak.se.gflorensia.model;
 
 public class Connection {
 

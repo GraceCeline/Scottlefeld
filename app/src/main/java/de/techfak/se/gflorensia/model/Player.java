@@ -1,4 +1,4 @@
-package de.techfak.se.gflorensia;
+package de.techfak.se.gflorensia.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -11,7 +11,6 @@ public class Player implements de.techfak.gse24.botlib.Player {
     private static final String PROPERTY_BUS = "bus";
     private static final String PROPERTY_TRAM = "tram";
     private static final String PROPERTY_SCOOTER = "escooter";
-    int round;
     int busTickets;
     int scooterTickets;
     int tramTickets;
@@ -93,15 +92,6 @@ public class Player implements de.techfak.gse24.botlib.Player {
         support.removePropertyChangeListener(listener);
     }
 
-    public Integer getRound() {
-        return this.round;
-    }
-
-    public void incRound() {
-        int oldRound = this.getRound();
-        this.round++;
-        this.support.firePropertyChange("round", oldRound, this.round);
-    }
 
     public boolean returnAllZero(PointOfInterest poi) {
         List<String> transport = new ArrayList<>();

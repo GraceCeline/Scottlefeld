@@ -21,13 +21,13 @@
         android:theme="@style/Theme.GSE"
         tools:targetApi="33">
         <activity
-            android:name=".BaseActivity"
+            android:name=".controller.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".StartActivity"
+            android:name=".controller.StartActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".controller.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

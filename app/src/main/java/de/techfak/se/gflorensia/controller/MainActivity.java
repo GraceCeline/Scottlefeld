@@ -1,4 +1,4 @@
-package de.techfak.se.gflorensia;
+package de.techfak.se.gflorensia.controller;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.File;
@@ -16,6 +16,11 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.techfak.se.gflorensia.NoMapSelectedException;
+import de.techfak.se.gflorensia.R;
+import de.techfak.se.gflorensia.model.PointOfInterest;
+
 /**
  * This is the MainActivity that is executed when the app is started.
  */
@@ -42,16 +47,6 @@ public class MainActivity extends BaseActivity {
             for (String file : files) {
                 if (file.endsWith(".geojson")) {
                     mapNames.add(getFileNameWithoutExtension(file));
-
-                    /* if (file.equals("medium.geojson")){
-                        String smallJson = getJsonContent(path + "/" + "medium.geojson");
-                        try {
-                            extractPOI(smallJson);
-                            createConnections(smallJson, poiMap);
-                        } catch (IOException | JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }*/
                 }
             }
         }
