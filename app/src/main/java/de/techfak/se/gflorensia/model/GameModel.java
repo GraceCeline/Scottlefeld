@@ -1,4 +1,6 @@
 package de.techfak.se.gflorensia.model;
+import android.util.Log;
+
 import de.techfak.gse24.botlib.MX;
 import de.techfak.gse24.botlib.PlayerFactory;
 import de.techfak.gse24.botlib.exceptions.JSONParseException;
@@ -10,20 +12,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 public class GameModel {
     public static final String MAPS = "maps/";
     public static final String GEO = ".geojson";
     public static final String BUS = "bus";
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
-    public int round;
+    int round;
     public MX mx;
 
-    public Player player;
+    Player player;
     public PlayerFactory playerFactory;
-
     public List<PointOfInterest> poiList = new ArrayList<>();
-
     public Map<String, Integer> detectiveTickets = new HashMap<>();
     public Map<String, Integer> mxTickets = new HashMap<>();
     final PropertyChangeSupport support;
@@ -46,6 +48,7 @@ public class GameModel {
     public void setMX(MX mx) {
         this.mx = mx;
     }
+    public List<PointOfInterest> getPoiList() { return poiList; }
     public void setPOIList(List<PointOfInterest> poiList) {
         this.poiList = poiList;
     }
@@ -71,6 +74,18 @@ public class GameModel {
         playerFactory = new PlayerFactory(jsonContent, player);
 
         return playerFactory.createMx(mxTickets.get(BUS), mxTickets.get(TRAM), mxTickets.get(SCOOTER));
+    }
+    public void manageTickets(String selectedTransportMode) {
+        if (Objects.equals(selectedTransportMode, BUS)) {
+            player.decBusTickets();
+            mx.giveBusTicket();
+        } else if (Objects.equals(selectedTransportMode, TRAM)) {
+            player.decTramTickets();
+            mx.giveTramTicket();
+        } else if (Objects.equals(selectedTransportMode, SCOOTER)) {
+            player.decScooterTickets();
+            mx.giveScooterTicket();
+        }
     }
     public void addListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);
