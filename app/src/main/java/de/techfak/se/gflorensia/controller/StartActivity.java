@@ -76,6 +76,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
     public static final String MX_WON = "MX has won the game";
+    public static final String DETECTIVE_WON = "Detective has won the game! Congratulations";
     public static final int ENDGAME = 22;
     public static final int ROUND_THREE = 3;
     public static final int ROUND_EIGHT = 8;
@@ -153,7 +154,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         Map<String, Integer> mxTicketsMap = new HashMap<>();
         // Right after game is started
         try {
-            loadGameMap(mapName);
+            // loadGameMap(mapName);
             poiCollection = loadGameMap(mapName).values();
             gameModel.incRound();
         } catch (CorruptedMapException | JSONException | IOException e) {
@@ -168,10 +169,10 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             extractTickets(jsonContent, detectiveTicketsMap, mxTicketsMap);
             gameModel.setDetectiveTickets(detectiveTicketsMap);
             gameModel.setMXTickets(mxTicketsMap);
-            gameModel.getPlayer().setBusTickets(gameModel.detectiveTickets.get(BUS));
-            gameModel.getPlayer().setTramTickets(gameModel.detectiveTickets.get(TRAM));
-            gameModel.getPlayer().setScooterTickets(gameModel.detectiveTickets.get(SCOOTER));
-            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.mxTickets);
+            gameModel.getPlayer().setBusTickets(gameModel.getDetectiveTickets().get(BUS));
+            gameModel.getPlayer().setTramTickets(gameModel.getDetectiveTickets().get(TRAM));
+            gameModel.getPlayer().setScooterTickets(gameModel.getDetectiveTickets().get(SCOOTER));
+            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.getMXTickets());
             gameModel.setMX(mxPlayer);
             Log.i("MX Start", gameModel.getMX().getPosition());
         } catch (JsonProcessingException e) {
@@ -191,13 +192,13 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
         gameModel.setPOIList(poiList);
         PointOfInterest randomPOI = getRandomPOI(poiList);
-        currentLocation = randomPOI;
+        gameModel.setCurrentLocation(randomPOI);
 
         // Show the map
         postMap(randomPOI, poiList);
         // Display all connections with lines
         displayConnection(mapView, poiList);
-        player.setPosition(currentLocation.getName());
+        player.setPosition(gameModel.getCurrentLocation().getName());
 
         //////////////////////////////////////////////
 
@@ -239,11 +240,12 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                 destination = getDestinationPOI(selectedPOI, poiList);
                 if (destination != null) {
-                    List<String> availableTransportModes = getTransportModeforPOI(currentLocation, destination);
+                    List<String> availableTransportModes = getTransportModeforPOI(
+                            gameModel.getCurrentLocation(), destination);
                     updateDropdown(spinnerTransport, availableTransportModes);
                     Log.i("Transport Modes", availableTransportModes.toString());
-
-                    updatePolyline(currentLocation.createGeoPoint(), destination.createGeoPoint());
+                    updatePolyline(gameModel.getCurrentLocation().createGeoPoint(),
+                            destination.createGeoPoint());
                 }
 
             }
@@ -276,7 +278,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         finishTurnButton.setOnClickListener(v -> {
 
             try {
-                if (gameModel.getPlayer().returnAllZero(currentLocation)) {
+                if (gameModel.getPlayer().returnAllZero(gameModel.getCurrentLocation())) {
                     Log.i("ALl ticket", "zero");
                     endGame(MX_WON, poiList);
                 } else if (gameModel.getRound() == ENDGAME) {
@@ -292,17 +294,17 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
-                    validateMove(currentLocation, destination, selectedTransportMode, gameModel.getPlayer());
+                    validateMove(gameModel.getCurrentLocation(), destination, selectedTransportMode, gameModel.getPlayer());
 
                     Log.i("Detective ", "Transport" + selectedTransportMode);
 
                     // Update current location to new destination
                     textView.setText(randomPOIAtomic.get().getName());
-                    currentLocation = destination;
+                    gameModel.setCurrentLocation(destination);
                     marker.setPosition(destination.createGeoPoint());
 
                     gameModel.incRound();
-                    // game.gameModel.manageTickets(selectedTransportMode);
+                    gameModel.manageTickets(selectedTransportMode);
 
                     // Refresh POIs and transport modes based on the new location
                     List<String> newConnections;
@@ -352,10 +354,10 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         Button buttonCenter = findViewById(R.id.button2);
         buttonCenter.setOnClickListener(v -> {
-            if (currentLocation != null) {
-                mapView.getController().setCenter(currentLocation.createGeoPoint());
-                center.setText(describeGeoPoint(currentLocation.createGeoPoint()));
-                Log.i("Center", describeGeoPoint(currentLocation.createGeoPoint()));
+            if (gameModel.getCurrentLocation() != null) {
+                mapView.getController().setCenter(gameModel.getCurrentLocation().createGeoPoint());
+                center.setText(describeGeoPoint(gameModel.getCurrentLocation().createGeoPoint()));
+                Log.i("Center", describeGeoPoint(gameModel.getCurrentLocation().createGeoPoint()));
             }
         });
     }
@@ -410,7 +412,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             marker.setPosition(poiChosen.createGeoPoint());
 
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            marker.setTitle(currentLocation.getName());
+            marker.setTitle(game.getGameModel().getCurrentLocation().getName());
             marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.person, null));
 
             mapView.getOverlays().add(marker);

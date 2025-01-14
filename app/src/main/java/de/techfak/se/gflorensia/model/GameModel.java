@@ -23,14 +23,15 @@ public class GameModel {
     public static final String BUS = "bus";
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
+    public static final int ENDGAME = 22;
+    final PropertyChangeSupport support;
     int round;
     MX mx;
-
     Player player;
-    public List<PointOfInterest> poiList = new ArrayList<>();
-    public Map<String, Integer> detectiveTickets;
-    public Map<String, Integer> mxTickets;
-    final PropertyChangeSupport support;
+    PointOfInterest currentLocation;
+    List<PointOfInterest> poiList = new ArrayList<>();
+    Map<String, Integer> detectiveTickets;
+    Map<String, Integer> mxTickets;
     public GameModel() {
         // mr x erstellen mit plazerfactorz
         // ....
@@ -81,6 +82,15 @@ public class GameModel {
         this.round++;
         this.support.firePropertyChange("round", oldRound, this.round);
     }
+
+    public PointOfInterest getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(PointOfInterest currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
     public void manageTickets(String selectedTransportMode) {
         if (Objects.equals(selectedTransportMode, BUS)) {
             player.decBusTickets();
@@ -93,6 +103,18 @@ public class GameModel {
             mx.giveScooterTicket();
         }
     }
+    /* public String endGameConditions(PointOfInterest destination) {
+        if (player.returnAllZero(currentLocation)) {
+            Log.i("ALl ticket", "zero");
+            return "MX";
+        } else if (round == ENDGAME) {
+            Log.i("Game", String.valueOf(round));
+            return "MX";
+        } else if (destination.getName().equals(mx.getPosition())) {
+            return "Detective";
+        }
+        return "";
+    } */
     public void addListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);
     }
