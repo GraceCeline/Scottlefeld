@@ -1,5 +1,10 @@
 package de.techfak.se.gflorensia.model;
+
 import android.util.Log;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.techfak.gse24.botlib.MX;
 import de.techfak.gse24.botlib.PlayerFactory;
@@ -15,19 +20,16 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GameModel {
-    public static final String MAPS = "maps/";
-    public static final String GEO = ".geojson";
     public static final String BUS = "bus";
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
     int round;
-    public MX mx;
+    MX mx;
 
     Player player;
-    public PlayerFactory playerFactory;
     public List<PointOfInterest> poiList = new ArrayList<>();
-    public Map<String, Integer> detectiveTickets = new HashMap<>();
-    public Map<String, Integer> mxTickets = new HashMap<>();
+    public Map<String, Integer> detectiveTickets;
+    public Map<String, Integer> mxTickets;
     final PropertyChangeSupport support;
     public GameModel() {
         // mr x erstellen mit plazerfactorz
@@ -45,8 +47,20 @@ public class GameModel {
         return mx;
     }
 
-    public void setMX(MX mx) {
-        this.mx = mx;
+    public void setMX(MX mxPlayer) {
+        this.mx = mxPlayer;
+    }
+    public Map<String, Integer> getDetectiveTickets() {
+        return this.detectiveTickets;
+    }
+    public void setDetectiveTickets(Map<String, Integer> detectiveTickets) {
+        this.detectiveTickets = detectiveTickets;
+    }
+    public Map<String, Integer> getMXTickets() {
+        return this.mxTickets;
+    }
+    public void setMXTickets(Map<String, Integer> mxTickets) {
+        this.mxTickets = mxTickets;
     }
     public List<PointOfInterest> getPoiList() { return poiList; }
     public void setPOIList(List<PointOfInterest> poiList) {
@@ -62,18 +76,10 @@ public class GameModel {
     public Integer getRound() {
         return this.round;
     }
-
     public void incRound() {
         int oldRound = this.getRound();
         this.round++;
         this.support.firePropertyChange("round", oldRound, this.round);
-    }
-    public MX createMX(String jsonContent, Player player, Map<String, Integer> mxTickets)
-            throws JSONParseException, NoFreePositionException {
-
-        playerFactory = new PlayerFactory(jsonContent, player);
-
-        return playerFactory.createMx(mxTickets.get(BUS), mxTickets.get(TRAM), mxTickets.get(SCOOTER));
     }
     public void manageTickets(String selectedTransportMode) {
         if (Objects.equals(selectedTransportMode, BUS)) {

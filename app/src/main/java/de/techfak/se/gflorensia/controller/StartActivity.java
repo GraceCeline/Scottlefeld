@@ -33,6 +33,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -82,7 +85,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     static final String MAPS = "maps/";
     static final String GEO = ".geojson";
     static final String ARROW = "->";
-    static String mxPosition = "";
 
     private static final float THICKNESS = 15.0f;
     private static final float DIF = 7;
@@ -101,9 +103,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     Polyline line;
 
     Player player;
-    PlayerFactory playerFactory;
     GameApplication game;
-    MX mxPlayer;
 
     TextView roundCounter;
     TextView busTicket;
@@ -145,32 +145,37 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         player = new Player();
         game.setGameModel(new GameModel());
-        // GameModel gameModel = game.getGameModel();
-        game.gameModel.setPlayer(player);
-        game.gameModel.getPlayer().addListener(this);
-        game.gameModel.addListener(this);
-
+        GameModel gameModel = game.getGameModel();
+        gameModel.setPlayer(player);
+        gameModel.getPlayer().addListener(this);
+        gameModel.addListener(this);
+        Map<String, Integer> detectiveTicketsMap = new HashMap<>();
+        Map<String, Integer> mxTicketsMap = new HashMap<>();
         // Right after game is started
         try {
-
-            String mapJsonContent = getJsonContent(MAPS + mapName + GEO);
-            poiCollection = loadGameMap(mapJsonContent).values();
-            game.gameModel.incRound();
-            String mapFile = MAPS + mapName + GEO;
-
-            extractTickets(getJsonContent(mapFile), game.gameModel.detectiveTickets, game.gameModel.mxTickets);
-            game.gameModel.getPlayer().setBusTickets(game.gameModel.detectiveTickets.get(BUS));
-            game.gameModel.getPlayer().setTramTickets(game.gameModel.detectiveTickets.get(TRAM));
-            game.gameModel.getPlayer().setScooterTickets(game.gameModel.detectiveTickets.get(SCOOTER));
-
-            mxPlayer = game.gameModel.createMX(mapJsonContent, game.gameModel.getPlayer(), game.gameModel.mxTickets);
-            game.gameModel.setMX(mxPlayer);
-            Log.i("MX Start", game.gameModel.getMX().getPosition());
+            loadGameMap(mapName);
+            poiCollection = loadGameMap(mapName).values();
+            gameModel.incRound();
         } catch (CorruptedMapException | JSONException | IOException e) {
             showErrorMapDialog("Corrupted Map", "You picked a map with isolated POIs!");
             return;
         } catch (NullPointerException e) {
-            Log.e("Ticket", "Encountered a NullPointerException: " + e.getMessage());
+            Log.i("Debug", e.getMessage());
+        }
+
+        String jsonContent = getJsonContent(MAPS + mapName + GEO);
+        try {
+            extractTickets(jsonContent, detectiveTicketsMap, mxTicketsMap);
+            gameModel.setDetectiveTickets(detectiveTicketsMap);
+            gameModel.setMXTickets(mxTicketsMap);
+            gameModel.getPlayer().setBusTickets(gameModel.detectiveTickets.get(BUS));
+            gameModel.getPlayer().setTramTickets(gameModel.detectiveTickets.get(TRAM));
+            gameModel.getPlayer().setScooterTickets(gameModel.detectiveTickets.get(SCOOTER));
+            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.mxTickets);
+            gameModel.setMX(mxPlayer);
+            Log.i("MX Start", gameModel.getMX().getPosition());
+        } catch (JsonProcessingException e) {
+            Log.e("Debug", "Error processing Json");
         } catch (JSONParseException e) {
             showErrorMapDialog("JsonParseException", "Cannot parse Json");
             return;
@@ -179,10 +184,12 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     "No free Position",
                     "No free positions available! Please choose another action."
             );
+        } catch (NullPointerException e) {
+            Log.e("Debug", "Encountered a NullPointerException: " + e.getMessage());
         }
 
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
-        game.gameModel.setPOIList(poiList);
+        gameModel.setPOIList(poiList);
         PointOfInterest randomPOI = getRandomPOI(poiList);
         currentLocation = randomPOI;
 
@@ -209,7 +216,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         // MX Turn
         try {
-            Turn turn = mxTurn(mxPlayer);
+            Turn turn = gameModel.getMX().getTurn();
         } catch (NoTicketAvailableException e) {
             Log.i("MX Exception", "No ticket available!");
         }
@@ -269,13 +276,13 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         finishTurnButton.setOnClickListener(v -> {
 
             try {
-                if (game.gameModel.getPlayer().returnAllZero(currentLocation)) {
+                if (gameModel.getPlayer().returnAllZero(currentLocation)) {
                     Log.i("ALl ticket", "zero");
                     endGame(MX_WON, poiList);
-                } else if (game.gameModel.getRound() == ENDGAME) {
-                    Log.i("Game", String.valueOf(game.gameModel.getRound()));
+                } else if (gameModel.getRound() == ENDGAME) {
+                    Log.i("Game", String.valueOf(gameModel.getRound()));
                     endGame(MX_WON, poiList);
-                } else if (destination.getName().equals(mxPosition)) {
+                } else if (destination.getName().equals(gameModel.getMX().getPosition())) {
                     endGame("Detective has won the game! Congratulations", poiList);
                 }
 
@@ -285,20 +292,17 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
-                    validateMove(currentLocation, destination, selectedTransportMode, game.gameModel.getPlayer());
+                    validateMove(currentLocation, destination, selectedTransportMode, gameModel.getPlayer());
 
                     Log.i("Detective ", "Transport" + selectedTransportMode);
-                    /* Hier keine Aufrufe wie marker setzen, auch kein mxPlayer Logik, keine Tickets reduzieren etc
-                    * stattdessen: EIN funktionsaufruf im Model, der sich um das alles kuemmert
-                    * Dieser feuert property change und dadurch wird marker gesetzt */
 
                     // Update current location to new destination
                     textView.setText(randomPOIAtomic.get().getName());
                     currentLocation = destination;
                     marker.setPosition(destination.createGeoPoint());
 
-                    game.gameModel.incRound();
-                    game.gameModel.manageTickets(selectedTransportMode);
+                    gameModel.incRound();
+                    // game.gameModel.manageTickets(selectedTransportMode);
 
                     // Refresh POIs and transport modes based on the new location
                     List<String> newConnections;
@@ -310,12 +314,10 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     }
 
                     try {
-                        Turn turn = mxTurn(mxPlayer);
-                        Log.i("Bus Ticket", String.valueOf(mxPlayer.getBusTickets()));
-                        Log.i("Tram Ticket", String.valueOf(mxPlayer.getTramTickets()));
-                        Log.i("Scooter Ticket", String.valueOf(mxPlayer.getScooterTickets()));
+                        Turn turn = gameModel.getMX().getTurn();
                     } catch (NoTicketAvailableException e) {
-                        Log.i("MX Position", mxPlayer.getPosition());
+                        Snackbar.make(view, e.getMessage(),Snackbar.LENGTH_LONG).show();
+                        Log.i("MX Position", gameModel.getMX().getPosition());
                     }
 
 
@@ -342,8 +344,8 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                             dialog.dismiss();
                         })
                         .show();
-                game.gameModel.getPlayer().removeListener(StartActivity.this);
-                game.gameModel.removeListener(StartActivity.this);
+                gameModel.getPlayer().removeListener(StartActivity.this);
+                gameModel.removeListener(StartActivity.this);
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
@@ -377,26 +379,18 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 .show();
     }
 
-    public Map<String, PointOfInterest> loadGameMap(String jsonContent)
+    public Map<String, PointOfInterest> loadGameMap(String mapChosen)
             throws CorruptedMapException, JSONException, IOException {
-        Map<String, PointOfInterest> poiMap = extractPOI(jsonContent);
-        createConnections(jsonContent, poiMap);
-
+        String filename = mapChosen + GEO;
+        String mapJson = getJsonContent(MAPS + filename);
+        Map<String, PointOfInterest> poiMap = extractPOI(mapJson);
+        createConnections(mapJson, poiMap);
         for (PointOfInterest poi : poiMap.values()) {
             if (poi.getConnections().isEmpty()) {
                 throw new CorruptedMapException();
             }
         }
-
         return poiMap;
-    }
-
-
-    Turn mxTurn(MX mxplayer) throws NoTicketAvailableException {
-        Turn turn = mxplayer.getTurn();
-        mxPosition = mxplayer.getPosition();
-
-        return turn;
     }
 
     private void updateDropdown(Spinner dropdown, List<String> options) {
@@ -442,17 +436,24 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         });
 
     }
+    MX createMX(String jsonContent, Player player, Map<String, Integer> mxTickets)
+            throws JSONParseException, NoFreePositionException {
+        Log.i("Player", player.toString());
+        PlayerFactory playerFactory = new PlayerFactory(jsonContent, player);
+        return playerFactory.createMx(mxTickets.get(BUS), mxTickets.get(TRAM), mxTickets.get(SCOOTER));
+    }
 
     void showMXMarker(Integer number, List<PointOfInterest> poiList) {
+        String position = game.getGameModel().getMX().getPosition();
         if (showMXrounds.contains(number)) {
             if (mx == null) {
                 mx = new Marker(mapView);
-                mx.setTitle("MX here, I'm in " + mxPlayer.getPosition());
+                mx.setTitle("MX here, I'm in " + position);
                 mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
-                PointOfInterest mxPosition = getDestinationPOI(mxPlayer.getPosition(), poiList);
+                PointOfInterest mxPosition = getDestinationPOI(position, poiList);
                 mx.setPosition(mxPosition.createGeoPoint());
             }
-            Log.i("MX Marker", "Position " + mxPlayer.getPosition());
+            Log.i("MX Marker", "Position " + position);
 
             mapView.getOverlays().add(mx);
             mx.setVisible(true);
@@ -486,9 +487,9 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         switch (evt.getPropertyName()) {
             case "round":
                 roundCounter = findViewById(R.id.textView7);
-                String text = "Round " + game.gameModel.getRound();
+                String text = "Round " + game.getGameModel().getRound();
                 roundCounter.setText(text);
-                showMXMarker(game.gameModel.getRound(), game.gameModel.getPoiList());
+                showMXMarker(game.getGameModel().getRound(), game.getGameModel().getPoiList());
                 break;
             case BUS:
                 busTicket = findViewById(R.id.textView4);
@@ -511,7 +512,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     private void endGame(String message, List<PointOfInterest> poiList) {
         // Standort von M. X anzeigen
         Marker mxMarker = new Marker(mapView);
-        mxMarker.setPosition(getDestinationPOI(mxPosition, poiList).createGeoPoint());
+        mxMarker.setPosition(getDestinationPOI(game.getGameModel().getMX().getPosition(), poiList).createGeoPoint());
         mxMarker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
         mapView.getOverlays().add(mxMarker);
         mapView.invalidate();
