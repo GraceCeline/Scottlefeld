@@ -2,10 +2,6 @@ package de.techfak.se.gflorensia.model;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.techfak.gse24.botlib.MX;
 import de.techfak.gse24.botlib.PlayerFactory;
 import de.techfak.gse24.botlib.exceptions.JSONParseException;
@@ -91,6 +87,7 @@ public class GameModel {
 
     public void setCurrentLocation(PointOfInterest currentLocation) {
         this.currentLocation = currentLocation;
+        this.player.setPosition(currentLocation.getName());
     }
 
     public void manageTickets(String selectedTransportMode) {
@@ -105,13 +102,14 @@ public class GameModel {
             mx.giveScooterTicket();
         }
     }
-    public void validateMove(PointOfInterest destinationPOI,
+    public void validateMove(PointOfInterest poiStart,
+                             PointOfInterest destinationPOI,
                                     String transportMode,
                                     Player player)
             throws InvalidConnectionException, ZeroTicketException {
 
         boolean connectionFound = false;
-        for (Connection connection : currentLocation.getConnections()) {
+        for (Connection connection : poiStart.getConnections()) {
             if (connection.getDestination().equals(destinationPOI)) {
                 if (connection.getTransportMode().equals(transportMode)) {
                     connectionFound = true;
@@ -143,27 +141,26 @@ public class GameModel {
             default:
                 break;
         }
-
-        Log.i("Validation", "Move is valid");
     }
 
-    /* public String endGameConditions(PointOfInterest destination) {
-        if (player.returnAllZero(currentLocation)) {
-            Log.i("ALl ticket", "zero");
-            return "MX";
-        } else if (round == ENDGAME) {
-            Log.i("Game", String.valueOf(round));
+    public String endGameConditions(PointOfInterest destination) {
+        if (player.returnAllZero(this.currentLocation) || round == ENDGAME) {
+            Log.i("MX WON", this.currentLocation.describePOI());
+            Log.i("MX WON", this.getRound().toString());
             return "MX";
         } else if (destination.getName().equals(mx.getPosition())) {
+            Log.i("DETECTIVE WON", this.mx.getPosition());
             return "Detective";
         }
         return "";
-    } */
+    }
     public void addListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);
+        Log.i("Listener", "listener added");
     }
 
     public void removeListener(PropertyChangeListener listener) {
         support.removePropertyChangeListener(listener);
+        Log.i("Listener", "listener removed");
     }
 }

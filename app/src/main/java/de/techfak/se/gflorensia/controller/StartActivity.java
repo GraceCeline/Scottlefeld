@@ -34,8 +34,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -154,7 +152,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         Map<String, Integer> mxTicketsMap = new HashMap<>();
         // Right after game is started
         try {
-            // loadGameMap(mapName);
             poiCollection = loadGameMap(mapName).values();
             gameModel.incRound();
         } catch (CorruptedMapException | JSONException | IOException e) {
@@ -165,6 +162,12 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         }
 
         String jsonContent = getJsonContent(MAPS + mapName + GEO);
+
+        List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
+        gameModel.setPOIList(poiList);
+        PointOfInterest randomPOI = getRandomPOI(poiList);
+        gameModel.setCurrentLocation(randomPOI);
+
         try {
             extractTickets(jsonContent, detectiveTicketsMap, mxTicketsMap);
             gameModel.setDetectiveTickets(detectiveTicketsMap);
@@ -189,16 +192,11 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             showErrorMapDialog("Null Pointer Exception", e.getMessage());
         }
 
-        List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
-        gameModel.setPOIList(poiList);
-        PointOfInterest randomPOI = getRandomPOI(poiList);
-        gameModel.setCurrentLocation(randomPOI);
-
         // Show the map
         postMap(randomPOI, poiList);
         // Display all connections with lines
         displayConnection(mapView, poiList);
-        player.setPosition(gameModel.getCurrentLocation().getName());
+        // player.setPosition(gameModel.getCurrentLocation().getName());
 
         //////////////////////////////////////////////
 
@@ -214,13 +212,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             connectionList = randomPOI.getConnectedPOIs();
         } catch (JSONException | IOException e) {
             showErrorMapDialog("Exception", e.getMessage());
-        }
-
-        // MX Turn
-        try {
-            Turn turn = gameModel.getMX().getTurn();
-        } catch (NoTicketAvailableException e) {
-            showErrorMapDialog("MX Exception", "No ticket available!");
         }
 
         /* Create dropdown menu for Point of Interests */
@@ -278,14 +269,11 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         finishTurnButton.setOnClickListener(v -> {
 
             try {
-                if (gameModel.getPlayer().returnAllZero(gameModel.getCurrentLocation())) {
-                    Log.i("ALl ticket", "zero");
-                    endGame(MX_WON, poiList);
-                } else if (gameModel.getRound() == ENDGAME) {
-                    Log.i("Game", String.valueOf(gameModel.getRound()));
-                    endGame(MX_WON, poiList);
-                } else if (destination.getName().equals(gameModel.getMX().getPosition())) {
-                    endGame("Detective has won the game! Congratulations", poiList);
+                if (!gameModel.endGameConditions(destination).isEmpty()) {
+                    endGame(gameModel.endGameConditions(destination) + " won", gameModel.getPoiList());
+                    gameModel.getPlayer().removeListener(this);
+                    gameModel.removeListener(this);
+                    return;
                 }
 
                 AtomicReference<PointOfInterest> randomPOIAtomic = new AtomicReference<>(randomPOI);
@@ -294,13 +282,15 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
-                    gameModel.validateMove(destination, selectedTransportMode, gameModel.getPlayer());
+                    gameModel.validateMove(gameModel.getCurrentLocation(),
+                            destination, selectedTransportMode, gameModel.getPlayer());
 
                     Log.i("Detective ", "Transport" + selectedTransportMode);
 
                     // Update current location to new destination
                     textView.setText(randomPOIAtomic.get().getName());
                     gameModel.setCurrentLocation(destination);
+                    Log.i("Player position", gameModel.getPlayer().getPosition());
                     marker.setPosition(destination.createGeoPoint());
 
                     gameModel.incRound();
@@ -317,15 +307,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                     try {
                         Turn turn = gameModel.getMX().getTurn();
+                        Log.i("MX position", gameModel.getMX().getPosition());
                     } catch (NoTicketAvailableException e) {
                         Snackbar.make(view, e.getMessage(),Snackbar.LENGTH_LONG).show();
                         Log.i("MX Position", gameModel.getMX().getPosition());
                     }
 
-
                     // Clear the second dropdown until a new POI is selected
                     updateDropdown(spinnerTransport, Collections.emptyList());
-
                     mapView.invalidate();
                 }
             } catch (InvalidConnectionException | ZeroTicketException e) {
@@ -340,14 +329,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                         .setMessage("Are you sure you want to exit?")
                         .setPositiveButton("Yes", (dialog, id) -> {
                             StartActivity.super.onBackPressed();
+                            gameModel.getPlayer().removeListener(StartActivity.this);
+                            gameModel.removeListener(StartActivity.this);
                             finish();
                         })
                         .setNegativeButton("No", (dialog, id) -> {
                             dialog.dismiss();
                         })
                         .show();
-                gameModel.getPlayer().removeListener(StartActivity.this);
-                gameModel.removeListener(StartActivity.this);
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
@@ -619,5 +608,4 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         }
         return null;
     }
-
 }
