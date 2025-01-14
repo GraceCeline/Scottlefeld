@@ -268,27 +268,25 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         finishTurnButton.setOnClickListener(v -> {
 
+            textView.setText(destination.getName());
+            center.setText(describeGeoPoint(destination.createGeoPoint()));
+            if (!gameModel.endGameConditions(destination).isEmpty()) {
+                endGame(gameModel.endGameConditions(destination) + " won \n"
+                        + "Position: " + destination.getName(), gameModel.getPoiList());
+                gameModel.getPlayer().removeListener(this);
+                gameModel.removeListener(this);
+                return;
+            }
+
             try {
-                if (!gameModel.endGameConditions(destination).isEmpty()) {
-                    endGame(gameModel.endGameConditions(destination) + " won", gameModel.getPoiList());
-                    gameModel.getPlayer().removeListener(this);
-                    gameModel.removeListener(this);
-                    return;
-                }
-
-                AtomicReference<PointOfInterest> randomPOIAtomic = new AtomicReference<>(randomPOI);
-                randomPOIAtomic.set(destination);
-                center.setText(describeGeoPoint(destination.createGeoPoint()));
-
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
                     gameModel.validateMove(gameModel.getCurrentLocation(),
                             destination, selectedTransportMode, gameModel.getPlayer());
 
-                    Log.i("Detective ", "Transport" + selectedTransportMode);
+                    Log.i("Detective ", "Transport " + selectedTransportMode);
 
                     // Update current location to new destination
-                    textView.setText(randomPOIAtomic.get().getName());
                     gameModel.setCurrentLocation(destination);
                     Log.i("Player position", gameModel.getPlayer().getPosition());
                     marker.setPosition(destination.createGeoPoint());
@@ -299,7 +297,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     // Refresh POIs and transport modes based on the new location
                     List<String> newConnections;
                     try {
-                        newConnections = randomPOIAtomic.get().getConnectedPOIs();
+                        newConnections = gameModel.getCurrentLocation().getConnectedPOIs();
                         updateDropdown(spinnerPOI, newConnections);
                     } catch (JSONException | IOException e) {
                         Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -308,6 +306,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     try {
                         Turn turn = gameModel.getMX().getTurn();
                         Log.i("MX position", gameModel.getMX().getPosition());
+                        showMXMarker(gameModel.getRound(), game.getGameModel().getPoiList());
                     } catch (NoTicketAvailableException e) {
                         Snackbar.make(view, e.getMessage(),Snackbar.LENGTH_LONG).show();
                         Log.i("MX Position", gameModel.getMX().getPosition());
@@ -480,7 +479,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 roundCounter = findViewById(R.id.textView7);
                 String text = "Round " + game.getGameModel().getRound();
                 roundCounter.setText(text);
-                showMXMarker(game.getGameModel().getRound(), game.getGameModel().getPoiList());
                 break;
             case BUS:
                 busTicket = findViewById(R.id.textView4);

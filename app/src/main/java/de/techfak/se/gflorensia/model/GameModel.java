@@ -3,16 +3,12 @@ package de.techfak.se.gflorensia.model;
 import android.util.Log;
 
 import de.techfak.gse24.botlib.MX;
-import de.techfak.gse24.botlib.PlayerFactory;
-import de.techfak.gse24.botlib.exceptions.JSONParseException;
-import de.techfak.gse24.botlib.exceptions.NoFreePositionException;
 import de.techfak.se.gflorensia.InvalidConnectionException;
 import de.techfak.se.gflorensia.ZeroTicketException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -94,12 +90,15 @@ public class GameModel {
         if (Objects.equals(selectedTransportMode, BUS)) {
             player.decBusTickets();
             mx.giveBusTicket();
+            Log.i("Ticket player", String.valueOf(this.player.getBusTickets()));
         } else if (Objects.equals(selectedTransportMode, TRAM)) {
             player.decTramTickets();
             mx.giveTramTicket();
+            Log.i("Ticket player", String.valueOf(this.player.getTramTickets()));
         } else if (Objects.equals(selectedTransportMode, SCOOTER)) {
             player.decScooterTickets();
             mx.giveScooterTicket();
+            Log.i("Ticket player", String.valueOf(this.player.getScooterTickets()));
         }
     }
     public void validateMove(PointOfInterest poiStart,
@@ -144,12 +143,11 @@ public class GameModel {
     }
 
     public String endGameConditions(PointOfInterest destination) {
-        if (player.returnAllZero(this.currentLocation) || round == ENDGAME) {
+        if (this.player.returnAllZero(destination) || round == ENDGAME) {
             Log.i("MX WON", this.currentLocation.describePOI());
             Log.i("MX WON", this.getRound().toString());
             return "MX";
         } else if (destination.getName().equals(mx.getPosition())) {
-            Log.i("DETECTIVE WON", this.mx.getPosition());
             return "Detective";
         }
         return "";
