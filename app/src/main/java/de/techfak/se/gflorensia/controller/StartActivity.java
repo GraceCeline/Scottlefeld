@@ -175,7 +175,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             gameModel.setMX(mxPlayer);
             Log.i("MX Start", gameModel.getMX().getPosition());
         } catch (JsonProcessingException e) {
-            Log.e("Debug", "Error processing Json");
+            showErrorMapDialog("JsonProcessingException", e.getMessage());
         } catch (JSONParseException e) {
             showErrorMapDialog("JsonParseException", "Cannot parse Json");
             return;
@@ -185,7 +185,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     "No free positions available! Please choose another action."
             );
         } catch (NullPointerException e) {
-            Log.e("Debug", "Encountered a NullPointerException: " + e.getMessage());
+            showErrorMapDialog("Null Pointer Exception", e.getMessage());
         }
 
         List<PointOfInterest> poiList = new ArrayList<>(poiCollection);
@@ -195,6 +195,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         // Show the map
         postMap(randomPOI, poiList);
+        // Display all connections with lines
         displayConnection(mapView, poiList);
         player.setPosition(currentLocation.getName());
 
@@ -211,14 +212,14 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         try {
             connectionList = randomPOI.getConnectedPOIs();
         } catch (JSONException | IOException e) {
-            Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_LONG).show();
+            showErrorMapDialog("Exception", e.getMessage());
         }
 
         // MX Turn
         try {
             Turn turn = gameModel.getMX().getTurn();
         } catch (NoTicketAvailableException e) {
-            Log.i("MX Exception", "No ticket available!");
+            showErrorMapDialog("MX Exception", "No ticket available!");
         }
 
         /* Create dropdown menu for Point of Interests */
@@ -255,7 +256,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 try {
                     throw new NoMapSelectedException();
                 } catch (NoMapSelectedException e) {
-                    Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    showErrorMapDialog("No Map Selected Exception", e.getMessage());
                 }
             }
         });
@@ -264,7 +265,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTransportMode = spinnerTransport.getSelectedItem().toString();
-
                 Log.d("Selected Transport", selectedTransportMode);
             }
 
