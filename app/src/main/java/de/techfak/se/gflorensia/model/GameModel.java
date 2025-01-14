@@ -10,6 +10,8 @@ import de.techfak.gse24.botlib.MX;
 import de.techfak.gse24.botlib.PlayerFactory;
 import de.techfak.gse24.botlib.exceptions.JSONParseException;
 import de.techfak.gse24.botlib.exceptions.NoFreePositionException;
+import de.techfak.se.gflorensia.InvalidConnectionException;
+import de.techfak.se.gflorensia.ZeroTicketException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -103,6 +105,48 @@ public class GameModel {
             mx.giveScooterTicket();
         }
     }
+    public void validateMove(PointOfInterest destinationPOI,
+                                    String transportMode,
+                                    Player player)
+            throws InvalidConnectionException, ZeroTicketException {
+
+        boolean connectionFound = false;
+        for (Connection connection : currentLocation.getConnections()) {
+            if (connection.getDestination().equals(destinationPOI)) {
+                if (connection.getTransportMode().equals(transportMode)) {
+                    connectionFound = true;
+                    break;
+                }
+            }
+        }
+
+        if (!connectionFound) {
+            throw new InvalidConnectionException("Invalid connection");
+        }
+
+        switch (transportMode) {
+            case BUS:
+                if (player.getBusTickets() == 0) {
+                    throw new ZeroTicketException("No ticket available for bus");
+                }
+                break;
+            case SCOOTER:
+                if (player.getScooterTickets() == 0) {
+                    throw new ZeroTicketException("No ticket available for scooter");
+                }
+                break;
+            case TRAM:
+                if (player.getTramTickets() == 0) {
+                    throw new ZeroTicketException("No ticket available for tram");
+                }
+                break;
+            default:
+                break;
+        }
+
+        Log.i("Validation", "Move is valid");
+    }
+
     /* public String endGameConditions(PointOfInterest destination) {
         if (player.returnAllZero(currentLocation)) {
             Log.i("ALl ticket", "zero");

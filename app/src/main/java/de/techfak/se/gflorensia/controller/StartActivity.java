@@ -294,7 +294,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
-                    validateMove(gameModel.getCurrentLocation(), destination, selectedTransportMode, gameModel.getPlayer());
+                    gameModel.validateMove(destination, selectedTransportMode, gameModel.getPlayer());
 
                     Log.i("Detective ", "Transport" + selectedTransportMode);
 
@@ -529,49 +529,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                 })
                 .setCancelable(false)
                 .show();
-    }
-
-    public static void validateMove(PointOfInterest poiStart,
-                                    PointOfInterest destinationPOI,
-                                    String transportMode,
-                                    Player player)
-            throws InvalidConnectionException, ZeroTicketException {
-
-        boolean connectionFound = false;
-        for (Connection connection : poiStart.getConnections()) {
-            if (connection.getDestination().equals(destinationPOI)) {
-                if (connection.getTransportMode().equals(transportMode)) {
-                    connectionFound = true;
-                    break;
-                }
-            }
-        }
-
-        if (!connectionFound) {
-            throw new InvalidConnectionException("Invalid connection");
-        }
-
-        switch (transportMode) {
-            case BUS:
-                if (player.getBusTickets() == 0) {
-                    throw new ZeroTicketException("No ticket available for bus");
-                }
-                break;
-            case SCOOTER:
-                if (player.getScooterTickets() == 0) {
-                    throw new ZeroTicketException("No ticket available for scooter");
-                }
-                break;
-            case TRAM:
-                if (player.getTramTickets() == 0) {
-                    throw new ZeroTicketException("No ticket available for tram");
-                }
-                break;
-            default:
-                break;
-        }
-
-        Log.i("Validation", "Move is valid");
     }
 
     void displayConnection(MapView mapView, List<PointOfInterest> poiList) {
