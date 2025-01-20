@@ -1,7 +1,5 @@
 package de.techfak.se.gflorensia.model;
 
-import android.util.Log;
-
 import de.techfak.gse24.botlib.MX;
 import de.techfak.se.gflorensia.InvalidConnectionException;
 import de.techfak.se.gflorensia.ZeroTicketException;
@@ -27,8 +25,6 @@ public class GameModel {
     Map<String, Integer> detectiveTickets;
     Map<String, Integer> mxTickets;
     public GameModel() {
-        // mr x erstellen mit plazerfactorz
-        // ....
         this.support = new PropertyChangeSupport(this);
     }
 
@@ -57,7 +53,9 @@ public class GameModel {
     public void setMXTickets(Map<String, Integer> mxTickets) {
         this.mxTickets = mxTickets;
     }
-    public List<PointOfInterest> getPoiList() { return poiList; }
+    public List<PointOfInterest> getPoiList() {
+        return poiList;
+    }
     public void setPOIList(List<PointOfInterest> poiList) {
         this.poiList = poiList;
     }
@@ -90,15 +88,12 @@ public class GameModel {
         if (Objects.equals(selectedTransportMode, BUS)) {
             player.decBusTickets();
             mx.giveBusTicket();
-            Log.i("Ticket player", String.valueOf(this.player.getBusTickets()));
         } else if (Objects.equals(selectedTransportMode, TRAM)) {
             player.decTramTickets();
             mx.giveTramTicket();
-            Log.i("Ticket player", String.valueOf(this.player.getTramTickets()));
         } else if (Objects.equals(selectedTransportMode, SCOOTER)) {
             player.decScooterTickets();
             mx.giveScooterTicket();
-            Log.i("Ticket player", String.valueOf(this.player.getScooterTickets()));
         }
     }
     public void validateMove(PointOfInterest poiStart,
@@ -143,9 +138,7 @@ public class GameModel {
     }
 
     public String endGameConditions(PointOfInterest destination) {
-        if (this.player.returnAllZero(destination) || round == ENDGAME) {
-            Log.i("MX WON", this.currentLocation.describePOI());
-            Log.i("MX WON", this.getRound().toString());
+        if (player.returnAllZero(this.currentLocation) || round == ENDGAME) {
             return "MX";
         } else if (destination.getName().equals(mx.getPosition())) {
             return "Detective";
@@ -154,11 +147,9 @@ public class GameModel {
     }
     public void addListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);
-        Log.i("Listener", "listener added");
     }
 
     public void removeListener(PropertyChangeListener listener) {
         support.removePropertyChangeListener(listener);
-        Log.i("Listener", "listener removed");
     }
 }

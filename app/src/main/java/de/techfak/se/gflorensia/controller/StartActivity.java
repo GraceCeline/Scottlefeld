@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import androidx.activity.EdgeToEdge;
@@ -49,7 +48,6 @@ import org.osmdroid.views.overlay.Polyline;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 import de.techfak.gse24.botlib.MX;
 import de.techfak.gse24.botlib.PlayerFactory;
@@ -267,32 +265,30 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         });
 
         finishTurnButton.setOnClickListener(v -> {
-
-            textView.setText(destination.getName());
-            center.setText(describeGeoPoint(destination.createGeoPoint()));
-            if (!gameModel.endGameConditions(destination).isEmpty()) {
-                endGame(gameModel.endGameConditions(destination) + " won \n"
-                        + "Position: " + destination.getName(), gameModel.getPoiList());
-                gameModel.getPlayer().removeListener(this);
-                gameModel.removeListener(this);
-                return;
-            }
+            gameModel.manageTickets(selectedTransportMode);
 
             try {
+                if (!gameModel.endGameConditions(destination).isEmpty()) {
+                    endGame(gameModel.endGameConditions(destination) + " won \n"
+                            + "Position: " + destination.getName(), gameModel.getPoiList());
+                    gameModel.getPlayer().removeListener(this);
+                    gameModel.removeListener(this);
+                    return;
+                }
                 if (destination != null && selectedTransportMode != null) {
                     // Validate move before the next step
                     gameModel.validateMove(gameModel.getCurrentLocation(),
                             destination, selectedTransportMode, gameModel.getPlayer());
 
-                    Log.i("Detective ", "Transport " + selectedTransportMode);
-
                     // Update current location to new destination
+                    // Update current location to new destinatioen
+                    textView.setText(destination.getName());
+                    center.setText(describeGeoPoint(destination.createGeoPoint()));
                     gameModel.setCurrentLocation(destination);
                     Log.i("Player position", gameModel.getPlayer().getPosition());
                     marker.setPosition(destination.createGeoPoint());
 
                     gameModel.incRound();
-                    gameModel.manageTickets(selectedTransportMode);
 
                     // Refresh POIs and transport modes based on the new location
                     List<String> newConnections;
@@ -308,7 +304,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                         Log.i("MX position", gameModel.getMX().getPosition());
                         showMXMarker(gameModel.getRound(), game.getGameModel().getPoiList());
                     } catch (NoTicketAvailableException e) {
-                        Snackbar.make(view, e.getMessage(),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_LONG).show();
                         Log.i("MX Position", gameModel.getMX().getPosition());
                     }
 
@@ -436,20 +432,28 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
     void showMXMarker(Integer number, List<PointOfInterest> poiList) {
         String position = game.getGameModel().getMX().getPosition();
         if (showMXrounds.contains(number)) {
+            // If the marker doesn't exist yet, create it
             if (mx == null) {
                 mx = new Marker(mapView);
-                mx.setTitle("MX here, I'm in " + position);
                 mx.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.mx, null));
-                PointOfInterest mxPosition = getDestinationPOI(position, poiList);
+            }
+
+            // Always update position and title for the new round
+            mx.setTitle("MX here, I'm in " + position);
+            PointOfInterest mxPosition = getDestinationPOI(position, poiList);
+            if (mxPosition != null) {
                 mx.setPosition(mxPosition.createGeoPoint());
             }
+
             Log.i("MX Marker", "Position " + position);
 
+            // Add to overlay and show marker
             mapView.getOverlays().add(mx);
             mx.setVisible(true);
+
         } else {
+            // If not in a reveal round, remove or hide the marker
             if (mx != null) {
-                // Hide the marker if it's not in a valid round
                 mx.setVisible(false);
                 mapView.getOverlays().remove(mx);
             }
