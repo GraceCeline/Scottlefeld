@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.CheckBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +96,11 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick(View view) {
+        CheckBox controlMXCheckBox = findViewById(R.id.checkBox);
+        boolean isMxHuman = controlMXCheckBox.isChecked();
         Intent intent = new Intent(this, StartActivity.class);
         intent.putExtra("chosen_map", selectedMap);
+        intent.putExtra("mx_human", isMxHuman);
         startActivity(intent);
     }
 

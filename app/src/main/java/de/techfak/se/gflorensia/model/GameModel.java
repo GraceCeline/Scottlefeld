@@ -1,5 +1,6 @@
 package de.techfak.se.gflorensia.model;
 
+
 import de.techfak.gse24.botlib.MX;
 import de.techfak.se.gflorensia.InvalidConnectionException;
 import de.techfak.se.gflorensia.ZeroTicketException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class GameModel {
     public static final String BUS = "bus";
@@ -82,6 +84,27 @@ public class GameModel {
     public void setCurrentLocation(PointOfInterest currentLocation) {
         this.currentLocation = currentLocation;
         this.player.setPosition(currentLocation.getName());
+    }
+
+    public MXPlayer initMXPlayer(int busTickets,
+                                 int tramTickets, int scooterTickets) {
+
+        MXPlayer newMxPlayer = new MXPlayer();
+        newMxPlayer.setBusTickets(busTickets);
+        newMxPlayer.setTramTickets(tramTickets);
+        newMxPlayer.setScooterTickets(scooterTickets);
+
+        return newMxPlayer;
+    }
+
+    public void setMXStart(Player player, MXPlayer mx) {
+        String normalPlayerLoc = player.getPosition();
+        List<PointOfInterest> availablePois = new ArrayList<>(this.poiList);
+        availablePois.removeIf(poi -> poi.getName().equals(normalPlayerLoc));
+
+        Random random = new Random();
+        PointOfInterest chosenPoi = availablePois.get(random.nextInt(availablePois.size()));
+        mx.setPosition(chosenPoi.getName());
     }
 
     public void manageTickets(String selectedTransportMode) {

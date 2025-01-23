@@ -63,6 +63,7 @@ import de.techfak.se.gflorensia.R;
 import de.techfak.se.gflorensia.ZeroTicketException;
 import de.techfak.se.gflorensia.model.Connection;
 import de.techfak.se.gflorensia.model.GameModel;
+import de.techfak.se.gflorensia.model.MXPlayer;
 import de.techfak.se.gflorensia.model.Player;
 import de.techfak.se.gflorensia.model.PointOfInterest;
 
@@ -121,6 +122,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         // Datas needed
         String mapName = getIntent().getExtras().getString("chosen_map");
+        boolean isHuman = getIntent().getExtras().getBoolean("mx_human");
         Collection<PointOfInterest> poiCollection = null;
         Spinner spinnerPOI = findViewById(R.id.spinner2);
         Button finishTurnButton = findViewById(R.id.button3);
@@ -173,7 +175,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             gameModel.getPlayer().setBusTickets(gameModel.getDetectiveTickets().get(BUS));
             gameModel.getPlayer().setTramTickets(gameModel.getDetectiveTickets().get(TRAM));
             gameModel.getPlayer().setScooterTickets(gameModel.getDetectiveTickets().get(SCOOTER));
-            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.getMXTickets());
+            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.getMXTickets(), isHuman);
             gameModel.setMX(mxPlayer);
             Log.i("MX Start", gameModel.getMX().getPosition());
         } catch (JsonProcessingException e) {
@@ -281,7 +283,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                             destination, selectedTransportMode, gameModel.getPlayer());
 
                     // Update current location to new destination
-                    // Update current location to new destinatioen
+                    // Update current location to new destination
                     textView.setText(destination.getName());
                     center.setText(describeGeoPoint(destination.createGeoPoint()));
                     gameModel.setCurrentLocation(destination);
@@ -422,11 +424,32 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         });
 
     }
-    MX createMX(String jsonContent, Player player, Map<String, Integer> mxTickets)
+    MX createMX(String jsonContent, Player player, Map<String, Integer> mxTickets, boolean isHuman)
             throws JSONParseException, NoFreePositionException {
-        Log.i("Player", player.toString());
         PlayerFactory playerFactory = new PlayerFactory(jsonContent, player);
-        return playerFactory.createMx(mxTickets.get(BUS), mxTickets.get(TRAM), mxTickets.get(SCOOTER));
+
+        if (isHuman) {
+            Log.i("MX human", String.valueOf(isHuman));
+            MXPlayer mx = game.getGameModel().initMXPlayer(
+                    mxTickets.get(BUS),
+                    mxTickets.get(TRAM),
+                    mxTickets.get(SCOOTER));
+            // set start position for MXPlayer
+            game.getGameModel().setMXStart(
+                    game.getGameModel().getPlayer(),
+                    mx
+            );
+
+            Log.i("MX Human Position", mx.getPosition());
+            return mx;
+        } else {
+            // Return a bot M. X using the existing factory method.
+            return playerFactory.createMx(
+                    mxTickets.get(BUS),
+                    mxTickets.get(TRAM),
+                    mxTickets.get(SCOOTER)
+            );
+        }
     }
 
     void showMXMarker(Integer number, List<PointOfInterest> poiList) {

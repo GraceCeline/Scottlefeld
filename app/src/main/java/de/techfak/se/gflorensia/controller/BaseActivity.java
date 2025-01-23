@@ -131,16 +131,6 @@ public class BaseActivity extends AppCompatActivity {
                 }
             }
         }
-        public List<PointOfInterest> findIsolatedPOI(Map<String, PointOfInterest> poiMap) {
-            List<PointOfInterest> isolatedPOIs = new ArrayList<>();
-            for (PointOfInterest poi : poiMap.values()) {
-                if (poi.getConnections().isEmpty()) {
-                    isolatedPOIs.add(poi);
-                    Log.i("Isolated", poi.getName() + " is isolated");
-                }
-            }
-            return isolatedPOIs;
-        }
 
     public String describeGeoPoint(GeoPoint geo) {
         return "Latitude " + geo.getLatitude() + " Longitude " + geo.getLongitude();
