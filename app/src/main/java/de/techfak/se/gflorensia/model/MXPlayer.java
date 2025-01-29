@@ -32,6 +32,7 @@ public class MXPlayer extends Player implements MX {
     public void giveTramTicket() {
         this.tramTickets++;
     }
+
     public int getBusTickets() {
         return busTickets;
     }
@@ -62,5 +63,8 @@ public class MXPlayer extends Player implements MX {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+    public int getBlackTickets() {
+        return 0;
     }
 }

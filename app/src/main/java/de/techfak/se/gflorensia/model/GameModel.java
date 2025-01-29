@@ -1,7 +1,7 @@
 package de.techfak.se.gflorensia.model;
 
-
 import de.techfak.gse24.botlib.MX;
+import de.techfak.gse24.botlib.exceptions.NoTicketAvailableException;
 import de.techfak.se.gflorensia.InvalidConnectionException;
 import de.techfak.se.gflorensia.ZeroTicketException;
 
@@ -17,6 +17,9 @@ public class GameModel {
     public static final String BUS = "bus";
     public static final String TRAM = "tram";
     public static final String SCOOTER = "escooter";
+    public static final String MX = "MX";
+    public static final String WINNER = "winner";
+    public static final String CURRENT = "Current Position";
     public static final int ENDGAME = 22;
     final PropertyChangeSupport support;
     int round;
@@ -48,6 +51,9 @@ public class GameModel {
     }
     public void setDetectiveTickets(Map<String, Integer> detectiveTickets) {
         this.detectiveTickets = detectiveTickets;
+        this.player.setBusTickets(detectiveTickets.get(BUS));
+        this.player.setTramTickets(detectiveTickets.get(TRAM));
+        this.player.setScooterTickets(detectiveTickets.get(SCOOTER));
     }
     public Map<String, Integer> getMXTickets() {
         return this.mxTickets;
@@ -61,12 +67,6 @@ public class GameModel {
     public void setPOIList(List<PointOfInterest> poiList) {
         this.poiList = poiList;
     }
-    // mr x
-    // normalen spieler
-    // validateTurn
-    // increase round counter
-    // is game over check
-
 
     public Integer getRound() {
         return this.round;
@@ -82,8 +82,12 @@ public class GameModel {
     }
 
     public void setCurrentLocation(PointOfInterest currentLocation) {
+        PointOfInterest oldLocation = this.currentLocation;
         this.currentLocation = currentLocation;
+        // Pass auf error wegen current Location auf
+        this.support.firePropertyChange(CURRENT, oldLocation, currentLocation);
         this.player.setPosition(currentLocation.getName());
+
     }
 
     public MXPlayer initMXPlayer(int busTickets,
@@ -159,14 +163,33 @@ public class GameModel {
                 break;
         }
     }
+    public void doTurn(PointOfInterest poiStart,
+                       PointOfInterest destinationPOI,
+                       String transportMode,
+                       Player player)
+            throws InvalidConnectionException, ZeroTicketException, NoTicketAvailableException {
+        endGameConditions(destinationPOI);
+        validateMove(poiStart, destinationPOI, transportMode, player);
+        manageTickets(transportMode);
+        setCurrentLocation(destinationPOI);
+        incRound();
 
-    public String endGameConditions(PointOfInterest destination) {
-        if (player.returnAllZero(this.currentLocation) || round == ENDGAME) {
-            return "MX";
-        } else if (destination.getName().equals(mx.getPosition())) {
-            return "Detective";
+        if (player.returnAllZero(destinationPOI)) {
+            String[] winnerDestination = new String[] {MX, destinationPOI.getName()};
+            this.support.firePropertyChange(WINNER, "", winnerDestination);
         }
-        return "";
+        // MX's Turn after move is valid
+        this.mx.getTurn();
+    }
+
+    public void endGameConditions(PointOfInterest destination) {
+        if (player.returnAllZero(this.currentLocation) || round == ENDGAME) {
+            String[] winnerDestination = new String[] {MX, destination.getName()};
+            this.support.firePropertyChange(WINNER, "", winnerDestination);
+        } else if (destination.getName().equals(mx.getPosition())) {
+            String[] winnerDestination = new String[] {"Detective", destination.getName()};
+            this.support.firePropertyChange(WINNER, "", winnerDestination);
+        }
     }
     public void addListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);

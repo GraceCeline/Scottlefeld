@@ -166,7 +166,6 @@ public class BaseActivity extends AppCompatActivity {
     public void extractTickets(String jsonContent, Map<String, Integer> detectiveTicketsMap,
                                Map<String, Integer> mxTicketsMap)
             throws JsonProcessingException {
-        Log.i("Debug", jsonContent);
 
         ObjectMapper om = new ObjectMapper();
         JsonNode root = om.readTree(jsonContent);
