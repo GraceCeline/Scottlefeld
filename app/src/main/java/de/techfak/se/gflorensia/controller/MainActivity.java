@@ -96,11 +96,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick(View view) {
-        CheckBox controlMXCheckBox = findViewById(R.id.checkBox);
-        boolean isMxHuman = controlMXCheckBox.isChecked();
         Intent intent = new Intent(this, StartActivity.class);
         intent.putExtra("chosen_map", selectedMap);
-        intent.putExtra("mx_human", isMxHuman);
         startActivity(intent);
     }
 

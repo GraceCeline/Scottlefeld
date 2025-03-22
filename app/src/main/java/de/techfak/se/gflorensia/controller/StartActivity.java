@@ -120,7 +120,6 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
 
         // Datas needed
         String mapName = getIntent().getExtras().getString("chosen_map");
-        boolean isHuman = getIntent().getExtras().getBoolean("mx_human");
         Collection<PointOfInterest> poiCollection = null;
 
         Button finishTurnButton = findViewById(R.id.button3);
@@ -169,7 +168,7 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
             gameModel.setDetectiveTickets(detectiveTicketsMap);
             gameModel.setMXTickets(mxTicketsMap);
             // Create MX
-            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.getMXTickets(), isHuman);
+            MX mxPlayer = createMX(jsonContent, gameModel.getPlayer(), gameModel.getMXTickets());
             gameModel.setMX(mxPlayer);
             gameModel.incRound();
             Log.i("MX Start", gameModel.getMX().getPosition());
@@ -241,6 +240,9 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
                     Log.i("MX Current Position", gameModel.getMX().getPosition());
                     // After MX's Turn and round is incremented, show MX on certain rounds
                     showMXMarker(gameModel.getRound(), game.getGameModel().getPoiList());
+                    Log.i("MX Ticket Bus", String.valueOf(gameModel.getMX().getBusTickets()));
+                    Log.i("MX Ticket Tram", String.valueOf(gameModel.getMX().getTramTickets()));
+                    Log.i("MX Ticket Scooter", String.valueOf(gameModel.getMX().getScooterTickets()));
                 }
             } catch (InvalidConnectionException | ZeroTicketException e) {
                 Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -356,32 +358,15 @@ public class StartActivity extends BaseActivity implements PropertyChangeListene
         });
         displayConnection(mapView, poiList);
     }
-    MX createMX(String jsonContent, Player player, Map<String, Integer> mxTickets, boolean isHuman)
+    MX createMX(String jsonContent, Player player, Map<String, Integer> mxTickets)
             throws JSONParseException, NoFreePositionException {
         PlayerFactory playerFactory = new PlayerFactory(jsonContent, player);
-
-        if (isHuman) {
-            Log.i("MX human", String.valueOf(isHuman));
-            MXPlayer mx = game.getGameModel().initMXPlayer(
-                    mxTickets.get(BUS),
-                    mxTickets.get(TRAM),
-                    mxTickets.get(SCOOTER));
-            // set start position for MXPlayer
-            game.getGameModel().setMXStart(
-                    game.getGameModel().getPlayer(),
-                    mx
-            );
-
-            Log.i("MX Human Position", mx.getPosition());
-            return mx;
-        } else {
             // Return a bot M. X using the existing factory method.
-            return playerFactory.createMx(
+        return playerFactory.createMx(
                     mxTickets.get(BUS),
                     mxTickets.get(TRAM),
                     mxTickets.get(SCOOTER)
-            );
-        }
+        );
     }
 
     void showMXMarker(Integer number, List<PointOfInterest> poiList) {

@@ -1,5 +1,4 @@
 package de.techfak.se.gflorensia.model;
-
 import de.techfak.gse24.botlib.MX;
 import de.techfak.gse24.botlib.exceptions.NoTicketAvailableException;
 import de.techfak.se.gflorensia.InvalidConnectionException;
